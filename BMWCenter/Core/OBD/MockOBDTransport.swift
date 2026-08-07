@@ -15,8 +15,14 @@ final class MockOBDTransport: OBDTransport, @unchecked Sendable {
     private var fuelLevelStart: Double = 78
     private let lock = NSLock()
     private var supported: Set<UInt8> = Set(OBDPIDCatalog.all.map(\.pid))
+    /// Simulates a slow/degraded adapter (PRD §149) — added per-command delay, seconds.
+    private let responseDelay: TimeInterval
+    /// Simulates an unexpected mid-session BLE drop (PRD §149) — seconds after connect.
+    private let disconnectAfter: TimeInterval?
 
-    init() {
+    init(responseDelay: TimeInterval = 0, disconnectAfter: TimeInterval? = nil) {
+        self.responseDelay = responseDelay
+        self.disconnectAfter = disconnectAfter
         var stateCont: AsyncStream<OBDConnectionState>.Continuation!
         state = AsyncStream { stateCont = $0 }
         stateContinuation = stateCont
@@ -64,8 +70,22 @@ final class MockOBDTransport: OBDTransport, @unchecked Sendable {
     func send(_ command: String, timeout: TimeInterval) async throws -> String {
         lock.lock()
         let isConnected = connected
+        let sessionStart = startDate
         lock.unlock()
         guard isConnected else { throw OBDError.disconnected }
+
+        if let disconnectAfter, Date().timeIntervalSince(sessionStart) >= disconnectAfter {
+            lock.lock()
+            connected = false
+            lock.unlock()
+            stateContinuation.yield(.failed(.disconnected))
+            throw OBDError.disconnected
+        }
+
+        if responseDelay > 0 {
+            try? await Task.sleep(nanoseconds: UInt64(responseDelay * 1_000_000_000))
+            if responseDelay >= timeout { throw OBDError.timeout }
+        }
 
         let cmd = command.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
         if cmd.hasPrefix("AT") {
