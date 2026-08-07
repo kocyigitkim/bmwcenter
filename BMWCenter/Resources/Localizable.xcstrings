@@ -2184,13 +2184,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This resets your vehicle's diagnostic memory."
+            "value": "This resets your vehicle's diagnostic memory and emissions readiness monitors."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bu işlem aracın arıza belleklerini sıfırlar."
+            "value": "Bu işlem aracın arıza belleklerini ve emisyon hazırlık monitörlerini sıfırlar."
           }
         }
       }
