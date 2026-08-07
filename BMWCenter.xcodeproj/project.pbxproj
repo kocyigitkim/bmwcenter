@@ -143,6 +143,7 @@
 		BF8B18319179BE455EA4F49D /* CalibrationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE5C834B240B147517C6765 /* CalibrationCard.swift */; };
 		C52D46CF11EB839B80AD7F4C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDA0C1BA9F75B298CBDACDE /* AppSettings.swift */; };
 		C5533EEEF10DEAAE44B775F6 /* SeverityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B3EAE0204F2C64EA2366A9 /* SeverityRouter.swift */; };
+		C5E8DCE4647FA4E5AA65FF62 /* ReadinessMonitors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228299418D1FAC7D0EDFEFD /* ReadinessMonitors.swift */; };
 		C615F50F3E7D9EA1552C2178 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A229C43130F2873BAB97AD04 /* Log.swift */; };
 		C728DC2B24A3E04D3108C444 /* VINDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F398839E036E3576BDC7EA47 /* VINDecoder.swift */; };
 		C8DD7E328EAE460695FD5C9D /* AdapterCapabilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37A79F86BB75E84E18E6A8E /* AdapterCapabilitiesTests.swift */; };
@@ -171,6 +172,7 @@
 		E468134A551D79E9255BA7BC /* DTCMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B7F004B626CC719A2C747 /* DTCMonitor.swift */; };
 		E5EEB97DE740DF456787F89E /* DTCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6F899EFC2EC139D47B7ABD /* DTCService.swift */; };
 		EB73DF183D8AAFFFE9218F7F /* GaugeRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDBB3453972495AAFEDA94 /* GaugeRing.swift */; };
+		EFA200E8C9147A3D5AD9CADE /* ReadinessMonitorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2C7EC0E7704A4752DC5B1 /* ReadinessMonitorsTests.swift */; };
 		F005206049C2424545E6064F /* BatteryHealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */; };
 		F1E20BEF5160F873CA6BAA3E /* Throttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E754555F24DAF902A1CC4F3F /* Throttle.swift */; };
 		F3D9A1357CE819268A238325 /* BMWCenterWidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8B3B167BC15478478CD29C /* BMWCenterWidgetsBundle.swift */; };
@@ -261,6 +263,7 @@
 		543EE12F5E013418608D4330 /* TextBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBar.swift; sourceTree = "<group>"; };
 		54BE5BC8476F7022539C1B05 /* EventDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetector.swift; sourceTree = "<group>"; };
 		553F218ACE1C0D870E0B4565 /* CueScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueScheduler.swift; sourceTree = "<group>"; };
+		55E2C7EC0E7704A4752DC5B1 /* ReadinessMonitorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessMonitorsTests.swift; sourceTree = "<group>"; };
 		56F133DEC7D1D07D3286D13C /* BMWCenterTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BMWCenterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57632732A1804B26EC84E321 /* VehicleSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleSnapshot.swift; sourceTree = "<group>"; };
 		586E91D901F7C9082CCE399E /* HistoryTemplateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTemplateBuilder.swift; sourceTree = "<group>"; };
@@ -322,6 +325,7 @@
 		ADCEC581CCFEE45DD27243C7 /* SectionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCard.swift; sourceTree = "<group>"; };
 		AF1053C8848D3CFA1432AC5D /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
 		B056CBB917E5DCC7639F6D74 /* CareFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareFeature.swift; sourceTree = "<group>"; };
+		B228299418D1FAC7D0EDFEFD /* ReadinessMonitors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessMonitors.swift; sourceTree = "<group>"; };
 		B30636C3F9442BF25CEC0F98 /* TripRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRecorderTests.swift; sourceTree = "<group>"; };
 		B50FAFC08AD2C9E8F8F418DF /* ColdEngineShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColdEngineShield.swift; sourceTree = "<group>"; };
 		B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHealthTests.swift; sourceTree = "<group>"; };
@@ -537,6 +541,7 @@
 				C098EEF0BE523C076D59CC2C /* OBDPID.swift */,
 				E94E322FBD010AA6601E1544 /* OBDService.swift */,
 				493BFFED979DC3C13B9248D9 /* OBDTransport.swift */,
+				B228299418D1FAC7D0EDFEFD /* ReadinessMonitors.swift */,
 				9F05766AB4FAEAB6AEB19319 /* ReplayTransport.swift */,
 				CFE97D016ACCBBF0A105E10E /* TransportMetrics.swift */,
 				57632732A1804B26EC84E321 /* VehicleSnapshot.swift */,
@@ -589,6 +594,7 @@
 				79E51009E3A9DABFADBB58C4 /* MockOBDTransportScenarioTests.swift */,
 				7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */,
 				210320C18B0C2CF3D4BAD8B7 /* PIDParsingTests.swift */,
+				55E2C7EC0E7704A4752DC5B1 /* ReadinessMonitorsTests.swift */,
 				980393B5EDDEBA331EF7FC1D /* ReplayTransportTests.swift */,
 				92E75D1E1B3763577A58B9E9 /* SpeedCalibratorTests.swift */,
 				F27FAE3BBFF36F809903F36C /* TransportMetricsTests.swift */,
@@ -1038,6 +1044,7 @@
 				CE70D4DEE7179070CF342BB7 /* MockOBDTransportScenarioTests.swift in Sources */,
 				54682D48E51B16955499523D /* OBDFrameParserEchoTests.swift in Sources */,
 				CD583FA5FF8DB206EA9D441D /* PIDParsingTests.swift in Sources */,
+				EFA200E8C9147A3D5AD9CADE /* ReadinessMonitorsTests.swift in Sources */,
 				6B3450DBAE15E4123F3524A2 /* ReplayTransportTests.swift in Sources */,
 				AEDFFDB76819FB741E1FC3E9 /* SpeedCalibratorTests.swift in Sources */,
 				76DFA59B830DEEA9A4189BC2 /* TransportMetricsTests.swift in Sources */,
@@ -1169,6 +1176,7 @@
 				AE4D3777C3164A7F386AE3B2 /* PDFReportBuilder.swift in Sources */,
 				D8ED7DAEFB282167A7E2CF88 /* PhoneSceneDelegate.swift in Sources */,
 				91124491211DDB39EA30129A /* PhoneWatchBridge.swift in Sources */,
+				C5E8DCE4647FA4E5AA65FF62 /* ReadinessMonitors.swift in Sources */,
 				C8E6C1F1E6B52123556AC695 /* ReplayTransport.swift in Sources */,
 				4F4E43A133FF136568A13BB7 /* RingBuffer.swift in Sources */,
 				A914AC65DAF171BEC6293C3D /* RootTabView.swift in Sources */,
