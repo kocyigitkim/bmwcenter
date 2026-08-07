@@ -11,6 +11,7 @@
 		0733B0EF7725B8498CF84CAF /* AccelTestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337E5D2666D110738484EFAA /* AccelTestRunner.swift */; };
 		085FE6F2FB89E59F4018A9CA /* FuelTrimMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A481E69905EB407A9E9F1249 /* FuelTrimMonitor.swift */; };
 		0912B8DD714EA0DE2FA424A9 /* VehicleSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57632732A1804B26EC84E321 /* VehicleSnapshot.swift */; };
+		0B67CC8A1FCB8965CEEF59FA /* CapabilityScanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A99ED99AF55258E218959B3 /* CapabilityScanUITests.swift */; };
 		0BDBCC367716C44A29D3C901 /* EMA.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05D7454DA3F21C65838D7C /* EMA.swift */; };
 		0BF9D967A62ADD0C4C2ACB3D /* TripLiveActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CF4DB7C0F07AE56AD49318 /* TripLiveActivityView.swift */; };
 		0C60C5F23FB1B4033051F3A5 /* EngineReadyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF5EBA0EBBBD6B32F3C6007 /* EngineReadyService.swift */; };
@@ -60,6 +61,7 @@
 		47333C9F3B5D3C09942C5A83 /* ThermalShockGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CA0B829110EAC7C559DBC4 /* ThermalShockGuard.swift */; };
 		48691326D392989648ADC17B /* DrivingScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD2E0D44C8AD48D96659266 /* DrivingScorer.swift */; };
 		4C1490CC3F7D21FC3273650D /* WidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C709E91703E22498D29D91FB /* WidgetDataStore.swift */; };
+		4E45B6EFD2B4983BE2467F33 /* CapabilityScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293182C6664955983F19E690 /* CapabilityScanView.swift */; };
 		4F1BCF324697F30A71EA1FD6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E8242FB9554F056A2A734325 /* Localizable.xcstrings */; };
 		4F4E43A133FF136568A13BB7 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA3A7A181715E5A7F150983 /* RingBuffer.swift */; };
 		4FC686DA1E814C07CF037BAF /* CueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F218ACE1C0D870E0B4565 /* CueScheduler.swift */; };
@@ -233,6 +235,7 @@
 		253D564BF242B2E1B6101C4A /* OverheatWatchdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverheatWatchdog.swift; sourceTree = "<group>"; };
 		258C963DB1001040DAE2E249 /* MetricTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricTile.swift; sourceTree = "<group>"; };
 		28D0E2AC60E895E10BD0DF7B /* Tokens+Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tokens+Spacing.swift"; sourceTree = "<group>"; };
+		293182C6664955983F19E690 /* CapabilityScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityScanView.swift; sourceTree = "<group>"; };
 		295502A4FBDE553C97F4D43C /* LiveActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityController.swift; sourceTree = "<group>"; };
 		296C2D12DB03C7B9E022271F /* TripSummaryCardRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCardRenderer.swift; sourceTree = "<group>"; };
 		317EEADE5D11B6A5512DF15A /* StopTripIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTripIntent.swift; sourceTree = "<group>"; };
@@ -309,6 +312,7 @@
 		93388BA2BAC39B3E3C56BD79 /* DiagnosticSafetyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticSafetyTests.swift; sourceTree = "<group>"; };
 		980393B5EDDEBA331EF7FC1D /* ReplayTransportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayTransportTests.swift; sourceTree = "<group>"; };
 		99B74C283966B7E2D35CABB4 /* IdleAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleAnalyzer.swift; sourceTree = "<group>"; };
+		9A99ED99AF55258E218959B3 /* CapabilityScanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityScanUITests.swift; sourceTree = "<group>"; };
 		9F05766AB4FAEAB6AEB19319 /* ReplayTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayTransport.swift; sourceTree = "<group>"; };
 		9FC2397E5E536886641D7CAB /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		A229C43130F2873BAB97AD04 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -817,6 +821,7 @@
 			isa = PBXGroup;
 			children = (
 				EA22F67DDDDF6A8BBDA745BD /* BatteryHealthView.swift */,
+				293182C6664955983F19E690 /* CapabilityScanView.swift */,
 				A2B0FFE37199BAF7A3839841 /* DTCCatalogView.swift */,
 				4FED6E501B26ACC6A3DEB7F6 /* DTCListView.swift */,
 				C40D67B40B8C56AE69A72E88 /* FreezeFrameView.swift */,
@@ -864,6 +869,7 @@
 		ED06023C038CB8A9329F3D2F /* BMWCenterUITests */ = {
 			isa = PBXGroup;
 			children = (
+				9A99ED99AF55258E218959B3 /* CapabilityScanUITests.swift */,
 				49CC81F7501D8A8DAD50AD2B /* SmokeTests.swift */,
 			);
 			path = BMWCenterUITests;
@@ -1081,6 +1087,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B67CC8A1FCB8965CEEF59FA /* CapabilityScanUITests.swift in Sources */,
 				7E1AE139E31851C5E75721D9 /* SmokeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1117,6 +1124,7 @@
 				BF8B18319179BE455EA4F49D /* CalibrationCard.swift in Sources */,
 				D471AFE0494BD780BDAF1E08 /* CalibrationView.swift in Sources */,
 				EB91C6A011256F77D1248524 /* CapabilityResolver.swift in Sources */,
+				4E45B6EFD2B4983BE2467F33 /* CapabilityScanView.swift in Sources */,
 				95888839010C680C9E949E52 /* CarPlayCoordinator.swift in Sources */,
 				A4605E90EDE934F770B230AB /* CarPlaySceneDelegate.swift in Sources */,
 				72E96539A37CE2419DDD3CB2 /* CareCoordinator.swift in Sources */,

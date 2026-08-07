@@ -35,6 +35,20 @@
                ReferencedContainer = "container:BMWCenter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E812AF9151098011C849693A"
+               BuildableName = "BMWCenterUITests.xctest"
+               BlueprintName = "BMWCenterUITests"
+               ReferencedContainer = "container:BMWCenter.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -61,6 +75,17 @@
                BlueprintIdentifier = "45F5E817EB46EAC172386D62"
                BuildableName = "BMWCenterTests.xctest"
                BlueprintName = "BMWCenterTests"
+               ReferencedContainer = "container:BMWCenter.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E812AF9151098011C849693A"
+               BuildableName = "BMWCenterUITests.xctest"
+               BlueprintName = "BMWCenterUITests"
                ReferencedContainer = "container:BMWCenter.xcodeproj">
             </BuildableReference>
          </TestableReference>

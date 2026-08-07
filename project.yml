@@ -88,9 +88,11 @@ schemes:
         BMWCenter: all
         # BMWCenterWidgets: all  # free Personal Team install
         BMWCenterTests: [test]
+        BMWCenterUITests: [test]
     run:
       config: Debug
     test:
       config: Debug
       targets:
         - BMWCenterTests
+        - BMWCenterUITests
