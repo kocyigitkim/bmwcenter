@@ -24,3 +24,6 @@ Carthage/Build/
 
 # XcodeGen generated project (regenerated from project.yml)
 # Keep BMWCenter.xcodeproj tracked since no CI regenerates it yet.
+
+# Claude Code local session state
+.claude/
