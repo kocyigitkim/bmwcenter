@@ -92,6 +92,9 @@ final class MockOBDTransport: OBDTransport, @unchecked Sendable {
             if cmd == "ATZ" { try? await Task.sleep(nanoseconds: 50_000_000) }
             return "OK"
         }
+        // MIL off, 1 stored DTC (matches the mock's static "0133" stored code),
+        // spark ignition, all continuous + non-continuous monitors ready.
+        if cmd == "0101" { return "41 01 01 07 FF 00" }
         if cmd == "0100" { return "41 00 BE 3E A8 13" }
         if cmd == "0120" { return "41 20 A0 07 B0 15" }
         if cmd == "0140" { return "41 40 FE D0 00 00" }

@@ -98,6 +98,7 @@
 		8432DD31FBF3DB18900B9D5D /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD2BDE43B2CA00956D14AA7 /* TripRepository.swift */; };
 		85B852B2BF2051992B8D040D /* DrivingScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A201D49B4006005FF5DC40E /* DrivingScorerTests.swift */; };
 		85ED3F2B95E027C977F3684D /* BatteryHealthAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE2F85DB17CC21711CF4612 /* BatteryHealthAnalyzer.swift */; };
+		8C033C929FD98CA97A11D638 /* MockReadinessIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6784ABCC361B626DAD8C098 /* MockReadinessIntegrationTests.swift */; };
 		8C15DEFB160FFB6F46134569 /* TripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A355991DF5B3F09FDB2E3EAE /* TripsViewModel.swift */; };
 		8CA0FD6BF12C8DC5C007B8C1 /* LiveTemplateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B797168B9EDD83D006E572 /* LiveTemplateBuilder.swift */; };
 		8D6B5CC3CBF180174A8C86D6 /* ExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F842C1EA48425CE4249D393 /* ExportTests.swift */; };
@@ -328,6 +329,7 @@
 		B228299418D1FAC7D0EDFEFD /* ReadinessMonitors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadinessMonitors.swift; sourceTree = "<group>"; };
 		B30636C3F9442BF25CEC0F98 /* TripRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRecorderTests.swift; sourceTree = "<group>"; };
 		B50FAFC08AD2C9E8F8F418DF /* ColdEngineShield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColdEngineShield.swift; sourceTree = "<group>"; };
+		B6784ABCC361B626DAD8C098 /* MockReadinessIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockReadinessIntegrationTests.swift; sourceTree = "<group>"; };
 		B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryHealthTests.swift; sourceTree = "<group>"; };
 		B8CF4DB7C0F07AE56AD49318 /* TripLiveActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLiveActivityView.swift; sourceTree = "<group>"; };
 		B9EFEC42C8B09CDAF78BC276 /* GearCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearCoach.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				78D1228F4712E730C48B83B2 /* FuelCalculatorTests.swift */,
 				DFB98617F81AEFBD6E329B6C /* FuelCalibratorTests.swift */,
 				79E51009E3A9DABFADBB58C4 /* MockOBDTransportScenarioTests.swift */,
+				B6784ABCC361B626DAD8C098 /* MockReadinessIntegrationTests.swift */,
 				7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */,
 				210320C18B0C2CF3D4BAD8B7 /* PIDParsingTests.swift */,
 				55E2C7EC0E7704A4752DC5B1 /* ReadinessMonitorsTests.swift */,
@@ -1042,6 +1045,7 @@
 				AC6439FC93C3E98585429419 /* FuelCalculatorTests.swift in Sources */,
 				84193F6321BB6FD0D8D88F5E /* FuelCalibratorTests.swift in Sources */,
 				CE70D4DEE7179070CF342BB7 /* MockOBDTransportScenarioTests.swift in Sources */,
+				8C033C929FD98CA97A11D638 /* MockReadinessIntegrationTests.swift in Sources */,
 				54682D48E51B16955499523D /* OBDFrameParserEchoTests.swift in Sources */,
 				CD583FA5FF8DB206EA9D441D /* PIDParsingTests.swift in Sources */,
 				EFA200E8C9147A3D5AD9CADE /* ReadinessMonitorsTests.swift in Sources */,

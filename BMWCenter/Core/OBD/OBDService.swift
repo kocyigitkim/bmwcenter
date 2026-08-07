@@ -224,6 +224,28 @@ final class OBDService: ObservableObject {
         return vin
     }
 
+    /// Mode 01 PID 0x01 (PRD §38 Emissions Readiness).
+    func readReadiness() async throws -> ReadinessStatus {
+        guard let transport else { throw OBDError.disconnected }
+        let command = "0101"
+        let response = try await transport.send(command, timeout: 3)
+        switch OBDFrameParser.parse(
+            response: response, expectedPID: 0x01, byteCount: 4, sentCommand: command
+        ) {
+        case .value(let bytes):
+            guard let status = ReadinessParser.parse(bytes: bytes) else {
+                throw OBDError.badResponse(response)
+            }
+            return status
+        case .noData:
+            throw OBDError.unsupportedPID(0x01)
+        case .disconnected:
+            throw OBDError.disconnected
+        case .retry, .badResponse:
+            throw OBDError.badResponse(response)
+        }
+    }
+
     func beginHighRateSpeedSampling() -> AsyncStream<(Date, Double)> {
         endHighRateSpeedSampling()
         return AsyncStream { continuation in
