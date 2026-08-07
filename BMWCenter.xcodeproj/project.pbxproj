@@ -30,6 +30,7 @@
 		27D921201F8005CB5B4E62DC /* CSVExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D2F04ECF38E0D62A10F497 /* CSVExporter.swift */; };
 		2ABBF4FF65CAD1B7B60813FF /* GPXExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E1231715BDCAD4EF2465ED /* GPXExporter.swift */; };
 		2B0C05B70C2984633EF61963 /* MonthlyReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743CE58CCD4A7A6746D533E8 /* MonthlyReportView.swift */; };
+		31BFD5B64FFFA7B238CD8D4F /* AdapterCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4024BD8E7C755C88D13875A /* AdapterCapabilities.swift */; };
 		31DC139DB472DACDC6F13C29 /* ScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A730F2F03F3342572FAEF /* ScoreRing.swift */; };
 		32874EF94CAE512DA866B867 /* DTCCatalog.SOURCE.md in Resources */ = {isa = PBXBuildFile; fileRef = BD1AAF290878E629AF13D211 /* DTCCatalog.SOURCE.md */; };
 		33D514EF28EA9DDD93CECFCD /* BaselineLearner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004A793D31AD146A4D53EB86 /* BaselineLearner.swift */; };
@@ -142,6 +143,7 @@
 		C5533EEEF10DEAAE44B775F6 /* SeverityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B3EAE0204F2C64EA2366A9 /* SeverityRouter.swift */; };
 		C615F50F3E7D9EA1552C2178 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A229C43130F2873BAB97AD04 /* Log.swift */; };
 		C728DC2B24A3E04D3108C444 /* VINDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F398839E036E3576BDC7EA47 /* VINDecoder.swift */; };
+		C8DD7E328EAE460695FD5C9D /* AdapterCapabilitiesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37A79F86BB75E84E18E6A8E /* AdapterCapabilitiesTests.swift */; };
 		C8E6C1F1E6B52123556AC695 /* ReplayTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F05766AB4FAEAB6AEB19319 /* ReplayTransport.swift */; };
 		CA5193F9E13E9DA529B6BDF6 /* SpeedCalibrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3266CE7314655DDE8318EBF2 /* SpeedCalibrator.swift */; };
 		CA791F4245322029E92FA25B /* LiveActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295502A4FBDE553C97F4D43C /* LiveActivityController.swift */; };
@@ -300,6 +302,7 @@
 		A229C43130F2873BAB97AD04 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		A2B0FFE37199BAF7A3839841 /* DTCCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCCatalogView.swift; sourceTree = "<group>"; };
 		A355991DF5B3F09FDB2E3EAE /* TripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsViewModel.swift; sourceTree = "<group>"; };
+		A37A79F86BB75E84E18E6A8E /* AdapterCapabilitiesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterCapabilitiesTests.swift; sourceTree = "<group>"; };
 		A3B5F79E35C9A4B034770674 /* MockOBDTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockOBDTransport.swift; sourceTree = "<group>"; };
 		A3BFB79AA1316B0F86935907 /* GlassSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassSurface.swift; sourceTree = "<group>"; };
 		A481E69905EB407A9E9F1249 /* FuelTrimMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelTrimMonitor.swift; sourceTree = "<group>"; };
@@ -324,6 +327,7 @@
 		BF2DCA3D0DC9FD60F3C2A2D7 /* BMWCenter-CarPlay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "BMWCenter-CarPlay.entitlements"; sourceTree = "<group>"; };
 		C098EEF0BE523C076D59CC2C /* OBDPID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBDPID.swift; sourceTree = "<group>"; };
 		C1DDEB968A777DF457EC4377 /* AddRefuelSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRefuelSheet.swift; sourceTree = "<group>"; };
+		C4024BD8E7C755C88D13875A /* AdapterCapabilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterCapabilities.swift; sourceTree = "<group>"; };
 		C40D67B40B8C56AE69A72E88 /* FreezeFrameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreezeFrameView.swift; sourceTree = "<group>"; };
 		C46D0E719FE58A6D75011615 /* MetricFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricFormatter.swift; sourceTree = "<group>"; };
 		C66B7F004B626CC719A2C747 /* DTCMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCMonitor.swift; sourceTree = "<group>"; };
@@ -516,6 +520,7 @@
 		40133312B0732A24C0BBE38F /* OBD */ = {
 			isa = PBXGroup;
 			children = (
+				C4024BD8E7C755C88D13875A /* AdapterCapabilities.swift */,
 				D488465D9EB8BFB5F437837C /* BLEOBDTransport.swift */,
 				C66B7F004B626CC719A2C747 /* DTCMonitor.swift */,
 				3B6F899EFC2EC139D47B7ABD /* DTCService.swift */,
@@ -561,6 +566,7 @@
 		4C60C7110117EB98DF737581 /* BMWCenterTests */ = {
 			isa = PBXGroup;
 			children = (
+				A37A79F86BB75E84E18E6A8E /* AdapterCapabilitiesTests.swift */,
 				DCB91604D0CF846D09B06712 /* BaselineLearnerTests.swift */,
 				B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */,
 				63EAB15AFC5DA4FE0939BEE8 /* CareFeatureTests.swift */,
@@ -1007,6 +1013,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DD7E328EAE460695FD5C9D /* AdapterCapabilitiesTests.swift in Sources */,
 				D0B8AE1A109C2D4B65E3CE9D /* BaselineLearnerTests.swift in Sources */,
 				F005206049C2424545E6064F /* BatteryHealthTests.swift in Sources */,
 				9B25446A780FC984B0F55DAC /* CareFeatureTests.swift in Sources */,
@@ -1055,6 +1062,7 @@
 			files = (
 				0733B0EF7725B8498CF84CAF /* AccelTestRunner.swift in Sources */,
 				7D721B6CA02A91AA8DC52506 /* AccelTestView.swift in Sources */,
+				31BFD5B64FFFA7B238CD8D4F /* AdapterCapabilities.swift in Sources */,
 				FC82CF502973659406066F24 /* AdapterScanView.swift in Sources */,
 				D2F24FFEA1667685D60CA104 /* AdaptiveMaintenance.swift in Sources */,
 				440AD17C67E5EB616E65126D /* AddRefuelSheet.swift in Sources */,

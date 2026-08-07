@@ -10,6 +10,9 @@ final class OBDService: ObservableObject {
     @Published private(set) var connection: OBDConnectionState = .idle
     @Published private(set) var discoveredAdapters: [DiscoveredAdapter] = []
     @Published private(set) var supportedPIDs: Set<UInt8> = []
+    /// Derived capability groups for the current session (PRD §13/§22). Read-only
+    /// telemetry today — nothing in this service consults it yet.
+    var adapterCapabilities: AdapterCapabilities { AdapterCapabilities.detect(supportedPIDs: supportedPIDs) }
     @Published private(set) var instantL100: Double?
     @Published private(set) var idleLh: Double?
     @Published private(set) var fuelRateLh: Double?
