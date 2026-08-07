@@ -9,7 +9,17 @@ enum OBDFrameParseResult: Equatable {
 }
 
 enum OBDFrameParser {
-    static func parse(response: String, expectedPID: UInt8, byteCount: Int) -> OBDFrameParseResult {
+    /// - Parameter sentCommand: the command that was written to the adapter, if
+    ///   known. When provided, a response line that is just an echo of that
+    ///   command (e.g. echo wasn't successfully disabled via `ATE0`) is
+    ///   filtered out before data extraction, same as the other adapter noise
+    ///   lines below.
+    static func parse(
+        response: String,
+        expectedPID: UInt8,
+        byteCount: Int,
+        sentCommand: String? = nil
+    ) -> OBDFrameParseResult {
         let upper = response.uppercased()
         if upper.contains("UNABLE TO CONNECT") { return .disconnected }
         if upper.contains("NO DATA") { return .noData }
@@ -18,11 +28,15 @@ enum OBDFrameParser {
             return .retry
         }
 
+        let echo = sentCommand?.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
         let lines = upper
             .replacingOccurrences(of: "\r", with: "\n")
             .split(separator: "\n")
             .map { String($0).trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty && !$0.hasPrefix("SEARCHING") && $0 != ">" && !$0.hasPrefix("OK") }
+            .filter {
+                !$0.isEmpty && !$0.hasPrefix("SEARCHING") && $0 != ">" && !$0.hasPrefix("OK")
+                    && $0 != echo
+            }
 
         for line in lines {
             if let bytes = extractDataBytes(from: line, expectedPID: expectedPID, byteCount: byteCount) {

@@ -537,7 +537,9 @@ final class OBDService: ObservableObject {
         for _ in 0..<2 {
             do {
                 let response = try await transport.send(command, timeout: 2)
-                switch OBDFrameParser.parse(response: response, expectedPID: pid, byteCount: count) {
+                switch OBDFrameParser.parse(
+                    response: response, expectedPID: pid, byteCount: count, sentCommand: command
+                ) {
                 case .value(let bytes): return bytes
                 case .noData: return nil
                 case .retry: continue

@@ -62,6 +62,7 @@
 		4FC686DA1E814C07CF037BAF /* CueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553F218ACE1C0D870E0B4565 /* CueScheduler.swift */; };
 		51F428F14099A9E19FCA833E /* TripTemplateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F992E8884653082D808B3E99 /* TripTemplateBuilder.swift */; };
 		52FDCFF2B71DD424CF41DAAA /* FuelLevelIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498F9F5A4757CD7342B2007 /* FuelLevelIntent.swift */; };
+		54682D48E51B16955499523D /* OBDFrameParserEchoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */; };
 		547CEB736D90FBB629FAAFAF /* TransportMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE97D016ACCBBF0A105E10E /* TransportMetrics.swift */; };
 		560081545143631A8D856B9D /* FreezeFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40D67B40B8C56AE69A72E88 /* FreezeFrameView.swift */; };
 		593912970CFBBD50E013AEE1 /* BadgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41072D05622B02D40C749FDA /* BadgeService.swift */; };
@@ -281,6 +282,7 @@
 		78D1228F4712E730C48B83B2 /* FuelCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelCalculatorTests.swift; sourceTree = "<group>"; };
 		7B5F26C4A6C83E54AD64AC10 /* AudioAnnouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnnouncer.swift; sourceTree = "<group>"; };
 		7BE6A3FCECDBB135FD8A21ED /* MaintenanceTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceTemplates.swift; sourceTree = "<group>"; };
+		7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBDFrameParserEchoTests.swift; sourceTree = "<group>"; };
 		7F842C1EA48425CE4249D393 /* ExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTests.swift; sourceTree = "<group>"; };
 		809587C89BABC4BA2F1DC2A4 /* SparklineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparklineChart.swift; sourceTree = "<group>"; };
 		85CFDAE5FF6351EEFD2C743D /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				4161B9401180AE0F8617D942 /* FormatterTests.swift */,
 				78D1228F4712E730C48B83B2 /* FuelCalculatorTests.swift */,
 				DFB98617F81AEFBD6E329B6C /* FuelCalibratorTests.swift */,
+				7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */,
 				210320C18B0C2CF3D4BAD8B7 /* PIDParsingTests.swift */,
 				980393B5EDDEBA331EF7FC1D /* ReplayTransportTests.swift */,
 				92E75D1E1B3763577A58B9E9 /* SpeedCalibratorTests.swift */,
@@ -1015,6 +1018,7 @@
 				8F9E1900811401094A61FEEB /* FormatterTests.swift in Sources */,
 				AC6439FC93C3E98585429419 /* FuelCalculatorTests.swift in Sources */,
 				84193F6321BB6FD0D8D88F5E /* FuelCalibratorTests.swift in Sources */,
+				54682D48E51B16955499523D /* OBDFrameParserEchoTests.swift in Sources */,
 				CD583FA5FF8DB206EA9D441D /* PIDParsingTests.swift in Sources */,
 				6B3450DBAE15E4123F3524A2 /* ReplayTransportTests.swift in Sources */,
 				AEDFFDB76819FB741E1FC3E9 /* SpeedCalibratorTests.swift in Sources */,
