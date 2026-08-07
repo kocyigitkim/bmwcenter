@@ -246,6 +246,19 @@ final class OBDService: ObservableObject {
         }
     }
 
+    /// PRD §30 Vehicle Health Scan — first version: combines stored/pending/
+    /// permanent DTC read with emissions readiness into one structured result.
+    /// Freeze frame / Mode 6 / battery / sensor-plausibility inputs are
+    /// follow-ups (see PRD §30's full generic scan flow).
+    func performScan() async -> VehicleScanResult {
+        let dtcs = (try? await readDTCs()) ?? []
+        let readiness = try? await readReadiness()
+        let status = VehicleScanClassifier.classify(dtcs: dtcs, readiness: readiness)
+        return VehicleScanResult(
+            performedAt: Date(), dtcs: dtcs, readiness: readiness, overallStatus: status
+        )
+    }
+
     func beginHighRateSpeedSampling() -> AsyncStream<(Date, Double)> {
         endHighRateSpeedSampling()
         return AsyncStream { continuation in

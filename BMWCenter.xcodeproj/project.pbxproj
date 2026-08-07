@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02F191B57A614DAD86975CA8 /* VehicleScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB13966B7121F4A0707FA547 /* VehicleScan.swift */; };
 		04F7A8B262239C799B216B73 /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB9DD314B7B6151C95C9F75 /* StatusBar.swift */; };
 		0733B0EF7725B8498CF84CAF /* AccelTestRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337E5D2666D110738484EFAA /* AccelTestRunner.swift */; };
 		085FE6F2FB89E59F4018A9CA /* FuelTrimMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A481E69905EB407A9E9F1249 /* FuelTrimMonitor.swift */; };
@@ -187,6 +188,7 @@
 		F962DEB80D54D9C0A88A10F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E37FE2236321E78C72C3A60 /* Assets.xcassets */; };
 		FB6A728BA67A1FDEE0ABAF86 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A859179D6B7EB2452491C1 /* InsightsView.swift */; };
 		FC82CF502973659406066F24 /* AdapterScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 178565F04B79C092564C3799 /* AdapterScanView.swift */; };
+		FDC17704B71B9F8A8BF458FB /* VehicleScanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBC8654F8F1BBDF3AC0A890 /* VehicleScanTests.swift */; };
 		FFEDCFA6DB6E53BF1FC1EC19 /* CareFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = B056CBB917E5DCC7639F6D74 /* CareFeature.swift */; };
 /* End PBXBuildFile section */
 
@@ -285,6 +287,7 @@
 		63EAB15AFC5DA4FE0939BEE8 /* CareFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareFeatureTests.swift; sourceTree = "<group>"; };
 		667E05AEB29024052B6AD811 /* FuelCalibrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelCalibrator.swift; sourceTree = "<group>"; };
 		66F8A67A81537899F640BD97 /* Tokens+Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tokens+Typography.swift"; sourceTree = "<group>"; };
+		6BBC8654F8F1BBDF3AC0A890 /* VehicleScanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleScanTests.swift; sourceTree = "<group>"; };
 		6BF4758C8475ACEC61F584AF /* GaugeIconRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeIconRenderer.swift; sourceTree = "<group>"; };
 		6CEDF1AD04B729ECD286363D /* MotionTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionTokens.swift; sourceTree = "<group>"; };
 		6E5192885AD4BD6C60949A22 /* ConnectionPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionPill.swift; sourceTree = "<group>"; };
@@ -392,6 +395,7 @@
 		F6B0B66832F98E86BAA913DE /* Migrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migrations.swift; sourceTree = "<group>"; };
 		F992E8884653082D808B3E99 /* TripTemplateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTemplateBuilder.swift; sourceTree = "<group>"; };
 		FA185E8F5E92AE512B6B63D9 /* BMWCenter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BMWCenter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB13966B7121F4A0707FA547 /* VehicleScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleScan.swift; sourceTree = "<group>"; };
 		FB46C30AE9B08B49E956E4AC /* CloudSyncController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncController.swift; sourceTree = "<group>"; };
 		FCA3A7A181715E5A7F150983 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
 		FF05D7454DA3F21C65838D7C /* EMA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMA.swift; sourceTree = "<group>"; };
@@ -555,6 +559,7 @@
 				B228299418D1FAC7D0EDFEFD /* ReadinessMonitors.swift */,
 				9F05766AB4FAEAB6AEB19319 /* ReplayTransport.swift */,
 				CFE97D016ACCBBF0A105E10E /* TransportMetrics.swift */,
+				FB13966B7121F4A0707FA547 /* VehicleScan.swift */,
 				57632732A1804B26EC84E321 /* VehicleSnapshot.swift */,
 				F398839E036E3576BDC7EA47 /* VINDecoder.swift */,
 				23C43ECB8AAD4AF04DE1B6F3 /* VLinker */,
@@ -612,6 +617,7 @@
 				92E75D1E1B3763577A58B9E9 /* SpeedCalibratorTests.swift */,
 				F27FAE3BBFF36F809903F36C /* TransportMetricsTests.swift */,
 				B30636C3F9442BF25CEC0F98 /* TripRecorderTests.swift */,
+				6BBC8654F8F1BBDF3AC0A890 /* VehicleScanTests.swift */,
 				3F0D4AD4A31A9C6FAC22DE82 /* VINDecoderTests.swift */,
 			);
 			path = BMWCenterTests;
@@ -1067,6 +1073,7 @@
 				76DFA59B830DEEA9A4189BC2 /* TransportMetricsTests.swift in Sources */,
 				67629C895AA7E2815BE20F8B /* TripRecorderTests.swift in Sources */,
 				B6A34181B75057B9347C8FB9 /* VINDecoderTests.swift in Sources */,
+				FDC17704B71B9F8A8BF458FB /* VehicleScanTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1237,6 +1244,7 @@
 				C728DC2B24A3E04D3108C444 /* VINDecoder.swift in Sources */,
 				BEE2CDE7FD414ED12141E68C /* VLinkerPIDCatalog.swift in Sources */,
 				F90C8AAC5CA5EDE837E8CBBC /* VehicleProfileView.swift in Sources */,
+				02F191B57A614DAD86975CA8 /* VehicleScan.swift in Sources */,
 				0912B8DD714EA0DE2FA424A9 /* VehicleSnapshot.swift in Sources */,
 				CE7CCE28EC89F737E5B76E3E /* WidgetDataStore.swift in Sources */,
 			);
