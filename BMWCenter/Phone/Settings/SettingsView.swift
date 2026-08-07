@@ -154,6 +154,9 @@ struct SettingsView: View {
                 }
 
                 Section(String(localized: "settings.diagnostics", table: "Localizable")) {
+                    NavigationLink(String(localized: "settings.vehicleScan", table: "Localizable")) {
+                        VehicleScanView()
+                    }
                     NavigationLink(String(localized: "settings.capabilities", table: "Localizable")) {
                         CapabilityScanView()
                     }

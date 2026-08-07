@@ -125,6 +125,7 @@
 		A341051F05625A5E6770E3C9 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2342A83CC689A4DAFA45DB40 /* AppEnvironment.swift */; };
 		A4605E90EDE934F770B230AB /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1053C8848D3CFA1432AC5D /* CarPlaySceneDelegate.swift */; };
 		A56E165BB1C271C73F73941B /* OBDTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493BFFED979DC3C13B9248D9 /* OBDTransport.swift */; };
+		A5A085552E197F17E0FC7348 /* VehicleScanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19D3D4501CAB976CFE3E620 /* VehicleScanUITests.swift */; };
 		A6E714EEEC8B7822C2D7EE48 /* FuelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40B5F30CDF3A4BD265A27646 /* FuelViewModel.swift */; };
 		A82F358B214BB79311819E93 /* FuelLevelWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412051948F4C67A1B300C909 /* FuelLevelWidget.swift */; };
 		A914AC65DAF171BEC6293C3D /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CEFE1A184138C5FF6172A2 /* RootTabView.swift */; };
@@ -171,6 +172,7 @@
 		D6113DED7238A633D8FBE5C2 /* GaugeIconRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF4758C8475ACEC61F584AF /* GaugeIconRenderer.swift */; };
 		D7B2133235E38B6ABFF1BE3B /* DTCDecodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE72CD6AD80F9EEE6267A5F /* DTCDecodingTests.swift */; };
 		D8ED7DAEFB282167A7E2CF88 /* PhoneSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D574CC286B59C4DE8E90F076 /* PhoneSceneDelegate.swift */; };
+		D94F0938E87A16422743C499 /* VehicleScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 268DE1B034487FB3316D47AB /* VehicleScanView.swift */; };
 		DABEA0D7F5776B0939668E83 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8CFD3004957F799F90FBC2 /* SettingsView.swift */; };
 		E330C9871305CA0860366975 /* ChallengeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3091466CFB1FDBD7F730464 /* ChallengeEngine.swift */; };
 		E43347DAD1B6C1C64431E394 /* TripActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20525C1F81EAC2DB328174E9 /* TripActivityAttributes.swift */; };
@@ -236,6 +238,7 @@
 		23A859179D6B7EB2452491C1 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		253D564BF242B2E1B6101C4A /* OverheatWatchdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverheatWatchdog.swift; sourceTree = "<group>"; };
 		258C963DB1001040DAE2E249 /* MetricTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricTile.swift; sourceTree = "<group>"; };
+		268DE1B034487FB3316D47AB /* VehicleScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleScanView.swift; sourceTree = "<group>"; };
 		28D0E2AC60E895E10BD0DF7B /* Tokens+Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tokens+Spacing.swift"; sourceTree = "<group>"; };
 		293182C6664955983F19E690 /* CapabilityScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityScanView.swift; sourceTree = "<group>"; };
 		295502A4FBDE553C97F4D43C /* LiveActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityController.swift; sourceTree = "<group>"; };
@@ -376,6 +379,7 @@
 		DCC69AB64354F3A84B29C21A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		DD1BB41DB3D8D22E49A51DAE /* DiagnosticSafety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticSafety.swift; sourceTree = "<group>"; };
 		DFB98617F81AEFBD6E329B6C /* FuelCalibratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelCalibratorTests.swift; sourceTree = "<group>"; };
+		E19D3D4501CAB976CFE3E620 /* VehicleScanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleScanUITests.swift; sourceTree = "<group>"; };
 		E2552D17F9E0492AEFD381F2 /* BMWCenterWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = BMWCenterWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2DF5CE3421592F7AF5D9D3F /* FuelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelRepository.swift; sourceTree = "<group>"; };
 		E5EB6E1C99EF2A2871AA7694 /* CueSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CueSchedulerTests.swift; sourceTree = "<group>"; };
@@ -831,6 +835,7 @@
 				A2B0FFE37199BAF7A3839841 /* DTCCatalogView.swift */,
 				4FED6E501B26ACC6A3DEB7F6 /* DTCListView.swift */,
 				C40D67B40B8C56AE69A72E88 /* FreezeFrameView.swift */,
+				268DE1B034487FB3316D47AB /* VehicleScanView.swift */,
 			);
 			path = Diagnostics;
 			sourceTree = "<group>";
@@ -877,6 +882,7 @@
 			children = (
 				9A99ED99AF55258E218959B3 /* CapabilityScanUITests.swift */,
 				49CC81F7501D8A8DAD50AD2B /* SmokeTests.swift */,
+				E19D3D4501CAB976CFE3E620 /* VehicleScanUITests.swift */,
 			);
 			path = BMWCenterUITests;
 			sourceTree = "<group>";
@@ -1096,6 +1102,7 @@
 			files = (
 				0B67CC8A1FCB8965CEEF59FA /* CapabilityScanUITests.swift in Sources */,
 				7E1AE139E31851C5E75721D9 /* SmokeTests.swift in Sources */,
+				A5A085552E197F17E0FC7348 /* VehicleScanUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,6 +1252,7 @@
 				BEE2CDE7FD414ED12141E68C /* VLinkerPIDCatalog.swift in Sources */,
 				F90C8AAC5CA5EDE837E8CBBC /* VehicleProfileView.swift in Sources */,
 				02F191B57A614DAD86975CA8 /* VehicleScan.swift in Sources */,
+				D94F0938E87A16422743C499 /* VehicleScanView.swift in Sources */,
 				0912B8DD714EA0DE2FA424A9 /* VehicleSnapshot.swift in Sources */,
 				CE7CCE28EC89F737E5B76E3E /* WidgetDataStore.swift in Sources */,
 			);
