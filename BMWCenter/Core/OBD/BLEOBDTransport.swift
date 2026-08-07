@@ -59,6 +59,9 @@ final class BLEOBDTransport: NSObject, OBDTransport, @unchecked Sendable {
     private var pendingResponse: CheckedContinuation<String, Error>?
     private var responseTimeoutTask: Task<Void, Never>?
     private let commandQueue = OBDCommandQueue()
+    /// Read-only connection-quality telemetry (PRD §118/§156) — never influences behavior.
+    let metricsRecorder = TransportMetricsRecorder()
+    private var pendingSendStart: Date?
     private var lastPeripheralID: UUID?
     private var lastCommand = ""
     /// Invalidates in-flight timeout tasks so a late wake cannot kill the next command.
@@ -290,6 +293,11 @@ final class BLEOBDTransport: NSObject, OBDTransport, @unchecked Sendable {
         ignoreDisconnectCallback = false
     }
 
+    /// Snapshot of accumulated command latency/timeout stats for this session.
+    var metricsSnapshot: TransportMetrics {
+        get async { await metricsRecorder.metrics }
+    }
+
     func send(_ command: String, timeout: TimeInterval) async throws -> String {
         try await commandQueue.withLock {
             try await self.sendUnlocked(command, timeout: timeout)
@@ -319,6 +327,8 @@ final class BLEOBDTransport: NSObject, OBDTransport, @unchecked Sendable {
         let lineEnding = useCRLF ? "\r\n" : "\r"
         let payload = (trimmed + lineEnding).data(using: .ascii) ?? Data()
 
+        let sendStart = Date()
+        pendingSendStart = sendStart
         return try await withCheckedThrowingContinuation { (cont: CheckedContinuation<String, Error>) in
             self.pendingResponse = cont
             self.responseTimeoutTask = Task { [weak self] in
@@ -328,6 +338,8 @@ final class BLEOBDTransport: NSObject, OBDTransport, @unchecked Sendable {
                 if let pending = self.pendingResponse {
                     self.pendingResponse = nil
                     NSLog("%@", "VLINKER TIMEOUT \(trimmed)")
+                    let recorder = self.metricsRecorder
+                    Task { await recorder.recordTimeout() }
                     pending.resume(throwing: OBDError.timeout)
                 }
             }
@@ -590,6 +602,12 @@ extension BLEOBDTransport: CBPeripheralDelegate {
         }
         if let pending = pendingResponse {
             pendingResponse = nil
+            if let start = pendingSendStart {
+                pendingSendStart = nil
+                let latencyMs = Date().timeIntervalSince(start) * 1000
+                let recorder = metricsRecorder
+                Task { await recorder.recordSuccess(latencyMs: latencyMs) }
+            }
             pending.resume(returning: response)
         }
     }
