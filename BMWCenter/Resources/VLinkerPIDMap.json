@@ -1,0 +1,98 @@
+{
+  "adapter": "Vgate vLinker MC / MC+ (iOS BLE)",
+  "notes": [
+    "VLinker is ELM327/STN compatible — all standard OBD-II Mode 01/03/07/09/0A commands work.",
+    "BMW F30/N13 MEVD1725 oil temp uses Mode 22 DID D3B0 on DME header 7E0 (A-40).",
+    "Platform setting BMW F30 N13 enables Mode 22 discovery at connect."
+  ],
+  "standardMode01": [
+    {"pid": "0C", "metric": "rpm", "tier": "fast"},
+    {"pid": "0D", "metric": "speed", "tier": "fast"},
+    {"pid": "05", "metric": "coolant", "tier": "medium"},
+    {"pid": "04", "metric": "engineLoad", "tier": "medium"},
+    {"pid": "11", "metric": "throttle", "tier": "medium"},
+    {"pid": "0B", "metric": "map", "tier": "medium"},
+    {"pid": "10", "metric": "maf", "tier": "medium"},
+    {"pid": "5E", "metric": "fuelRate", "tier": "medium"},
+    {"pid": "5C", "metric": "oilTemp.standard", "tier": "medium"},
+    {"pid": "2F", "metric": "fuelLevel", "tier": "slow"},
+    {"pid": "42", "metric": "voltage", "tier": "slow"},
+    {"pid": "0F", "metric": "intakeAir", "tier": "slow"},
+    {"pid": "33", "metric": "baro", "tier": "rare"},
+    {"pid": "46", "metric": "ambient", "tier": "rare"},
+    {"pid": "06", "metric": "stft1", "tier": "rare"},
+    {"pid": "07", "metric": "ltft1", "tier": "rare"},
+    {"pid": "3C", "metric": "catalyst", "tier": "rare"},
+    {"pid": "31", "metric": "distClear", "tier": "rare"},
+    {"pid": "49", "metric": "pedal", "tier": "rare"},
+    {"pid": "0E", "metric": "timing", "tier": "rare"}
+  ],
+  "bmwF30N13Mode22": [
+    {
+      "id": "bmw.oilTemp.D3B0",
+      "command": "22D3B0",
+      "header": "7E0",
+      "metric": "oilTempC",
+      "formula": "A-40",
+      "wiredTo": ["VehicleSnapshot.oilTempC", "Dashboard oil tile", "Care oilTempC"]
+    },
+    {
+      "id": "bmw.oilTemp.4402",
+      "command": "224402",
+      "header": "7E0",
+      "metric": "oilTempC",
+      "formula": "(A*256+B)*191.25/255-48",
+      "note": "legacy Torque F20/N13 fallback"
+    },
+    {
+      "id": "bmw.boost.2C10",
+      "command": "222C10",
+      "header": "7E0",
+      "metric": "boostActualKpa",
+      "formula": "((A*256)+B)/10 kPa from mbar"
+    },
+    {
+      "id": "bmw.boost.2C11",
+      "command": "222C11",
+      "header": "7E0",
+      "metric": "boostSetpointKpa",
+      "formula": "((A*256)+B)/10 kPa from mbar"
+    },
+    {
+      "id": "bmw.fuelRail.2B0D",
+      "command": "222B0D",
+      "header": "7E0",
+      "metric": "fuelRailBar",
+      "formula": "((A*256)+B)*0.1"
+    },
+    {
+      "id": "bmw.oilPressure.586F",
+      "command": "22586F",
+      "header": "7E0",
+      "metric": "oilPressureBar",
+      "formula": "A*117.556 hPa abs → gauge bar vs baro"
+    },
+    {
+      "id": "bmw.coolant.F405",
+      "command": "22F405",
+      "header": "7E0",
+      "metric": "coolantC",
+      "formula": "A-40"
+    },
+    {
+      "id": "bmw.transOil.1E01",
+      "command": "221E01",
+      "header": "7E1",
+      "metric": "transmissionOilTempC",
+      "formula": "A-40",
+      "note": "EGS module — ATSH7E1 required before request"
+    }
+  ],
+  "diagnostics": [
+    {"command": "03", "use": "stored DTCs"},
+    {"command": "07", "use": "pending DTCs"},
+    {"command": "0A", "use": "permanent DTCs"},
+    {"command": "04", "use": "clear DTCs"},
+    {"command": "0902", "use": "VIN"}
+  ]
+}
