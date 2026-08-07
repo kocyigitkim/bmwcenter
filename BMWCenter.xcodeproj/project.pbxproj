@@ -40,6 +40,7 @@
 		348FB385E5862B22C7376639 /* TextBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543EE12F5E013418608D4330 /* TextBar.swift */; };
 		35B058714B654A37DD323527 /* MotionTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDF1AD04B729ECD286363D /* MotionTokens.swift */; };
 		36932F4DF8A8704E243256DD /* EventDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DDD4CEA4037FBD55E7D136 /* EventDetectorTests.swift */; };
+		3771392C3CB59D325C8A4276 /* CapabilityResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4A5AA52A1E86F122A41AB9 /* CapabilityResolverTests.swift */; };
 		37B884337057F02D53EC77D8 /* FuelRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DF5CE3421592F7AF5D9D3F /* FuelRepository.swift */; };
 		37C5144048AE6F5D9F585D08 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC69AB64354F3A84B29C21A /* Models.swift */; };
 		38319E320D8C5DA44CED8D2D /* ExtendedPIDSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5205440CD34A87DDD8A9753C /* ExtendedPIDSession.swift */; };
@@ -173,6 +174,7 @@
 		E468134A551D79E9255BA7BC /* DTCMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66B7F004B626CC719A2C747 /* DTCMonitor.swift */; };
 		E5EEB97DE740DF456787F89E /* DTCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6F899EFC2EC139D47B7ABD /* DTCService.swift */; };
 		EB73DF183D8AAFFFE9218F7F /* GaugeRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEDBB3453972495AAFEDA94 /* GaugeRing.swift */; };
+		EB91C6A011256F77D1248524 /* CapabilityResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5F96A5ABB20B2DDB27C176 /* CapabilityResolver.swift */; };
 		EFA200E8C9147A3D5AD9CADE /* ReadinessMonitorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2C7EC0E7704A4752DC5B1 /* ReadinessMonitorsTests.swift */; };
 		F005206049C2424545E6064F /* BatteryHealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */; };
 		F1E20BEF5160F873CA6BAA3E /* Throttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E754555F24DAF902A1CC4F3F /* Throttle.swift */; };
@@ -241,6 +243,7 @@
 		374B821224132D373578613A /* RouteSimplifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteSimplifier.swift; sourceTree = "<group>"; };
 		38955E80CC3143077D83A045 /* OBDFrameParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBDFrameParser.swift; sourceTree = "<group>"; };
 		39C6ED530A1960B1A8469644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3B5F96A5ABB20B2DDB27C176 /* CapabilityResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityResolver.swift; sourceTree = "<group>"; };
 		3B6F899EFC2EC139D47B7ABD /* DTCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCService.swift; sourceTree = "<group>"; };
 		3BF5EBA0EBBBD6B32F3C6007 /* EngineReadyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineReadyService.swift; sourceTree = "<group>"; };
 		3CE130F26DBB98CCBE744147 /* FuelCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelCalculator.swift; sourceTree = "<group>"; };
@@ -344,6 +347,7 @@
 		C66B7F004B626CC719A2C747 /* DTCMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTCMonitor.swift; sourceTree = "<group>"; };
 		C709E91703E22498D29D91FB /* WidgetDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataStore.swift; sourceTree = "<group>"; };
 		CA6F36020FC2C8230539CCCA /* AlertEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertEngine.swift; sourceTree = "<group>"; };
+		CB4A5AA52A1E86F122A41AB9 /* CapabilityResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityResolverTests.swift; sourceTree = "<group>"; };
 		CDC91FD15E0982D13DBCBF16 /* VehicleProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleProfileView.swift; sourceTree = "<group>"; };
 		CEDA0C1BA9F75B298CBDACDE /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		CF730873E4CFFF29D6697DAD /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 			children = (
 				C4024BD8E7C755C88D13875A /* AdapterCapabilities.swift */,
 				D488465D9EB8BFB5F437837C /* BLEOBDTransport.swift */,
+				3B5F96A5ABB20B2DDB27C176 /* CapabilityResolver.swift */,
 				DD1BB41DB3D8D22E49A51DAE /* DiagnosticSafety.swift */,
 				C66B7F004B626CC719A2C747 /* DTCMonitor.swift */,
 				3B6F899EFC2EC139D47B7ABD /* DTCService.swift */,
@@ -583,6 +588,7 @@
 				A37A79F86BB75E84E18E6A8E /* AdapterCapabilitiesTests.swift */,
 				DCB91604D0CF846D09B06712 /* BaselineLearnerTests.swift */,
 				B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */,
+				CB4A5AA52A1E86F122A41AB9 /* CapabilityResolverTests.swift */,
 				63EAB15AFC5DA4FE0939BEE8 /* CareFeatureTests.swift */,
 				E5EB6E1C99EF2A2871AA7694 /* CueSchedulerTests.swift */,
 				93388BA2BAC39B3E3C56BD79 /* DiagnosticSafetyTests.swift */,
@@ -1034,6 +1040,7 @@
 				C8DD7E328EAE460695FD5C9D /* AdapterCapabilitiesTests.swift in Sources */,
 				D0B8AE1A109C2D4B65E3CE9D /* BaselineLearnerTests.swift in Sources */,
 				F005206049C2424545E6064F /* BatteryHealthTests.swift in Sources */,
+				3771392C3CB59D325C8A4276 /* CapabilityResolverTests.swift in Sources */,
 				9B25446A780FC984B0F55DAC /* CareFeatureTests.swift in Sources */,
 				21388602F1615F768EBDE514 /* CueSchedulerTests.swift in Sources */,
 				D7B2133235E38B6ABFF1BE3B /* DTCDecodingTests.swift in Sources */,
@@ -1109,6 +1116,7 @@
 				27D921201F8005CB5B4E62DC /* CSVExporter.swift in Sources */,
 				BF8B18319179BE455EA4F49D /* CalibrationCard.swift in Sources */,
 				D471AFE0494BD780BDAF1E08 /* CalibrationView.swift in Sources */,
+				EB91C6A011256F77D1248524 /* CapabilityResolver.swift in Sources */,
 				95888839010C680C9E949E52 /* CarPlayCoordinator.swift in Sources */,
 				A4605E90EDE934F770B230AB /* CarPlaySceneDelegate.swift in Sources */,
 				72E96539A37CE2419DDD3CB2 /* CareCoordinator.swift in Sources */,
