@@ -243,7 +243,7 @@ struct SettingsView: View {
                 Button(String(localized: "action.cancel", table: "Localizable"), role: .cancel) {}
                 Button(String(localized: "action.delete", table: "Localizable"), role: .destructive) {
                     Task {
-                        try? await obd.clearDTCs()
+                        try? await obd.clearDTCs(confirmed: true)
                         dtcs = []
                         dtcMessage = String(localized: "dtc.none", table: "Localizable")
                     }

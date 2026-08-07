@@ -30,6 +30,7 @@
 		27D921201F8005CB5B4E62DC /* CSVExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D2F04ECF38E0D62A10F497 /* CSVExporter.swift */; };
 		2ABBF4FF65CAD1B7B60813FF /* GPXExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E1231715BDCAD4EF2465ED /* GPXExporter.swift */; };
 		2B0C05B70C2984633EF61963 /* MonthlyReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743CE58CCD4A7A6746D533E8 /* MonthlyReportView.swift */; };
+		2B9CD8D952B2AB22952196C2 /* DiagnosticSafety.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1BB41DB3D8D22E49A51DAE /* DiagnosticSafety.swift */; };
 		31BFD5B64FFFA7B238CD8D4F /* AdapterCapabilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4024BD8E7C755C88D13875A /* AdapterCapabilities.swift */; };
 		31DC139DB472DACDC6F13C29 /* ScoreRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC9A730F2F03F3342572FAEF /* ScoreRing.swift */; };
 		32874EF94CAE512DA866B867 /* DTCCatalog.SOURCE.md in Resources */ = {isa = PBXBuildFile; fileRef = BD1AAF290878E629AF13D211 /* DTCCatalog.SOURCE.md */; };
@@ -66,6 +67,7 @@
 		54682D48E51B16955499523D /* OBDFrameParserEchoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */; };
 		547CEB736D90FBB629FAAFAF /* TransportMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE97D016ACCBBF0A105E10E /* TransportMetrics.swift */; };
 		560081545143631A8D856B9D /* FreezeFrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40D67B40B8C56AE69A72E88 /* FreezeFrameView.swift */; };
+		5749BB1D3F1F549154CFB35D /* DiagnosticSafetyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93388BA2BAC39B3E3C56BD79 /* DiagnosticSafetyTests.swift */; };
 		593912970CFBBD50E013AEE1 /* BadgeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41072D05622B02D40C749FDA /* BadgeService.swift */; };
 		5CE38565DE7480EC56C4F7ED /* DTCCatalog.json in Resources */ = {isa = PBXBuildFile; fileRef = AA13ED86F423F5A062DAC065 /* DTCCatalog.json */; };
 		5F08EFA81805FED596822F5A /* OBDService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E322FBD010AA6601E1544 /* OBDService.swift */; };
@@ -297,6 +299,7 @@
 		8EEDBB3453972495AAFEDA94 /* GaugeRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugeRing.swift; sourceTree = "<group>"; };
 		9075FF491E6443E044FE8477 /* DataFreshnessDot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFreshnessDot.swift; sourceTree = "<group>"; };
 		92E75D1E1B3763577A58B9E9 /* SpeedCalibratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedCalibratorTests.swift; sourceTree = "<group>"; };
+		93388BA2BAC39B3E3C56BD79 /* DiagnosticSafetyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticSafetyTests.swift; sourceTree = "<group>"; };
 		980393B5EDDEBA331EF7FC1D /* ReplayTransportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayTransportTests.swift; sourceTree = "<group>"; };
 		99B74C283966B7E2D35CABB4 /* IdleAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdleAnalyzer.swift; sourceTree = "<group>"; };
 		9F05766AB4FAEAB6AEB19319 /* ReplayTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayTransport.swift; sourceTree = "<group>"; };
@@ -354,6 +357,7 @@
 		DC9A730F2F03F3342572FAEF /* ScoreRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreRing.swift; sourceTree = "<group>"; };
 		DCB91604D0CF846D09B06712 /* BaselineLearnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaselineLearnerTests.swift; sourceTree = "<group>"; };
 		DCC69AB64354F3A84B29C21A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		DD1BB41DB3D8D22E49A51DAE /* DiagnosticSafety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticSafety.swift; sourceTree = "<group>"; };
 		DFB98617F81AEFBD6E329B6C /* FuelCalibratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelCalibratorTests.swift; sourceTree = "<group>"; };
 		E2552D17F9E0492AEFD381F2 /* BMWCenterWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = BMWCenterWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2DF5CE3421592F7AF5D9D3F /* FuelRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelRepository.swift; sourceTree = "<group>"; };
@@ -524,6 +528,7 @@
 			children = (
 				C4024BD8E7C755C88D13875A /* AdapterCapabilities.swift */,
 				D488465D9EB8BFB5F437837C /* BLEOBDTransport.swift */,
+				DD1BB41DB3D8D22E49A51DAE /* DiagnosticSafety.swift */,
 				C66B7F004B626CC719A2C747 /* DTCMonitor.swift */,
 				3B6F899EFC2EC139D47B7ABD /* DTCService.swift */,
 				44717DA9EA0C7B0BDCDA2F7D /* ELM327Commands.swift */,
@@ -573,6 +578,7 @@
 				B815ED4B2072D49068FEE6A5 /* BatteryHealthTests.swift */,
 				63EAB15AFC5DA4FE0939BEE8 /* CareFeatureTests.swift */,
 				E5EB6E1C99EF2A2871AA7694 /* CueSchedulerTests.swift */,
+				93388BA2BAC39B3E3C56BD79 /* DiagnosticSafetyTests.swift */,
 				0A201D49B4006005FF5DC40E /* DrivingScorerTests.swift */,
 				6EE72CD6AD80F9EEE6267A5F /* DTCDecodingTests.swift */,
 				77DDD4CEA4037FBD55E7D136 /* EventDetectorTests.swift */,
@@ -1022,6 +1028,7 @@
 				9B25446A780FC984B0F55DAC /* CareFeatureTests.swift in Sources */,
 				21388602F1615F768EBDE514 /* CueSchedulerTests.swift in Sources */,
 				D7B2133235E38B6ABFF1BE3B /* DTCDecodingTests.swift in Sources */,
+				5749BB1D3F1F549154CFB35D /* DiagnosticSafetyTests.swift in Sources */,
 				85B852B2BF2051992B8D040D /* DrivingScorerTests.swift in Sources */,
 				36932F4DF8A8704E243256DD /* EventDetectorTests.swift in Sources */,
 				8D6B5CC3CBF180174A8C86D6 /* ExportTests.swift in Sources */,
@@ -1109,6 +1116,7 @@
 				AAACF9493637F36CD05477F4 /* DashboardViewModel.swift in Sources */,
 				727007839A7C2E383555318C /* DataFreshness.swift in Sources */,
 				B9915B2F2DEF02EFFE3C98BA /* DataFreshnessDot.swift in Sources */,
+				2B9CD8D952B2AB22952196C2 /* DiagnosticSafety.swift in Sources */,
 				48691326D392989648ADC17B /* DrivingScorer.swift in Sources */,
 				3D9CF858CD5F1418085FA226 /* ELM327Commands.swift in Sources */,
 				0BDBCC367716C44A29D3C901 /* EMA.swift in Sources */,

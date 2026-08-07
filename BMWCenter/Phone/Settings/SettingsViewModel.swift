@@ -44,8 +44,10 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
+    /// Caller must have already shown the user a confirmation dialog — this
+    /// method itself performs the destructive Mode 04 clear (PRD §35/§186).
     func clearDTCs() async {
-        try? await obd.clearDTCs()
+        try? await obd.clearDTCs(confirmed: true)
         dtcs = []
         dtcMessage = String(localized: "dtc.none", table: "Localizable")
     }

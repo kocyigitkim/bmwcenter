@@ -90,7 +90,12 @@ final class DTCService {
         return Array(map.values).sorted { $0.code < $1.code }
     }
 
-    func clearDTCs() async throws {
+    /// Mode 04, `.serviceWrite` (PRD §186/§35): erases stored/pending DTCs and
+    /// resets emissions readiness monitors. Requires the caller to pass
+    /// `confirmed: true` — normally right after the user accepts a UI
+    /// confirmation dialog explaining that consequence.
+    func clearDTCs(confirmed: Bool) async throws {
+        guard confirmed else { throw DiagnosticConfirmationRequired(operation: "clearDTCs") }
         guard let transport = transportProvider() else { throw OBDError.disconnected }
         _ = try await transport.send(ELM327Commands.clearDTCs, timeout: 3)
     }

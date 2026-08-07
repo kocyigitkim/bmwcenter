@@ -195,8 +195,9 @@ final class OBDService: ObservableObject {
         try await dtc.readDTCs()
     }
 
-    func clearDTCs() async throws {
-        try await dtc.clearDTCs()
+    /// See `DTCService.clearDTCs(confirmed:)` — `.serviceWrite`, requires explicit confirmation.
+    func clearDTCs(confirmed: Bool) async throws {
+        try await dtc.clearDTCs(confirmed: confirmed)
     }
 
     func readFreezeFrame() async throws -> VehicleSnapshot {

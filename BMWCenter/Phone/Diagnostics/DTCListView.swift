@@ -87,7 +87,7 @@ struct DTCListView: View {
         ) {
             Button(String(localized: "common.confirm", table: "Localizable"), role: .destructive) {
                 Task {
-                    try? await env.obd.clearDTCs()
+                    try? await env.obd.clearDTCs(confirmed: true)
                     await reload()
                 }
             }
