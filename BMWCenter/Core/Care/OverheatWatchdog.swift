@@ -16,6 +16,14 @@ final class OverheatWatchdog: CareFeature {
     /// Reject a single sample if it implies a physically implausible jump.
     private static let maxPlausibleDeltaC: Double = 15
     private static let maxPlausibleDeltaWindowS: TimeInterval = 5
+    /// Below this, the engine is still warming up — the thermostat is normally
+    /// still closed (coolant only circulating through the short/block loop, not
+    /// the radiator), so a fast temperature rise here is expected and NOT a
+    /// cooling-system fault. Rate-of-rise checks (rapid-rise alarm, fan-suspect)
+    /// only make sense once the engine is already near its normal operating
+    /// temperature — matches the >85°C reference this file already uses for
+    /// baseline-cruise learning below.
+    private static let warmedUpFloorC: Double = 85
 
     private let baseline: BaselineLearner
     private let modelContext: ModelContext
@@ -108,18 +116,23 @@ final class OverheatWatchdog: CareFeature {
 
         var cues: [CareCue] = []
 
-        // Rapid rise
+        let isWarmedUp = coolant >= Self.warmedUpFloorC
+
+        // Rapid rise — only meaningful once already warmed up; during normal
+        // cold-start warm-up (thermostat closed) a fast climb is expected.
         let last30 = coolantHistory.filter { now.timeIntervalSince($0.0) <= 30 }
-        if !inStartupGrace, let first = last30.first?.1, coolant - first >= 8 {
+        if !inStartupGrace, isWarmedUp, let first = last30.first?.1, coolant - first >= 8 {
             cues.append(alarmCue())
             log(type: "overheat", severity: "alarm", value: coolant, threshold: thresholds.alarm)
             lastLevel = "alarm"
             return cues
         }
 
-        // Fan suspect
+        // Fan suspect — same reasoning: a warm-up climb while idling in the
+        // driveway isn't a fan problem, so only suspect the fan once the
+        // engine has already reached operating temperature.
         let last90 = coolantHistory.filter { now.timeIntervalSince($0.0) <= 90 }
-        if speed < 5, let first = last90.first?.1, coolant - first >= 6, !fanAnnounced {
+        if speed < 5, isWarmedUp, let first = last90.first?.1, coolant - first >= 6, !fanAnnounced {
             fanAnnounced = true
             cues.append(CareCue(
                 id: "overheat.fan",
