@@ -16,6 +16,10 @@ final class CareCoordinator: ObservableObject {
     @Published private(set) var thermalCountdownS: Double?
     @Published private(set) var tripCardImage: UIImage?
     @Published private(set) var showTripCard = false
+    /// Set when a cue should interrupt the current screen with a full-screen
+    /// alert (critical severity, or a coolant/overheat protective cue — both
+    /// are safety-relevant enough that a chip alone isn't sufficient).
+    @Published var fullScreenCue: CareCue?
 
     let baseline: BaselineLearner
     let scheduler: CueScheduler
@@ -68,6 +72,11 @@ final class CareCoordinator: ObservableObject {
 
         scheduler.onPresented = { [weak self] cue, plan in
             guard let self else { return }
+            let isForcedOverheatCue = cue.id.hasPrefix("overheat.")
+                && (cue.severity == .protective || cue.severity == .critical)
+            if plan.fullScreen || isForcedOverheatCue {
+                self.fullScreenCue = cue
+            }
             if plan.phoneChip {
                 let alert = ActiveAlert(
                     id: cue.id,

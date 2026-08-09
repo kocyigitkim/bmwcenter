@@ -17,8 +17,14 @@ final class AudioAnnouncer {
         speak(text, toneCount: severity == .critical ? 2 : 1)
     }
 
-    func announceCare(_ text: String, severity: CueSeverity, toneCount: Int) {
-        guard settings.spokenAlerts || settings.careSpokenCues || severity == .critical else { return }
+    func announceCare(_ text: String, severity: CueSeverity, toneCount: Int, cueID: String = "") {
+        // Coolant/overheat warnings are safety-critical — speak them even if
+        // the user has muted spoken alerts/coaching, same as .critical always does.
+        let isForcedOverheatCue = cueID.hasPrefix("overheat.")
+            && (severity == .protective || severity == .critical)
+        guard isForcedOverheatCue
+            || settings.spokenAlerts || settings.careSpokenCues || severity == .critical
+        else { return }
         if severity == .coach || severity == .celebration {
             guard settings.careSpokenCues || severity == .celebration else { return }
         }

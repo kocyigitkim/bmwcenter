@@ -2,6 +2,7 @@ import SwiftUI
 
 struct RootTabView: View {
     @EnvironmentObject private var tripRecorder: TripRecorder
+    @EnvironmentObject private var env: AppEnvironment
     @Environment(AppSettings.self) private var settings
     @State private var selection: AppTab = .dashboard
 
@@ -51,6 +52,14 @@ struct RootTabView: View {
         .environment(\.locale, Locale(identifier: settings.languageCode))
         .id(settings.languageCode)
         .modifier(TabMinimizeIfAvailable())
+        .fullScreenCover(item: Binding(
+            get: { env.care.fullScreenCue },
+            set: { env.care.fullScreenCue = $0 }
+        )) { cue in
+            CareFullScreenAlertView(cue: cue) {
+                env.care.fullScreenCue = nil
+            }
+        }
         .overlay(alignment: .bottom) {
             if tripRecorder.state.isActive {
                 // Live dot near Trips tab — visual cue without badge count

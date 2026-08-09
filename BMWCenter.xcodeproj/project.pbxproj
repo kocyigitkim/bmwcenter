@@ -103,6 +103,7 @@
 		8432DD31FBF3DB18900B9D5D /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD2BDE43B2CA00956D14AA7 /* TripRepository.swift */; };
 		85B852B2BF2051992B8D040D /* DrivingScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A201D49B4006005FF5DC40E /* DrivingScorerTests.swift */; };
 		85ED3F2B95E027C977F3684D /* BatteryHealthAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE2F85DB17CC21711CF4612 /* BatteryHealthAnalyzer.swift */; };
+		867DADA82FE9658E6AC4A9EF /* CareFullScreenAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70E971348D6E9E49F1B9744 /* CareFullScreenAlertView.swift */; };
 		8C033C929FD98CA97A11D638 /* MockReadinessIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6784ABCC361B626DAD8C098 /* MockReadinessIntegrationTests.swift */; };
 		8C15DEFB160FFB6F46134569 /* TripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A355991DF5B3F09FDB2E3EAE /* TripsViewModel.swift */; };
 		8CA0FD6BF12C8DC5C007B8C1 /* LiveTemplateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B797168B9EDD83D006E572 /* LiveTemplateBuilder.swift */; };
@@ -373,6 +374,7 @@
 		D488465D9EB8BFB5F437837C /* BLEOBDTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEOBDTransport.swift; sourceTree = "<group>"; };
 		D5569480710419BCF60C910F /* MaintenanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceService.swift; sourceTree = "<group>"; };
 		D574CC286B59C4DE8E90F076 /* PhoneSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSceneDelegate.swift; sourceTree = "<group>"; };
+		D70E971348D6E9E49F1B9744 /* CareFullScreenAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareFullScreenAlertView.swift; sourceTree = "<group>"; };
 		D9298070950068958A9783CA /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		D94DA5B90F765CCDFE2B45AA /* PDFReportBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportBuilder.swift; sourceTree = "<group>"; };
 		DA0C7F7E55A6E319E1F52058 /* AppTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTab.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				62500B8F3829BE7F9CC5DA26 /* AlertChipRow.swift */,
+				D70E971348D6E9E49F1B9744 /* CareFullScreenAlertView.swift */,
 				6E5192885AD4BD6C60949A22 /* ConnectionPill.swift */,
 				53B4DA3DF49ADA8479A657D7 /* DataFreshness.swift */,
 				9075FF491E6443E044FE8477 /* DataFreshnessDot.swift */,
@@ -1151,6 +1154,7 @@
 				A4605E90EDE934F770B230AB /* CarPlaySceneDelegate.swift in Sources */,
 				72E96539A37CE2419DDD3CB2 /* CareCoordinator.swift in Sources */,
 				FFEDCFA6DB6E53BF1FC1EC19 /* CareFeature.swift in Sources */,
+				867DADA82FE9658E6AC4A9EF /* CareFullScreenAlertView.swift in Sources */,
 				223DDC48E9E80D6307B8E362 /* CareTypes.swift in Sources */,
 				E330C9871305CA0860366975 /* ChallengeEngine.swift in Sources */,
 				388B6B8EC1C73EABDCB955BC /* CloudSyncController.swift in Sources */,

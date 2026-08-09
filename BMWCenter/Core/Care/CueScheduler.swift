@@ -141,7 +141,7 @@ final class CueScheduler {
         let plan = SeverityRouter.plan(for: cue.severity, appInBackground: appInBackground)
         onPresented?(cue, plan)
         if plan.speak {
-            announcer.announceCare(cue.text, severity: cue.severity, toneCount: plan.toneCount)
+            announcer.announceCare(cue.text, severity: cue.severity, toneCount: plan.toneCount, cueID: cue.id)
         }
         speakTask?.cancel()
         speakTask = Task { [weak self] in

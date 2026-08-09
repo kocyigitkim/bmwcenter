@@ -14,6 +14,16 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 
+    /// Keep the screen awake while the app is active — drivers glance at
+    /// live gauges/alerts and shouldn't have the display lock mid-drive.
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        application.isIdleTimerDisabled = true
+    }
+
+    func applicationWillResignActive(_ application: UIApplication) {
+        application.isIdleTimerDisabled = false
+    }
+
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
