@@ -21,6 +21,7 @@
 		0FF4D7BC62F0F5DB4E9C3D78 /* UnitSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFB2C6D99BD31B227AA662B /* UnitSystem.swift */; };
 		146FDF0975911A0BD51CC95A /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAA9F7553785369B07D6479 /* DashboardView.swift */; };
 		18D69CD4CDEE2E37DE7848C3 /* StatRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BF464786139C207D379A14 /* StatRow.swift */; };
+		19BAEFDFFBEA465DE88B180C /* OverheatWatchdogWarmupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7BBB2B0472E1DAAA71B428 /* OverheatWatchdogWarmupTests.swift */; };
 		1A4EB0B5BC6196A3F88D722D /* StopTripIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317EEADE5D11B6A5512DF15A /* StopTripIntent.swift */; };
 		1AEB7D9534EC7E556ED204E3 /* ThermostatWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CFB8F4CC35F430F3D448C7 /* ThermostatWatch.swift */; };
 		1D6FF0A6AC30483229AA318B /* MaintenanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5569480710419BCF60C910F /* MaintenanceService.swift */; };
@@ -143,6 +144,7 @@
 		B6A34181B75057B9347C8FB9 /* VINDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0D4AD4A31A9C6FAC22DE82 /* VINDecoderTests.swift */; };
 		B72C60BCD8D39CE7055C94B7 /* AudioAnnouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5F26C4A6C83E54AD64AC10 /* AudioAnnouncer.swift */; };
 		B75F6CC9BA9B275E4A885DA0 /* FuelCalibrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667E05AEB29024052B6AD811 /* FuelCalibrator.swift */; };
+		B8A4D533A2CE00407E02108B /* DashboardScanCardUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2B0176EDA176224B332A0C /* DashboardScanCardUITests.swift */; };
 		B8E0BABEC83211CE1B96BB13 /* Tokens+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DA97FB30C4A988C4A836EC /* Tokens+Color.swift */; };
 		B9915B2F2DEF02EFFE3C98BA /* DataFreshnessDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9075FF491E6443E044FE8477 /* DataFreshnessDot.swift */; };
 		BEE2CDE7FD414ED12141E68C /* VLinkerPIDCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F160793011BBFDC777A050A2 /* VLinkerPIDCatalog.swift */; };
@@ -334,6 +336,8 @@
 		A74E92B3BCCDC6CEEB27EDF2 /* VLinkerPIDMap.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VLinkerPIDMap.json; sourceTree = "<group>"; };
 		A9E5CDF19B64B9EA60D69D8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AA13ED86F423F5A062DAC065 /* DTCCatalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DTCCatalog.json; sourceTree = "<group>"; };
+		AA2B0176EDA176224B332A0C /* DashboardScanCardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardScanCardUITests.swift; sourceTree = "<group>"; };
+		AA7BBB2B0472E1DAAA71B428 /* OverheatWatchdogWarmupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverheatWatchdogWarmupTests.swift; sourceTree = "<group>"; };
 		AD08DF84D161C25D33E55E01 /* StreakService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakService.swift; sourceTree = "<group>"; };
 		AD4F3509D0F2BAA155E77FEC /* CareTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTypes.swift; sourceTree = "<group>"; };
 		ADCEC581CCFEE45DD27243C7 /* SectionCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCard.swift; sourceTree = "<group>"; };
@@ -615,6 +619,7 @@
 				79E51009E3A9DABFADBB58C4 /* MockOBDTransportScenarioTests.swift */,
 				B6784ABCC361B626DAD8C098 /* MockReadinessIntegrationTests.swift */,
 				7D84C448A2EAE031CA85ACC6 /* OBDFrameParserEchoTests.swift */,
+				AA7BBB2B0472E1DAAA71B428 /* OverheatWatchdogWarmupTests.swift */,
 				210320C18B0C2CF3D4BAD8B7 /* PIDParsingTests.swift */,
 				55E2C7EC0E7704A4752DC5B1 /* ReadinessMonitorsTests.swift */,
 				980393B5EDDEBA331EF7FC1D /* ReplayTransportTests.swift */,
@@ -881,6 +886,7 @@
 			isa = PBXGroup;
 			children = (
 				9A99ED99AF55258E218959B3 /* CapabilityScanUITests.swift */,
+				AA2B0176EDA176224B332A0C /* DashboardScanCardUITests.swift */,
 				49CC81F7501D8A8DAD50AD2B /* SmokeTests.swift */,
 				E19D3D4501CAB976CFE3E620 /* VehicleScanUITests.swift */,
 			);
@@ -1072,6 +1078,7 @@
 				CE70D4DEE7179070CF342BB7 /* MockOBDTransportScenarioTests.swift in Sources */,
 				8C033C929FD98CA97A11D638 /* MockReadinessIntegrationTests.swift in Sources */,
 				54682D48E51B16955499523D /* OBDFrameParserEchoTests.swift in Sources */,
+				19BAEFDFFBEA465DE88B180C /* OverheatWatchdogWarmupTests.swift in Sources */,
 				CD583FA5FF8DB206EA9D441D /* PIDParsingTests.swift in Sources */,
 				EFA200E8C9147A3D5AD9CADE /* ReadinessMonitorsTests.swift in Sources */,
 				6B3450DBAE15E4123F3524A2 /* ReplayTransportTests.swift in Sources */,
@@ -1101,6 +1108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B67CC8A1FCB8965CEEF59FA /* CapabilityScanUITests.swift in Sources */,
+				B8A4D533A2CE00407E02108B /* DashboardScanCardUITests.swift in Sources */,
 				7E1AE139E31851C5E75721D9 /* SmokeTests.swift in Sources */,
 				A5A085552E197F17E0FC7348 /* VehicleScanUITests.swift in Sources */,
 			);

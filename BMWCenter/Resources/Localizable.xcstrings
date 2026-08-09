@@ -8024,6 +8024,23 @@
           }
         }
       }
+    },
+    "scan.dashboardHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check diagnostic codes and emissions readiness"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arıza kodlarını ve emisyon hazırlığını kontrol et"
+          }
+        }
+      }
     }
   }
 }

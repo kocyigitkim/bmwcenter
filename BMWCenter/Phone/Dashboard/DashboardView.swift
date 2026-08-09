@@ -22,6 +22,8 @@ struct DashboardView: View {
             ScrollView {
                 VStack(spacing: DSSpace.cardGap) {
                     glassCluster
+                    vehicleScanCard
+                        .padding(.horizontal, DSSpace.screenEdge)
                     SectionHeader(title: String(localized: "section.engine", table: "Localizable"))
                     engineGrid
                         .padding(.horizontal, DSSpace.screenEdge)
@@ -616,6 +618,36 @@ struct DashboardView: View {
                 emptyReason: String(localized: "data.noData", table: "Localizable")
             )
         }
+    }
+
+    /// PRD §26 Home Screen primary action: entry point to the Vehicle Scan
+    /// screen (Phase 4). Deliberately just a navigation link, not an
+    /// auto-triggered scan — running DTC/readiness reads on every Dashboard
+    /// appearance would add unwanted traffic to the polling loop.
+    private var vehicleScanCard: some View {
+        NavigationLink {
+            VehicleScanView()
+        } label: {
+            HStack(spacing: DSSpace.s3) {
+                Image(systemName: "stethoscope")
+                    .font(.system(size: 28))
+                    .foregroundStyle(Color.brandPrimary)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(String(localized: "scan.action", table: "Localizable"))
+                        .font(DSFont.title())
+                        .foregroundStyle(Color.contentPrimary)
+                    Text(String(localized: "scan.dashboardHint", table: "Localizable"))
+                        .font(DSFont.caption())
+                        .foregroundStyle(Color.contentSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color.contentTertiary)
+            }
+            .padding(DSSpace.cardPadding)
+            .glassSurface(.card)
+        }
+        .buttonStyle(.plain)
     }
 
     private func parkingCard(lat: Double, lon: Double) -> some View {
