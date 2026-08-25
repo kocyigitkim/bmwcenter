@@ -56,7 +56,11 @@ jobs:
             echo "::error::ANDROID_KEYSTORE_BASE64 secret is not set. Add it in Settings > Secrets and variables > Actions."
             exit 1
           fi
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > release.keystore
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | tr -d '[:space:]' | base64 -d -i > release.keystore
+          if [ ! -s release.keystore ]; then
+            echo "::error::Decoded release.keystore is empty. Check that ANDROID_KEYSTORE_BASE64 contains the full base64 content of the keystore file."
+            exit 1
+          fi
 
       - name: Configure release signing
         working-directory: mobile/android/app
