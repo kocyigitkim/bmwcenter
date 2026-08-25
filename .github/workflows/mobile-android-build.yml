@@ -1,0 +1,80 @@
+name: Mobile Android APK Build
+
+on:
+  push:
+    branches:
+      - master
+      - "claude/**"
+    paths:
+      - "mobile/**"
+      - ".github/workflows/mobile-android-build.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prebuild native Android project
+        run: npx expo prebuild --platform android
+        env:
+          CI: "1"
+
+      - name: Build debug APK
+        working-directory: mobile/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Locate APK
+        id: apk
+        working-directory: mobile/android
+        run: |
+          APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
+          echo "path=$APK_PATH" >> "$GITHUB_OUTPUT"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: quickcar-debug-apk
+          path: mobile/android/${{ steps.apk.outputs.path }}
+          retention-days: 30
+
+      - name: Publish downloadable release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: mobile-apk-${{ github.run_number }}
+          name: QuickCar Mobile APK (build ${{ github.run_number }})
+          body: |
+            Otomatik derlenen QuickCar Android debug APK'sı.
+            Kaynak commit: ${{ github.sha }}
+          files: mobile/android/${{ steps.apk.outputs.path }}
+          draft: false
+          prerelease: true
