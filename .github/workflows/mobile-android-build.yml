@@ -47,23 +47,101 @@ jobs:
         env:
           CI: "1"
 
-      - name: Build debug APK
-        working-directory: mobile/android
+      - name: Decode release keystore
+        working-directory: mobile/android/app
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "::error::ANDROID_KEYSTORE_BASE64 secret is not set. Add it in Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > release.keystore
+
+      - name: Configure release signing
+        working-directory: mobile/android/app
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys
+
+          path = pathlib.Path("build.gradle")
+          text = path.read_text()
+
+          SIGNING_CONFIGS_OLD = (
+              "    signingConfigs {\n"
+              "        debug {\n"
+              "            storeFile file('debug.keystore')\n"
+              "            storePassword 'android'\n"
+              "            keyAlias 'androiddebugkey'\n"
+              "            keyPassword 'android'\n"
+              "        }\n"
+              "    }\n"
+          )
+          SIGNING_CONFIGS_NEW = (
+              "    signingConfigs {\n"
+              "        debug {\n"
+              "            storeFile file('debug.keystore')\n"
+              "            storePassword 'android'\n"
+              "            keyAlias 'androiddebugkey'\n"
+              "            keyPassword 'android'\n"
+              "        }\n"
+              "        release {\n"
+              "            storeFile file('release.keystore')\n"
+              "            storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')\n"
+              "            keyAlias System.getenv('ANDROID_KEY_ALIAS')\n"
+              "            keyPassword System.getenv('ANDROID_KEY_PASSWORD')\n"
+              "        }\n"
+              "    }\n"
+          )
+
+          RELEASE_BLOCK_OLD = (
+              "        release {\n"
+              "            // Caution! In production, you need to generate your own keystore file.\n"
+              "            // see https://reactnative.dev/docs/signed-apk-android.\n"
+              "            signingConfig signingConfigs.debug\n"
+          )
+          RELEASE_BLOCK_NEW = (
+              "        release {\n"
+              "            signingConfig signingConfigs.release\n"
+          )
+
+          if SIGNING_CONFIGS_OLD not in text:
+              sys.exit("Could not find expected signingConfigs block in build.gradle - aborting so we don't ship an unsigned/misconfigured build.")
+          if RELEASE_BLOCK_OLD not in text:
+              sys.exit("Could not find expected release buildType block in build.gradle - aborting so we don't ship an unsigned/misconfigured build.")
+
+          text = text.replace(SIGNING_CONFIGS_OLD, SIGNING_CONFIGS_NEW)
+          text = text.replace(RELEASE_BLOCK_OLD, RELEASE_BLOCK_NEW)
+
+          path.write_text(text)
+          print("Patched build.gradle with release signing config.")
+          PY
+
+      - name: Build release APK
+        working-directory: mobile/android
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_PASSWORD" ] || [ -z "$ANDROID_KEY_ALIAS" ] || [ -z "$ANDROID_KEY_PASSWORD" ]; then
+            echo "::error::One or more signing secrets (ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD) are not set."
+            exit 1
+          fi
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
       - name: Locate APK
         id: apk
         working-directory: mobile/android
         run: |
-          APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -n 1)
+          APK_PATH=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
           echo "path=$APK_PATH" >> "$GITHUB_OUTPUT"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: quickcar-debug-apk
+          name: quickcar-release-apk
           path: mobile/android/${{ steps.apk.outputs.path }}
           retention-days: 30
 
@@ -73,7 +151,7 @@ jobs:
           tag_name: mobile-apk-${{ github.run_number }}
           name: QuickCar Mobile APK (build ${{ github.run_number }})
           body: |
-            Otomatik derlenen QuickCar Android debug APK'sı.
+            Otomatik derlenen ve imzalanmış QuickCar Android release APK'sı.
             Kaynak commit: ${{ github.sha }}
           files: mobile/android/${{ steps.apk.outputs.path }}
           draft: false
