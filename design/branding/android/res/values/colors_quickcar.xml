@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="quickcar_bg_top">#16305C</color>
+    <color name="quickcar_bg_bottom">#060A14</color>
+    <color name="quickcar_accent">#1E6BFF</color>
+    <color name="quickcar_accent_alt">#37D8FF</color>
+    <color name="quickcar_needle">#FFC64D</color>
+</resources>

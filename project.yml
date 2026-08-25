@@ -1,4 +1,4 @@
-name: BMWCenter
+name: QuickCar
 options:
   bundleIdPrefix: com.muhammetkocyigit
   deploymentTarget:
@@ -12,19 +12,19 @@ settings:
     SWIFT_EMIT_LOC_STRINGS: YES
     ENABLE_USER_SCRIPT_SANDBOXING: YES
 targets:
-  BMWCenter:
+  QuickCar:
     type: application
     platform: iOS
     sources:
-      - path: BMWCenter
+      - path: QuickCar
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.bmwcenter
-        INFOPLIST_FILE: BMWCenter/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.quickcar
+        INFOPLIST_FILE: QuickCar/Info.plist
         # Personal Team cannot provision CarPlay Driving Task on device.
         # Default = CarPlay (Simulator). Device SDK strips to empty entitlements.
-        CODE_SIGN_ENTITLEMENTS: BMWCenter/Resources/BMWCenter-CarPlay.entitlements
-        "CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]": BMWCenter/Resources/BMWCenter.entitlements
+        CODE_SIGN_ENTITLEMENTS: QuickCar/Resources/QuickCar-CarPlay.entitlements
+        "CODE_SIGN_ENTITLEMENTS[sdk=iphoneos*]": QuickCar/Resources/QuickCar.entitlements
         TARGETED_DEVICE_FAMILY: "1"
         SWIFT_EMIT_LOC_STRINGS: YES
         GENERATE_INFOPLIST_FILE: NO
@@ -35,21 +35,21 @@ targets:
         ENABLE_TESTABILITY: YES
     # Free Personal Team: widgets/App Groups disabled for local device install
     # dependencies:
-    #   - target: BMWCenterWidgets
+    #   - target: QuickCarWidgets
     #     embed: true
 
-  BMWCenterWidgets:
+  QuickCarWidgets:
     type: app-extension
     platform: iOS
     sources:
-      - path: BMWCenterWidgets
-      - path: BMWCenter/Core/LiveActivity/TripActivityAttributes.swift
-      - path: BMWCenter/Core/Widgets/WidgetDataStore.swift
+      - path: QuickCarWidgets
+      - path: QuickCar/Core/LiveActivity/TripActivityAttributes.swift
+      - path: QuickCar/Core/Widgets/WidgetDataStore.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.bmwcenter.widgets
-        INFOPLIST_FILE: BMWCenterWidgets/Info.plist
-        CODE_SIGN_ENTITLEMENTS: BMWCenterWidgets/BMWCenterWidgets.entitlements
+        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.quickcar.widgets
+        INFOPLIST_FILE: QuickCarWidgets/Info.plist
+        CODE_SIGN_ENTITLEMENTS: QuickCarWidgets/QuickCarWidgets.entitlements
         TARGETED_DEVICE_FAMILY: "1"
         GENERATE_INFOPLIST_FILE: NO
         CURRENT_PROJECT_VERSION: 1
@@ -57,42 +57,42 @@ targets:
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
         SKIP_INSTALL: YES
 
-  BMWCenterTests:
+  QuickCarTests:
     type: bundle.unit-test
     platform: iOS
-    sources: [BMWCenterTests]
+    sources: [QuickCarTests]
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.bmwcenter.tests
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/BMWCenter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BMWCenter"
+        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.quickcar.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/QuickCar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickCar"
         BUNDLE_LOADER: "$(TEST_HOST)"
     dependencies:
-      - target: BMWCenter
+      - target: QuickCar
 
-  BMWCenterUITests:
+  QuickCarUITests:
     type: bundle.ui-testing
     platform: iOS
-    sources: [BMWCenterUITests]
+    sources: [QuickCarUITests]
     settings:
       base:
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.bmwcenter.uitests
+        PRODUCT_BUNDLE_IDENTIFIER: com.muhammetkocyigit.quickcar.uitests
     dependencies:
-      - target: BMWCenter
+      - target: QuickCar
 
 schemes:
-  BMWCenter:
+  QuickCar:
     build:
       targets:
-        BMWCenter: all
-        # BMWCenterWidgets: all  # free Personal Team install
-        BMWCenterTests: [test]
-        BMWCenterUITests: [test]
+        QuickCar: all
+        # QuickCarWidgets: all  # free Personal Team install
+        QuickCarTests: [test]
+        QuickCarUITests: [test]
     run:
       config: Debug
     test:
       config: Debug
       targets:
-        - BMWCenterTests
-        - BMWCenterUITests
+        - QuickCarTests
+        - QuickCarUITests

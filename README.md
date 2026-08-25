@@ -1,4 +1,4 @@
-# BMW Center
+# QuickCar
 
 iOS 17+ vehicle companion app with CarPlay Driving Task support.
 
@@ -16,7 +16,7 @@ iOS 17+ vehicle companion app with CarPlay Driving Task support.
 brew install xcodegen
 cd /Users/muhammetkocyigit/Desktop/bmwcenter
 xcodegen generate
-open BMWCenter.xcodeproj
+open QuickCar.xcodeproj
 ```
 
 Set your Development Team in Xcode if needed for device builds. Simulator runs without a team.
@@ -26,7 +26,7 @@ Set your Development Team in Xcode if needed for device builds. Simulator runs w
 ```bash
 xcrun simctl boot "iPhone 17 Pro" || true
 open -a Simulator
-xcodebuild -project BMWCenter.xcodeproj -scheme BMWCenter \
+xcodebuild -project QuickCar.xcodeproj -scheme QuickCar \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
   -configuration Debug build
 ```

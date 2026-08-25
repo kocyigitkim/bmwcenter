@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build BMWCenter/Resources/DTCCatalog.json from open OBD-II datasets.
+"""Build QuickCar/Resources/DTCCatalog.json from open OBD-II datasets.
 
 Sources (clone once):
   git clone --depth 1 https://github.com/foerbsnavi/obdex.git /tmp/obdex
@@ -20,8 +20,11 @@ try:
 except ImportError:
     sys.exit("PyYAML required: pip3 install pyyaml")
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from translate_dtc_catalog_tr import fill_missing_tr  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
-EXISTING_PATH = ROOT / "BMWCenter/Resources/DTCCatalog.json"
+EXISTING_PATH = ROOT / "QuickCar/Resources/DTCCatalog.json"
 OUT = EXISTING_PATH
 OBDEX = Path("/tmp/obdex/data/generic")
 WAL_DB = Path("/tmp/dtc-database/data/dtc_codes.db")
@@ -138,6 +141,10 @@ def main() -> None:
             catalog[code]["tr"] = old["tr"]
         if old.get("severity") in ("critical", "high") and catalog[code].get("severity") == "medium":
             catalog[code]["severity"] = old["severity"]
+
+    filled = fill_missing_tr(catalog)
+    if filled:
+        print(f"Auto-translated tr for {filled} codes missing it")
 
     ordered = {k: catalog[k] for k in sorted(catalog.keys())}
     OUT.write_text(json.dumps(ordered, ensure_ascii=False, indent=2) + "\n")

@@ -23,7 +23,50 @@ Carthage/Build/
 *.xcresult
 
 # XcodeGen generated project (regenerated from project.yml)
-# Keep BMWCenter.xcodeproj tracked since no CI regenerates it yet.
+# Keep QuickCar.xcodeproj tracked since no CI regenerates it yet.
 
 # Claude Code local session state
 .claude/
+
+# ── Otomatik eklendi: derleme çıktısı ve bağımlılıklar ──
+node_modules/
+dist/
+out/
+release/
+build/
+Build/
+.next/
+.nuxt/
+.cache/
+DerivedData/
+.derivedData/
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Xcode / CocoaPods
+Pods/
+*.xcuserdatad/
+xcuserdata/
+*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# Android / Gradle
+.gradle/
+local.properties
+
+# Unity
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+MemoryCaptures/
+Recordings/
+
+# Araç çıktıları
+graphify-out/
+
+# Sistem
+.DS_Store
+*.log
