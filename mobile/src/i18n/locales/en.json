@@ -96,6 +96,9 @@
   "connection.connected": "Connected",
   "connection.disconnected": "Disconnected",
   "connection.chooseAdapter": "Choose your OBD adapter",
+  "connection.error.bluetooth_off": "Bluetooth appears to be off. Turn it on and try again.",
+  "connection.error.bluetooth_permission_denied": "Bluetooth permission was denied. Enable Bluetooth/Location permission for QuickCar in device settings.",
+  "connection.error.generic": "Couldn't connect: {{message}}",
 
   "fuel.today": "Today",
   "fuel.week": "This Week",

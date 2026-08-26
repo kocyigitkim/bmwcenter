@@ -81,6 +81,16 @@ export default function DashboardScreen() {
 
       <AlertChipRow />
 
+      {connection.status === "error" && (
+        <View style={[styles.deviceList, { backgroundColor: colors.surface1 }]}>
+          <Text style={{ color: colors.semAttention }}>
+            {t(`connection.error.${connection.message}`, {
+              defaultValue: t("connection.error.generic", { message: connection.message }),
+            })}
+          </Text>
+        </View>
+      )}
+
       {!connected && devices.length > 0 && (
         <View style={[styles.deviceList, { backgroundColor: colors.surface1 }]}>
           <Text style={{ color: colors.contentSecondary, marginBottom: DSSpace.s2 }}>{t("connection.chooseAdapter")}</Text>

@@ -96,6 +96,9 @@
   "connection.connected": "Bağlandı",
   "connection.disconnected": "Bağlantı yok",
   "connection.chooseAdapter": "OBD adaptörünüzü seçin",
+  "connection.error.bluetooth_off": "Bluetooth kapalı görünüyor. Lütfen açıp tekrar deneyin.",
+  "connection.error.bluetooth_permission_denied": "Bluetooth izni verilmedi. Cihaz ayarlarından QuickCar için Bluetooth/Konum iznini açın.",
+  "connection.error.generic": "Bağlantı kurulamadı: {{message}}",
 
   "fuel.today": "Bugün",
   "fuel.week": "Bu Hafta",

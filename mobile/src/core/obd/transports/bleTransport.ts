@@ -1,6 +1,20 @@
 import { BleManager, Device, Characteristic, State, Subscription } from "react-native-ble-plx";
 import { Buffer } from "buffer";
+import { PermissionsAndroid, Platform } from "react-native";
 import type { ConnectionState, DiscoveredDevice, OBDTransport } from "../obdTransport";
+
+/** Android requires these to be granted at runtime, even though they're declared in the manifest. */
+async function ensureAndroidBlePermissions(): Promise<boolean> {
+  if (Platform.OS !== "android") return true;
+
+  const permissions =
+    Platform.Version >= 31
+      ? [PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN, PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT]
+      : [PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION];
+
+  const results = await PermissionsAndroid.requestMultiple(permissions);
+  return permissions.every((p) => results[p] === PermissionsAndroid.RESULTS.GRANTED);
+}
 
 /** Vgate / VLinker MC-iOS proprietary serial service, plus common ELM327-clone serial services. */
 const SERVICE_CANDIDATES = [
@@ -96,6 +110,11 @@ export class BLEOBDTransport implements OBDTransport {
 
   async scan(onDevice: (device: DiscoveredDevice) => void, timeoutMs = 15000): Promise<void> {
     this.setState({ status: "scanning" });
+    const granted = await ensureAndroidBlePermissions();
+    if (!granted) {
+      this.setState({ status: "error", message: "bluetooth_permission_denied" });
+      return;
+    }
     const poweredOn = await this.waitUntilPoweredOn();
     if (!poweredOn) {
       this.setState({ status: "error", message: "bluetooth_off" });
