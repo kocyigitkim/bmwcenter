@@ -1,5 +1,5 @@
-import { and, desc, eq, gte, lt, type SQL } from "drizzle-orm";
-import { activeVehicleId } from "../vehicle/useGarage";
+import { and, desc, eq, gte, isNull, lt, or, type SQL } from "drizzle-orm";
+import { activeVehicleId, activeVehicleAdoptsOrphans } from "../vehicle/useGarage";
 import { db } from "./db";
 import { fuelPricePoints, refuelEntries } from "./schema";
 import type { DateInterval } from "./tripRepository";
@@ -23,7 +23,9 @@ function rowToRefuel(row: typeof refuelEntries.$inferSelect): RefuelEntry {
 function ownedByActiveVehicle(extra?: SQL): SQL | undefined {
   const id = activeVehicleId();
   if (!id) return extra;
-  const owned = eq(refuelEntries.vehicleId, id);
+  const owned = activeVehicleAdoptsOrphans()
+    ? or(eq(refuelEntries.vehicleId, id), isNull(refuelEntries.vehicleId))!
+    : eq(refuelEntries.vehicleId, id);
   return extra ? and(extra, owned) : owned;
 }
 

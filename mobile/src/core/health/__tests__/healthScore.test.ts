@@ -1,4 +1,4 @@
-import { categoryForCode, computeHealth, type HealthInput } from "../healthScore";
+import { categoryForCode, computeHealth, PROTECTION_EVENT_TYPES, type HealthInput } from "../healthScore";
 
 const NOW = 1_700_000_000_000;
 
@@ -129,5 +129,28 @@ describe("computeHealth", () => {
     const report = computeHealth(input({ cranks: [{ date: NOW, minVoltage: 8.5 }] }));
     expect(report.unknownCount).toBeGreaterThan(0);
     expect(report.overallScore).toBe(report.categories.find((c) => c.category === "battery")!.score);
+  });
+});
+
+describe("protection event coverage", () => {
+  it("scores every event type the watchdogs actually write", () => {
+    // These are the types found in protection_events. A watchdog whose events
+    // no category claims would quietly never affect the score.
+    for (const type of PROTECTION_EVENT_TYPES) {
+      const report = computeHealth(
+        input({ hasScanned: true, protectionEvents: [{ type, severity: "warn", t: NOW }] })
+      );
+      const affected = report.categories.filter((c) => c.evidence.length > 0);
+      expect(affected.length).toBeGreaterThan(0);
+      expect(affected[0]!.evidence[0]!.key).toBe(`health.evidence.event.${type}`);
+    }
+  });
+
+  it("puts a low-voltage warning on the battery, not the engine", () => {
+    const report = computeHealth(
+      input({ hasScanned: true, protectionEvents: [{ type: "lowVoltage", severity: "warn", t: NOW }] })
+    );
+    expect(report.categories.find((c) => c.category === "battery")!.score).toBeLessThan(100);
+    expect(report.categories.find((c) => c.category === "engine")!.score).toBe(100);
   });
 });

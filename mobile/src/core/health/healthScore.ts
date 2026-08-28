@@ -123,17 +123,33 @@ function weightForDTC(status: HealthInputDTC["status"]): number {
   }
 }
 
+/**
+ * The types the care watchdogs actually write to protection_events. Kept as a
+ * list so a new watchdog whose events nothing scores is caught by its test
+ * rather than silently ignored.
+ */
+export const PROTECTION_EVENT_TYPES = [
+  "overheat",
+  "thermostat",
+  "hotShutdown",
+  "lowVoltage",
+  "fuelTrim",
+  "coldRev",
+] as const;
+
 function categoryForEvent(type: string): HealthCategory | undefined {
   switch (type) {
     case "overheat":
     case "thermostat":
-    case "thermalShock":
+    // Shutting down hot is a cooling-system stress, not an engine fault.
+    case "hotShutdown":
       return "cooling";
-    case "battery":
+    case "lowVoltage":
       return "battery";
     case "fuelTrim":
       return "fuelSystem";
-    case "coldShield":
+    // Revving a cold engine is wear the engine carries.
+    case "coldRev":
       return "engine";
     default:
       return undefined;

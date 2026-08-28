@@ -1,7 +1,9 @@
-import { and, asc, desc, eq, gte, lt, type SQL } from "drizzle-orm";
-import { activeVehicleId } from "../vehicle/useGarage";
+import { and, asc, desc, eq, gte, isNull, lt, or, type SQL } from "drizzle-orm";
+import { activeVehicleId, activeVehicleAdoptsOrphans } from "../vehicle/useGarage";
 import { db } from "./db";
-import { drivingEvents, trips, tripSamples } from "./schema";
+import { drivingEvents, protectionEvents, tripDiagnosticEvents, trips, tripSamples } from "./schema";
+import type { ProtectionEntry, TripDiagnosticEvent } from "../trip/tripDiagnostics";
+import type { FreezeFrameValues } from "../obd/freezeFrame";
 import {
   emptyDrivingSummary,
   summarize,
@@ -64,7 +66,9 @@ function rowToTrip(row: typeof trips.$inferSelect, events: (typeof drivingEvents
 function ownedByActiveVehicle(extra?: SQL): SQL | undefined {
   const id = activeVehicleId();
   if (!id) return extra;
-  const owned = eq(trips.vehicleId, id);
+  const owned = activeVehicleAdoptsOrphans()
+    ? or(eq(trips.vehicleId, id), isNull(trips.vehicleId))!
+    : eq(trips.vehicleId, id);
   return extra ? and(extra, owned) : owned;
 }
 
@@ -148,9 +152,43 @@ export class TripRepository {
     return db.select().from(tripSamples).where(eq(tripSamples.tripId, tripId)).orderBy(asc(tripSamples.t));
   }
 
+  /**
+   * What the car reported about itself during the trip: codes that set, MIL
+   * changes, and the protection warnings the care watchdogs raised.
+   */
+  async diagnostics(tripId: string): Promise<{
+    events: TripDiagnosticEvent[];
+    protection: ProtectionEntry[];
+  }> {
+    const [rows, warnings] = await Promise.all([
+      db
+        .select()
+        .from(tripDiagnosticEvents)
+        .where(eq(tripDiagnosticEvents.tripId, tripId))
+        .orderBy(asc(tripDiagnosticEvents.t)),
+      db
+        .select()
+        .from(protectionEvents)
+        .where(eq(protectionEvents.tripId, tripId))
+        .orderBy(asc(protectionEvents.t)),
+    ]);
+    return {
+      events: rows.map((row) => ({
+        t: row.t,
+        kind: row.kind as TripDiagnosticEvent["kind"],
+        code: row.code ?? undefined,
+        status: row.status ?? undefined,
+        freezeFrame: parseJSON<FreezeFrameValues>(row.freezeFrameJSON),
+        context: parseJSON<Record<string, number>>(row.contextJSON),
+      })),
+      protection: warnings.map((row) => ({ t: row.t, type: row.type, severity: row.severity })),
+    };
+  }
+
   async deleteTrip(id: string): Promise<void> {
     await db.delete(drivingEvents).where(eq(drivingEvents.tripId, id));
     await db.delete(tripSamples).where(eq(tripSamples.tripId, id));
+    await db.delete(tripDiagnosticEvents).where(eq(tripDiagnosticEvents.tripId, id));
     await db.delete(trips).where(eq(trips.id, id));
   }
 
@@ -226,3 +264,12 @@ export class TripRepository {
 }
 
 export const tripRepository = new TripRepository();
+
+function parseJSON<T>(raw: string | null): T | undefined {
+  if (!raw) return undefined;
+  try {
+    return JSON.parse(raw) as T;
+  } catch {
+    return undefined;
+  }
+}

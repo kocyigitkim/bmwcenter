@@ -19,7 +19,7 @@ import { dtcRecords, refuelEntries } from "../storage/schema";
 import { tripRepository } from "../storage/tripRepository";
 import { maintenanceRepository, type ScheduledMaintenanceItem } from "../storage/maintenanceRepository";
 import { summarize, emptyDrivingSummary, type DrivingSummary } from "../storage/models";
-import { activeVehicle, activeVehicleId } from "../vehicle/useGarage";
+import { activeVehicle, activeVehicleId, activeVehicleAdoptsOrphans } from "../vehicle/useGarage";
 import { displayedOdometerKm } from "../vehicle/vehicleRepository";
 import { lastReadiness, loadHealthReport, type StoredReadiness } from "../health/healthRepository";
 import { summaryFor } from "../obd/dtcCatalog";
@@ -65,13 +65,19 @@ export async function collectMechanicReport(now = Date.now()): Promise<MechanicR
   const since = now - RECENT_DAYS * 86_400_000;
 
   // Rows written before the garage existed have no owner; an upgraded install
-  // must not produce a report that looks like a car with no history.
-  const ownsCodes = vehicleId
-    ? or(eq(dtcRecords.vehicleId, vehicleId), isNull(dtcRecords.vehicleId))
-    : undefined;
-  const ownsRefuels = vehicleId
-    ? or(eq(refuelEntries.vehicleId, vehicleId), isNull(refuelEntries.vehicleId))
-    : undefined;
+  // must not produce a report that looks like a car with no history, but a car
+  // the user described must not silently claim another's codes either.
+  const adopts = activeVehicleAdoptsOrphans();
+  const ownsCodes = !vehicleId
+    ? undefined
+    : adopts
+      ? or(eq(dtcRecords.vehicleId, vehicleId), isNull(dtcRecords.vehicleId))
+      : eq(dtcRecords.vehicleId, vehicleId);
+  const ownsRefuels = !vehicleId
+    ? undefined
+    : adopts
+      ? or(eq(refuelEntries.vehicleId, vehicleId), isNull(refuelEntries.vehicleId))
+      : eq(refuelEntries.vehicleId, vehicleId);
 
   const [codeRows, refuelRows, trips, maintenance] = await Promise.all([
     db.select().from(dtcRecords).where(ownsCodes).orderBy(desc(dtcRecords.seenAt)),

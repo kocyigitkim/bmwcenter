@@ -250,9 +250,42 @@ function addColumnIfMissing(table: string, column: string, definition: string): 
 
 /** Schema changes that must also reach databases created by earlier versions. */
 export function migrateDatabase(): void {
-  // Garage: rows recorded before multi-vehicle support have no owner. They are
-  // backfilled to the default vehicle by vehicleRepository.ensureDefault().
+  // Garage: rows recorded before multi-vehicle support have no owner. They stay
+  // that way until the user describes a car and accepts the offer to adopt them.
   for (const table of ["trips", "refuel_entries", "dtc_records", "maintenance_items"]) {
     addColumnIfMissing(table, "vehicle_id", "TEXT");
   }
+  addColumnIfMissing("vehicle_profiles", "is_seeded", "INTEGER NOT NULL DEFAULT 0");
+
+  // Per-trip diagnostics. Nullable so a sensor the car never reported stays
+  // distinguishable from one that genuinely read zero.
+  for (const column of [
+    "engine_load_pct",
+    "voltage",
+    "intake_air_c",
+    "map_kpa",
+    "maf_gs",
+    "stft_pct",
+    "ltft_pct",
+    "oil_temp_c",
+    "fuel_level_pct",
+    "ambient_c",
+  ]) {
+    addColumnIfMissing("trip_samples", column, "REAL");
+  }
+  addColumnIfMissing("dtc_records", "trip_id", "TEXT");
+  sqlite.execSync(`
+    CREATE TABLE IF NOT EXISTS trip_diagnostic_events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      trip_id TEXT NOT NULL,
+      t INTEGER NOT NULL,
+      kind TEXT NOT NULL,
+      code TEXT,
+      status TEXT,
+      freeze_frame_json TEXT,
+      context_json TEXT
+    );
+    CREATE INDEX IF NOT EXISTS idx_trip_diagnostic_events_trip_id
+      ON trip_diagnostic_events(trip_id);
+  `);
 }

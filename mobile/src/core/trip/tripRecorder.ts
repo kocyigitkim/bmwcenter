@@ -8,6 +8,7 @@ import { activeVehicleId } from "../vehicle/useGarage";
 import { vehicleRepository } from "../vehicle/vehicleRepository";
 import { maintenanceNotifier } from "../maintenance/maintenanceNotifier";
 import { metricHistory } from "../metrics/metricHistory";
+import { tripDiagnosticsWatcher } from "./tripDiagnosticsWatcher";
 import { FuelIntegrationState, fuelRateLh } from "../fuel/fuelCalculator";
 import { speedCalibrator } from "../analysis/speedCalibrator";
 import { useCareCoordinator } from "../care/careCoordinator";
@@ -51,6 +52,16 @@ interface PendingSample {
   coolantC: number;
   throttlePct: number;
   boostKpa: number;
+  engineLoadPct: number | null;
+  voltage: number | null;
+  intakeAirC: number | null;
+  mapKpa: number | null;
+  mafGs: number | null;
+  stftPct: number | null;
+  ltftPct: number | null;
+  oilTempC: number | null;
+  fuelLevelPct: number | null;
+  ambientC: number | null;
 }
 
 interface TripRecorderStore {
@@ -132,6 +143,7 @@ async function beginTrip(manual: boolean, set: (partial: Partial<TripRecorderSto
   memorySamples = [];
   // The live graphs cover the drive in progress, not the one before it.
   metricHistory.clear();
+  tripDiagnosticsWatcher.start(trip.id);
   movingDurationS = 0;
   idleDurationS = 0;
   maxSpeed = 0;
@@ -166,6 +178,7 @@ function sample(snapshot: VehicleSnapshot, now: number, set: (partial: Partial<T
   const rpm = snapshot.rpm ?? 0;
 
   integration.integrate({ t: now, speedKmh: speed, fuelRateLh: rate });
+  tripDiagnosticsWatcher.onSample(snapshot, now);
   speedCalibrator.ingest(snapshot.speedKmh ?? 0, locationProvider.lastLocation, now);
   addRoutePoint(now);
 
@@ -188,6 +201,18 @@ function sample(snapshot: VehicleSnapshot, now: number, set: (partial: Partial<T
       coolantC: snapshot.coolantC ?? 0,
       throttlePct: snapshot.throttlePct ?? 0,
       boostKpa: boostKpa(snapshot) ?? 0,
+      // Null, not zero: a PID the car never answered must stay tellable apart
+      // from one that genuinely read zero.
+      engineLoadPct: snapshot.engineLoadPct ?? null,
+      voltage: snapshot.voltage ?? null,
+      intakeAirC: snapshot.intakeAirC ?? null,
+      mapKpa: snapshot.mapKpa ?? null,
+      mafGs: snapshot.mafGs ?? null,
+      stftPct: snapshot.stftBank1 ?? null,
+      ltftPct: snapshot.ltftBank1 ?? null,
+      oilTempC: snapshot.oilTempC ?? null,
+      fuelLevelPct: snapshot.fuelLevelPct ?? null,
+      ambientC: snapshot.ambientC ?? null,
     });
   }
 
@@ -246,16 +271,7 @@ async function persistProgress(now: number) {
 async function flushSamples() {
   if (!currentTrip || memorySamples.length === 0) return;
   const tripId = currentTrip.id;
-  const rows = memorySamples.map((s) => ({
-    tripId,
-    t: s.t,
-    speedKmh: s.speedKmh,
-    rpm: s.rpm,
-    fuelRateLh: s.fuelRateLh,
-    coolantC: s.coolantC,
-    throttlePct: s.throttlePct,
-    boostKpa: s.boostKpa,
-  }));
+  const rows = memorySamples.map((s) => ({ tripId, ...s }));
   await db.insert(tripSamples).values(rows);
   if (currentTrip.startLatitude == null && locationProvider.lastLocation) {
     currentTrip.startLatitude = locationProvider.lastLocation.latitude;
@@ -330,6 +346,7 @@ async function finalizeTrip(discard: boolean, set: (partial: Partial<TripRecorde
 
   currentTrip = undefined;
   memorySamples = [];
+  tripDiagnosticsWatcher.stop();
   integration = new FuelIntegrationState();
   lastSampleAt = undefined;
   pausedSince = undefined;

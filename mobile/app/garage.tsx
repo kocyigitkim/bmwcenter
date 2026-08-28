@@ -9,7 +9,11 @@ import { DSSpace, DSRadius, brandPrimary, withAlpha } from "@/design/tokens";
 import { Formatters } from "@/design/formatters";
 import { useAppSettings } from "@/core/settings/appSettings";
 import { useGarage } from "@/core/vehicle/useGarage";
-import { displayedOdometerKm, type GarageVehicle } from "@/core/vehicle/vehicleRepository";
+import {
+  displayedOdometerKm,
+  type GarageVehicle,
+  type UnassignedHistory,
+} from "@/core/vehicle/vehicleRepository";
 
 export default function GarageScreen() {
   const { t } = useTranslation();
@@ -23,7 +27,30 @@ export default function GarageScreen() {
   const setActive = useGarage((s) => s.setActive);
   const addVehicle = useGarage((s) => s.addVehicle);
   const removeVehicle = useGarage((s) => s.removeVehicle);
+  const adoptHistory = useGarage((s) => s.adoptHistory);
   const [newName, setNewName] = useState("");
+
+  /**
+   * The one moment the existing history can be placed. Everything recorded
+   * before the user described a car belongs to nobody; only they know whether
+   * it was driven in this one, so it is asked rather than assumed.
+   */
+  const offerToAdopt = (vehicle: GarageVehicle, counts: UnassignedHistory) => {
+    const parts = [
+      counts.trips > 0 ? t("garage.adopt.trips", { count: counts.trips }) : undefined,
+      counts.refuels > 0 ? t("garage.adopt.refuels", { count: counts.refuels }) : undefined,
+      counts.codes > 0 ? t("garage.adopt.codes", { count: counts.codes }) : undefined,
+    ].filter(Boolean);
+
+    Alert.alert(
+      t("garage.adopt.title", { name: vehicle.name }),
+      t("garage.adopt.body", { summary: parts.join(", ") }),
+      [
+        { text: t("garage.adopt.keepSeparate"), style: "cancel" },
+        { text: t("garage.adopt.move"), onPress: () => adoptHistory(vehicle.id).catch(() => undefined) },
+      ]
+    );
+  };
 
   useEffect(() => {
     load().catch(() => undefined);
@@ -111,9 +138,10 @@ export default function GarageScreen() {
         <Pressable
           disabled={newName.trim().length === 0}
           onPress={async () => {
-            const vehicle = await addVehicle(newName.trim());
+            const { vehicle, offerAdoption, unassigned } = await addVehicle(newName.trim());
             setNewName("");
             await setActive(vehicle.id);
+            if (offerAdoption) offerToAdopt(vehicle, unassigned);
           }}
           style={{ padding: DSSpace.s4, opacity: newName.trim().length === 0 ? 0.4 : 1 }}
         >

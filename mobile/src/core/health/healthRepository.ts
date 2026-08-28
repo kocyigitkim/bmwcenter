@@ -3,7 +3,7 @@ import { db } from "../storage/db";
 import { crankRecords, dtcRecords, protectionEvents } from "../storage/schema";
 import { storage } from "../settings/appSettings";
 import type { EngineIgnition, MonitorStatus, ReadinessStatus } from "../obd/readiness";
-import { activeVehicleId } from "../vehicle/useGarage";
+import { activeVehicleId, activeVehicleAdoptsOrphans } from "../vehicle/useGarage";
 import { computeHealth, type HealthInput, type HealthReport } from "./healthScore";
 
 const READINESS_KEY = "health.lastReadiness";
@@ -50,11 +50,14 @@ export function lastReadiness(): StoredReadiness | undefined {
 
 export async function loadHealthReport(now = Date.now()): Promise<HealthReport> {
   const vehicleId = activeVehicleId();
-  // Rows written before the garage existed have no owner; include them so an
-  // upgraded install doesn't report an empty history.
-  const owned = vehicleId
-    ? or(eq(dtcRecords.vehicleId, vehicleId), isNull(dtcRecords.vehicleId))
-    : undefined;
+  // Rows written before the garage existed have no owner; they count against the
+  // placeholder so an upgraded install doesn't report an empty history, but not
+  // against a car the user described and never said they belonged to.
+  const owned = !vehicleId
+    ? undefined
+    : activeVehicleAdoptsOrphans()
+      ? or(eq(dtcRecords.vehicleId, vehicleId), isNull(dtcRecords.vehicleId))
+      : eq(dtcRecords.vehicleId, vehicleId);
 
   const [codes, events, cranks] = await Promise.all([
     db.select().from(dtcRecords).where(owned),

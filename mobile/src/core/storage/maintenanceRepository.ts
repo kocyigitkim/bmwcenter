@@ -1,7 +1,7 @@
 import { and, eq, isNull, or, type SQL } from "drizzle-orm";
 import { db } from "./db";
 import { accelRecords, crankRecords, maintenanceItems } from "./schema";
-import { activeVehicleId, activeVehicle } from "../vehicle/useGarage";
+import { activeVehicleId, activeVehicle, activeVehicleAdoptsOrphans } from "../vehicle/useGarage";
 import { displayedOdometerKm } from "../vehicle/vehicleRepository";
 import { computeDue, compareByUrgency, type DueInfo } from "../maintenance/maintenanceSchedule";
 
@@ -64,12 +64,14 @@ function newId(): string {
 }
 
 /** Items belong to a vehicle; rows written before the garage existed have no
- * owner and are shown to whoever is active so nothing disappears on upgrade. */
+ * owner and show against the placeholder until the user says whose they are. */
 function ownedByActiveVehicle(extra?: SQL): SQL | undefined {
   const vehicleId = activeVehicleId();
-  const owned = vehicleId
-    ? or(eq(maintenanceItems.vehicleId, vehicleId), isNull(maintenanceItems.vehicleId))
-    : undefined;
+  const owned = !vehicleId
+    ? undefined
+    : activeVehicleAdoptsOrphans()
+      ? or(eq(maintenanceItems.vehicleId, vehicleId), isNull(maintenanceItems.vehicleId))
+      : eq(maintenanceItems.vehicleId, vehicleId);
   if (owned && extra) return and(owned, extra);
   return extra ?? owned;
 }

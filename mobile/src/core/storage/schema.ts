@@ -42,6 +42,38 @@ export const tripSamples = sqliteTable("trip_samples", {
   coolantC: real("coolant_c").notNull().default(0),
   throttlePct: real("throttle_pct").notNull().default(0),
   boostKpa: real("boost_kpa").notNull().default(0),
+  // Added later, and nullable on purpose: the original columns default to 0,
+  // which cannot tell "the sensor read zero" from "the car never reported it".
+  engineLoadPct: real("engine_load_pct"),
+  voltage: real("voltage"),
+  intakeAirC: real("intake_air_c"),
+  mapKpa: real("map_kpa"),
+  mafGs: real("maf_gs"),
+  stftPct: real("stft_pct"),
+  ltftPct: real("ltft_pct"),
+  oilTempC: real("oil_temp_c"),
+  fuelLevelPct: real("fuel_level_pct"),
+  ambientC: real("ambient_c"),
+});
+
+/**
+ * What the diagnostics watcher saw while a trip was being recorded.
+ *
+ * Separate from dtc_records because these are moments in a drive, not the
+ * current state of the car: a code that set at minute 40 of a motorway run
+ * stays interesting long after it has been cleared.
+ */
+export const tripDiagnosticEvents = sqliteTable("trip_diagnostic_events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  tripId: text("trip_id").notNull(),
+  t: integer("t").notNull(),
+  /** code | milOn | milOff */
+  kind: text("kind").notNull(),
+  code: text("code"),
+  status: text("status"),
+  freezeFrameJSON: text("freeze_frame_json"),
+  /** Sensor snapshot at the moment, for context the freeze frame may not carry. */
+  contextJSON: text("context_json"),
 });
 
 export const drivingEvents = sqliteTable("driving_events", {
@@ -100,6 +132,9 @@ export const vehicleProfiles = sqliteTable("vehicle_profiles", {
   odometerOffsetKm: real("odometer_offset_km").notNull().default(0),
   vin: text("vin"),
   isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
+  /** True for the placeholder the app creates so it has somewhere to put data
+   * before the user has described their car. */
+  isSeeded: integer("is_seeded", { mode: "boolean" }).notNull().default(false),
 });
 
 export const maintenanceItems = sqliteTable("maintenance_items", {
@@ -118,6 +153,8 @@ export const maintenanceItems = sqliteTable("maintenance_items", {
 
 export const dtcRecords = sqliteTable("dtc_records", {
   vehicleId: text("vehicle_id"),
+  /** The trip during which the code was first seen, when it set while driving. */
+  tripId: text("trip_id"),
   id: integer("id").primaryKey({ autoIncrement: true }),
   code: text("code").notNull(),
   seenAt: integer("seen_at").notNull(),

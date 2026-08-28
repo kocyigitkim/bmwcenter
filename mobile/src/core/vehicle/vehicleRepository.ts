@@ -17,6 +17,33 @@ export interface GarageVehicle {
   odometerOffsetKm: number;
   vin: string | null;
   isActive: boolean;
+  /** True while this is the placeholder the app made for itself, before the
+   * user has described a car of their own. */
+  isSeeded: boolean;
+}
+
+export interface UnassignedHistory {
+  trips: number;
+  refuels: number;
+  codes: number;
+}
+
+export function hasUnassignedHistory(counts: UnassignedHistory): boolean {
+  return counts.trips + counts.refuels + counts.codes > 0;
+}
+
+/**
+ * Whether defining this vehicle is the moment to offer the existing history.
+ *
+ * Only on the user's first real car: once they have described one, later
+ * additions are second cars, and the history plainly belongs to the first.
+ */
+export function shouldOfferAdoption(
+  vehiclesBefore: Array<Pick<GarageVehicle, "isSeeded">>,
+  counts: UnassignedHistory
+): boolean {
+  if (!hasUnassignedHistory(counts)) return false;
+  return vehiclesBefore.every((v) => v.isSeeded);
 }
 
 type Row = typeof vehicleProfiles.$inferSelect;
@@ -36,6 +63,7 @@ function toVehicle(row: Row): GarageVehicle {
     odometerOffsetKm: row.odometerOffsetKm,
     vin: row.vin,
     isActive: row.isActive,
+    isSeeded: row.isSeeded,
   };
 }
 
@@ -55,11 +83,14 @@ export const vehicleRepository = {
   },
 
   /**
-   * Creates the first vehicle from the settings the app has been using so far,
-   * and adopts every record written before multi-vehicle support existed.
+   * Creates the placeholder the app needs somewhere to put data before the user
+   * has described their car.
    *
-   * Without the backfill, upgrading would hide all past trips, refuels and codes
-   * behind a vehicle filter that never matches them.
+   * It deliberately does not claim the records written before multi-vehicle
+   * support existed: those stay unowned, and the placeholder shows them (see
+   * `adoptsOrphans`) so nothing disappears on upgrade. Handing that history to a
+   * car the user has not described yet would make the offer to move it — the
+   * one moment they get to decide where it belongs — impossible to make.
    */
   async ensureDefault(): Promise<GarageVehicle> {
     const existing = await this.all();
@@ -82,17 +113,45 @@ export const vehicleRepository = {
       odometerOffsetKm: 0,
       vin: s.lastVIN || null,
       isActive: true,
+      isSeeded: true,
     };
     await db.insert(vehicleProfiles).values(vehicle);
+    return vehicle;
+  },
 
+  /** How much unowned history is waiting to be claimed. */
+  async unassignedHistory(): Promise<UnassignedHistory> {
+    const [tripRows, refuelRows, codeRows] = await Promise.all([
+      db.select({ id: trips.id }).from(trips).where(isNull(trips.vehicleId)),
+      db.select({ id: refuelEntries.id }).from(refuelEntries).where(isNull(refuelEntries.vehicleId)),
+      db.select({ id: dtcRecords.id }).from(dtcRecords).where(isNull(dtcRecords.vehicleId)),
+    ]);
+    return { trips: tripRows.length, refuels: refuelRows.length, codes: codeRows.length };
+  },
+
+  /**
+   * Hands the unowned history to a vehicle, and retires the placeholder that was
+   * standing in for it — its whole purpose was to hold this until now.
+   */
+  async adoptHistory(vehicleId: string): Promise<void> {
     for (const table of [trips, refuelEntries, dtcRecords, maintenanceItems]) {
       await db
         .update(table)
-        .set({ vehicleId: vehicle.id })
+        .set({ vehicleId })
         .where(isNull(table.vehicleId))
         .catch(() => undefined);
     }
-    return vehicle;
+    await this.retireSeeded(vehicleId);
+  },
+
+  /** Removes placeholder vehicles once a real one exists to replace them. */
+  async retireSeeded(keepId: string): Promise<void> {
+    const all = await this.all();
+    const seeded = all.filter((v) => v.isSeeded && v.id !== keepId);
+    if (seeded.length === 0 || all.length - seeded.length === 0) return;
+    for (const placeholder of seeded) {
+      await db.delete(vehicleProfiles).where(eq(vehicleProfiles.id, placeholder.id));
+    }
   },
 
   async create(partial: Partial<GarageVehicle> & { name: string }): Promise<GarageVehicle> {
@@ -109,6 +168,7 @@ export const vehicleRepository = {
       odometerOffsetKm: 0,
       vin: null,
       isActive: false,
+      isSeeded: false,
       ...partial,
     };
     await db.insert(vehicleProfiles).values(vehicle);

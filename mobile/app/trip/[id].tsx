@@ -14,6 +14,19 @@ import { exportTripsCSV } from "@/core/export/csvExporter";
 import { exportTripGPX } from "@/core/export/gpxExporter";
 import { analyzeTrip, type TripAnalysis, type TripSample } from "@/core/trip/tripAnalysis";
 import { TripMap } from "@/components/TripMap";
+import { MetricChart } from "@/components/MetricChart";
+import {
+  buildTimeline,
+  sensorSeries,
+  summarizeSensors,
+  type ProtectionEntry,
+  type SensorSample,
+  type SensorSummary,
+  type TimelineEntry,
+  type TripDiagnosticEvent,
+} from "@/core/trip/tripDiagnostics";
+import { TRIP_SENSOR_KEYS, tripSensor } from "@/core/trip/tripSensors";
+import type { FreezeFrameValues } from "@/core/obd/freezeFrame";
 import type { Trip } from "@/core/storage/models";
 
 type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
@@ -27,11 +40,20 @@ export default function TripDetailScreen() {
   const router = useRouter();
   const [trip, setTrip] = useState<Trip | undefined>();
   const [samples, setSamples] = useState<TripSample[]>([]);
+  const [rawSamples, setRawSamples] = useState<SensorSample[]>([]);
+  const [diagnostics, setDiagnostics] = useState<{
+    events: TripDiagnosticEvent[];
+    protection: ProtectionEntry[];
+  }>({ events: [], protection: [] });
 
   useEffect(() => {
     if (!id) return;
     tripRepository.trip(id).then(setTrip);
-    tripRepository.samples(id).then(setSamples);
+    tripRepository.samples(id).then((rows) => {
+      setSamples(rows);
+      setRawSamples(rows);
+    });
+    tripRepository.diagnostics(id).then(setDiagnostics).catch(() => undefined);
   }, [id]);
 
   // Guard stored points: a malformed row must never reach the map layer.
@@ -54,6 +76,8 @@ export default function TripDetailScreen() {
 
   const hasRoute = route.length > 1;
   const hasHarsh = (analysis?.segments ?? []).some((s) => s.cls !== "normal");
+  const timeline = buildTimeline(trip.startedAt, diagnostics.events, diagnostics.protection);
+  const sensors = summarizeSensors(rawSamples, TRIP_SENSOR_KEYS);
 
   const exportCSV = async () => {
     const uri = await exportTripsCSV([trip]);
@@ -181,6 +205,27 @@ export default function TripDetailScreen() {
         </Section>
       )}
 
+      {timeline.length > 0 && (
+        <Section title={t("trip.diagnostics.title")}>
+          {timeline.map((entry, i) => (
+            <TimelineRow key={`${entry.t}-${entry.kind}-${entry.code ?? entry.type ?? i}`} entry={entry} last={i === timeline.length - 1} />
+          ))}
+        </Section>
+      )}
+
+      {sensors.length > 0 && (
+        <Section title={t("trip.sensors.title")}>
+          {sensors.map((summary, i) => (
+            <SensorRow
+              key={summary.key}
+              summary={summary}
+              samples={rawSamples}
+              last={i === sensors.length - 1}
+            />
+          ))}
+        </Section>
+      )}
+
       {trip.note ? (
         <View style={[styles.noteCard, { backgroundColor: colors.surface1 }]}>
           <Text style={{ color: colors.contentPrimary }}>{trip.note}</Text>
@@ -194,6 +239,164 @@ export default function TripDetailScreen() {
       </View>
     </ScrollView>
   );
+}
+
+/** One moment from the drive. A code carries the ECU's freeze frame, which is
+ * the whole reason the event is worth keeping, so it opens in place. */
+function TimelineRow({ entry, last }: { entry: TimelineEntry; last: boolean }) {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const frameRows = entry.freezeFrame ? freezeFrameRows(entry.freezeFrame) : [];
+  const expandable = frameRows.length > 0;
+
+  const tint =
+    entry.kind === "code" || entry.kind === "milOn"
+      ? colors.semCritical
+      : entry.kind === "protection"
+        ? colors.semAttention
+        : colors.contentSecondary;
+
+  const icon: IconName =
+    entry.kind === "code"
+      ? "alert-circle-outline"
+      : entry.kind === "milOff"
+        ? "engine-off-outline"
+        : entry.kind === "protection"
+          ? "shield-alert-outline"
+          : "engine-outline";
+
+  const title =
+    entry.kind === "code"
+      ? t("trip.diagnostics.codeSet", { code: entry.code })
+      : entry.kind === "protection"
+        ? t(`care.event.${entry.type}`, { defaultValue: entry.type ?? "" })
+        : t(`trip.diagnostics.${entry.kind}`);
+
+  const subtitle = [
+    t("trip.diagnostics.at", { time: formatOffset(entry.offsetS) }),
+    entry.status ? t(`dtc.status.${entry.status}`, { defaultValue: entry.status }) : undefined,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  return (
+    <View style={[styles.timelineRow, !last && { borderBottomColor: colors.hairline, borderBottomWidth: StyleSheet.hairlineWidth }]}>
+      <Pressable
+        onPress={() => expandable && setOpen((v) => !v)}
+        disabled={!expandable}
+        style={{ flexDirection: "row", alignItems: "center" }}
+      >
+        <View style={[styles.tipIcon, { backgroundColor: withAlpha(tint, 0.14) }]}>
+          <MaterialCommunityIcons name={icon} size={17} color={tint} />
+        </View>
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <Text style={{ color: colors.contentPrimary, fontSize: 14, fontWeight: "600" }}>{title}</Text>
+          <Text style={{ color: colors.contentTertiary, fontSize: 12 }}>{subtitle}</Text>
+        </View>
+        {expandable && (
+          <MaterialCommunityIcons
+            name={open ? "chevron-up" : "chevron-down"}
+            size={18}
+            color={colors.contentTertiary}
+          />
+        )}
+      </Pressable>
+
+      {open && (
+        <View style={{ marginTop: DSSpace.s3, paddingLeft: 40 }}>
+          <Text style={{ color: colors.contentSecondary, fontSize: 12, marginBottom: DSSpace.s2 }}>
+            {t("trip.diagnostics.freezeFrame")}
+          </Text>
+          {frameRows.map(([labelKey, value]) => (
+            <View key={labelKey} style={styles.frameRow}>
+              <Text style={{ color: colors.contentTertiary, fontSize: 12, flex: 1 }}>{t(labelKey)}</Text>
+              <Text style={{ color: colors.contentPrimary, fontSize: 12, fontVariant: ["tabular-nums"] }}>{value}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+}
+
+/** A sensor's range over the trip, opening into the trace behind it. */
+function SensorRow({
+  summary,
+  samples,
+  last,
+}: {
+  summary: SensorSummary;
+  samples: SensorSample[];
+  last: boolean;
+}) {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const settings = useAppSettings();
+  const [open, setOpen] = useState(false);
+
+  const sensor = tripSensor(summary.key);
+  if (!sensor) return null;
+
+  const unit = t(sensor.unitKey(settings));
+  const show = (raw: number) => `${Formatters.number(sensor.convert(raw, settings), sensor.precision)} ${unit}`;
+  const series = open
+    ? sensorSeries(samples, summary.key).map((s) => ({ t: s.t, value: sensor.convert(s.value, settings) }))
+    : [];
+
+  return (
+    <View style={[styles.timelineRow, !last && { borderBottomColor: colors.hairline, borderBottomWidth: StyleSheet.hairlineWidth }]}>
+      <Pressable onPress={() => setOpen((v) => !v)} style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <Text style={{ color: colors.contentPrimary, fontSize: 14, fontWeight: "600" }}>{t(sensor.labelKey)}</Text>
+          <Text style={{ color: colors.contentTertiary, fontSize: 12 }}>
+            {t("trip.sensors.range", { min: show(summary.min), avg: show(summary.avg), max: show(summary.max) })}
+          </Text>
+        </View>
+        <MaterialCommunityIcons
+          name={open ? "chevron-up" : "chart-line-variant"}
+          size={18}
+          color={colors.contentTertiary}
+        />
+      </Pressable>
+
+      {open && (
+        <View style={{ marginTop: DSSpace.s3 }}>
+          <MetricChart
+            samples={series}
+            color={brandPrimary}
+            height={160}
+            formatValue={(value) => `${Formatters.number(value, sensor.precision)} ${unit}`}
+            emptyText={t("trip.sensors.tooShort")}
+          />
+        </View>
+      )}
+    </View>
+  );
+}
+
+/** Freeze-frame fields that carry a reading, as label key / formatted value. */
+function freezeFrameRows(frame: FreezeFrameValues): Array<[string, string]> {
+  const rows: Array<[string, string | undefined]> = [
+    ["metric.rpm", frame.rpm != null ? `${Formatters.number(frame.rpm, 0)} rpm` : undefined],
+    ["metric.speed", frame.speedKmh != null ? `${Formatters.number(frame.speedKmh, 0)} km/h` : undefined],
+    ["metric.coolant", frame.coolantC != null ? `${Formatters.number(frame.coolantC, 0)} °C` : undefined],
+    ["metric.engineLoad", frame.engineLoadPct != null ? `${Formatters.number(frame.engineLoadPct, 0)} %` : undefined],
+    ["metric.throttle", frame.throttlePct != null ? `${Formatters.number(frame.throttlePct, 0)} %` : undefined],
+    ["metric.intakeAir", frame.intakeAirC != null ? `${Formatters.number(frame.intakeAirC, 0)} °C` : undefined],
+    ["metric.map", frame.mapKpa != null ? `${Formatters.number(frame.mapKpa, 0)} kPa` : undefined],
+    ["metric.maf", frame.mafGs != null ? `${Formatters.number(frame.mafGs, 1)} g/s` : undefined],
+    ["metric.fuelTrimShort", frame.fuelTrimShortPct != null ? `${Formatters.number(frame.fuelTrimShortPct, 1)} %` : undefined],
+    ["metric.fuelTrimLong", frame.fuelTrimLongPct != null ? `${Formatters.number(frame.fuelTrimLongPct, 1)} %` : undefined],
+  ];
+  return rows.filter((row): row is [string, string] => row[1] != null);
+}
+
+function formatOffset(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const rest = seconds % 60;
+  return `${minutes}:${String(rest).padStart(2, "0")}`;
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -283,6 +486,8 @@ const styles = StyleSheet.create({
   sectionCard: { marginHorizontal: DSSpace.screenEdge, borderRadius: DSRadius.card, overflow: "hidden" },
   row: { flexDirection: "row", alignItems: "center", gap: DSSpace.s3, paddingHorizontal: DSSpace.s4, paddingVertical: 13 },
   rowIcon: { width: 30, height: 30, borderRadius: 8, alignItems: "center", justifyContent: "center" },
+  timelineRow: { paddingVertical: DSSpace.s3 },
+  frameRow: { flexDirection: "row", alignItems: "center", paddingVertical: 2 },
   tipRow: { flexDirection: "row", alignItems: "flex-start", gap: DSSpace.s3, paddingHorizontal: DSSpace.s4, paddingVertical: 13 },
   tipIcon: { width: 30, height: 30, borderRadius: 8, alignItems: "center", justifyContent: "center", marginTop: 1 },
   noteCard: { margin: DSSpace.screenEdge, marginBottom: 0, padding: DSSpace.cardPadding, borderRadius: DSRadius.card },
