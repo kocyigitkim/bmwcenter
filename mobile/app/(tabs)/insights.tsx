@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Pressable, ActivityIndicator, Alert } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useFocusEffect, useRouter } from "expo-router";
@@ -11,6 +11,8 @@ import { useAppSettings } from "@/core/settings/appSettings";
 import { tripRepository } from "@/core/storage/tripRepository";
 import { useEffectivePricePerLiter } from "@/core/fuel/effectivePrice";
 import { emptyDrivingSummary, type DrivingSummary } from "@/core/storage/models";
+import * as Sharing from "expo-sharing";
+import { buildMechanicReportPDF } from "@/core/export/mechanicReport";
 import { ScoreRing } from "@/components/ScoreRing";
 import type { ScoreBreakdown } from "@/core/analysis/drivingScorer";
 
@@ -66,6 +68,7 @@ export default function InsightsScreen() {
         <NavRow icon="alert-circle-outline" label={t("insights.dtc")} onPress={() => router.push("/scan")} />
         <NavRow icon="battery-heart-variant" label={t("insights.batteryHealth")} onPress={() => router.push("/battery-health")} />
         <NavRow icon="timer-outline" label={t("insights.accelTest")} onPress={() => router.push("/accel-test")} />
+        <MechanicReportRow />
       </View>
     </ScrollView>
   );
@@ -78,6 +81,48 @@ function Stat({ label, value }: { label: string; value: string }) {
       <Text style={{ color: colors.contentPrimary, fontSize: 20, fontWeight: "700" }}>{value}</Text>
       <Text style={{ color: colors.contentSecondary, fontSize: 12 }}>{label}</Text>
     </View>
+  );
+}
+
+/**
+ * Builds the workshop report and hands it straight to the share sheet — the
+ * point of the report is to leave the phone, so there is no screen in between.
+ */
+function MechanicReportRow() {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const [busy, setBusy] = useState(false);
+
+  const generate = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      const uri = await buildMechanicReportPDF();
+      if (!uri) {
+        Alert.alert(t("report.failedTitle"), t("report.failedBody"));
+        return;
+      }
+      if (await Sharing.isAvailableAsync()) await Sharing.shareAsync(uri);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <Pressable onPress={generate} disabled={busy} style={[styles.navRow, { backgroundColor: colors.surface1 }]}>
+      <MaterialCommunityIcons name="file-document-outline" size={20} color={brandPrimary} />
+      <View style={{ flex: 1, marginLeft: DSSpace.s3 }}>
+        <Text style={{ color: colors.contentPrimary }}>{t("report.generate")}</Text>
+        <Text style={{ color: colors.contentTertiary, fontSize: 11, marginTop: 1 }}>
+          {busy ? t("report.generating") : t("report.generateHint")}
+        </Text>
+      </View>
+      {busy ? (
+        <ActivityIndicator size="small" />
+      ) : (
+        <MaterialCommunityIcons name="share-variant" size={18} color={colors.contentTertiary} />
+      )}
+    </Pressable>
   );
 }
 

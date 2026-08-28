@@ -2,26 +2,35 @@ import { desc, eq, isNull, or } from "drizzle-orm";
 import { db } from "../storage/db";
 import { crankRecords, dtcRecords, protectionEvents } from "../storage/schema";
 import { storage } from "../settings/appSettings";
+import type { EngineIgnition, MonitorStatus, ReadinessStatus } from "../obd/readiness";
 import { activeVehicleId } from "../vehicle/useGarage";
 import { computeHealth, type HealthInput, type HealthReport } from "./healthScore";
 
 const READINESS_KEY = "health.lastReadiness";
 
-interface StoredReadiness {
+export interface StoredReadiness {
   incompleteCount: number;
   supportedCount: number;
   milOn: boolean;
   at: number;
+  /** Per-monitor detail, absent on installs that stored readiness before the
+   * mechanic report needed the full table. */
+  monitors?: MonitorStatus[];
+  ignition?: EngineIgnition;
+  dtcCount?: number;
 }
 
 /** The scan screen reads readiness live; health needs it later, so the last
  * result is kept. Also doubles as the "has a scan ever run" signal. */
-export function rememberReadiness(r: { incompleteCount: number; milOn: boolean; monitors: Array<{ supported: boolean }> }): void {
+export function rememberReadiness(r: ReadinessStatus): void {
   const payload: StoredReadiness = {
     incompleteCount: r.incompleteCount,
     supportedCount: r.monitors.filter((m) => m.supported).length,
     milOn: r.milOn,
     at: Date.now(),
+    monitors: r.monitors,
+    ignition: r.ignition,
+    dtcCount: r.dtcCount,
   };
   try {
     storage.set(READINESS_KEY, JSON.stringify(payload));
