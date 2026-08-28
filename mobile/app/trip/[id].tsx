@@ -13,6 +13,8 @@ import { useAppSettings } from "@/core/settings/appSettings";
 import { tripRepository } from "@/core/storage/tripRepository";
 import { exportTripsCSV } from "@/core/export/csvExporter";
 import { exportTripGPX } from "@/core/export/gpxExporter";
+import { isNativeMapAvailable } from "@/core/maps/mapAvailability";
+import { RouteSketch } from "@/components/RouteSketch";
 import type { Trip } from "@/core/storage/models";
 
 export default function TripDetailScreen() {
@@ -32,8 +34,13 @@ export default function TripDetailScreen() {
     return <View style={{ flex: 1, backgroundColor: colors.canvas }} />;
   }
 
-  const route = trip.routeData ?? [];
+  // Guard the stored points: a malformed row would otherwise reach MapView as
+  // an undefined coordinate, which is itself a native crash.
+  const route = (trip.routeData ?? []).filter(
+    (p) => p != null && Number.isFinite(p.lat) && Number.isFinite(p.lon)
+  );
   const hasRoute = route.length > 1;
+  const showNativeMap = hasRoute && isNativeMapAvailable();
 
   const exportCSV = async () => {
     const uri = await exportTripsCSV([trip]);
@@ -58,7 +65,9 @@ export default function TripDetailScreen() {
         <Text style={[styles.title, { color: colors.contentPrimary }]}>{new Date(trip.startedAt).toLocaleString()}</Text>
       </View>
 
-      {hasRoute && (
+      {hasRoute && !showNativeMap && <RouteSketch route={route} />}
+
+      {showNativeMap && (
         <MapView
           style={styles.map}
           initialRegion={{
@@ -82,8 +91,8 @@ export default function TripDetailScreen() {
         <Stat label={t("trip.average")} value={Formatters.consumption(trip.avgL100 || undefined, settings)} />
         <Stat label={t("unit.liter")} value={Formatters.liters(trip.fuelUsedL)} />
         <Stat label={t("metric.speed")} value={Formatters.speed(trip.maxSpeedKmh, settings)} />
-        <Stat label="Duration" value={Formatters.duration(trip.durationS)} />
-        <Stat label="Score" value={trip.scoreTotal != null ? Formatters.number(trip.scoreTotal, 0) : "--"} />
+        <Stat label={t("trip.duration")} value={Formatters.duration(trip.durationS)} />
+        <Stat label={t("trip.score")} value={trip.scoreTotal != null ? Formatters.number(trip.scoreTotal, 0) : "--"} />
       </View>
 
       {trip.note ? (

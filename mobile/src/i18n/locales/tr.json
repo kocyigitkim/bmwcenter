@@ -298,5 +298,8 @@
   "settings.vehicle.makeOnlyHint": "Modelim listede yok — markaya göre değerleri kullan",
   "settings.vehicle.thermostat": "Termostat {{value}}°C",
   "settings.vehicle.confidence": "Güven {{value}}",
-  "settings.vehicle.thermalSummary": "Termostat {{thermostat}}°C · normal üst sınır {{normal}}°C · uyarı {{warn}}°C"
+  "settings.vehicle.thermalSummary": "Termostat {{thermostat}}°C · normal üst sınır {{normal}}°C · uyarı {{warn}}°C",
+  "trip.route.unavailable": "Rota verisi görüntülenemiyor",
+  "trip.duration": "Süre",
+  "trip.score": "Skor"
 }

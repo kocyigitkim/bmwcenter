@@ -298,5 +298,8 @@
   "settings.vehicle.makeOnlyHint": "My model isn't listed — use brand-level figures",
   "settings.vehicle.thermostat": "Thermostat {{value}}°C",
   "settings.vehicle.confidence": "Confidence {{value}}",
-  "settings.vehicle.thermalSummary": "Thermostat {{thermostat}}°C · normal ceiling {{normal}}°C · warn {{warn}}°C"
+  "settings.vehicle.thermalSummary": "Thermostat {{thermostat}}°C · normal ceiling {{normal}}°C · warn {{warn}}°C",
+  "trip.route.unavailable": "Route can't be drawn",
+  "trip.duration": "Duration",
+  "trip.score": "Score"
 }
