@@ -81,7 +81,8 @@
         }
       ],
       "expo-audio",
-      "./plugins/withTripForegroundService.js"
+      "./plugins/withTripForegroundService.js",
+      "./plugins/withHomeWidget.js"
     ]
   }
 }

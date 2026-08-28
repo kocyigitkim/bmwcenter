@@ -9,6 +9,7 @@ import { vehicleRepository } from "../vehicle/vehicleRepository";
 import { maintenanceNotifier } from "../maintenance/maintenanceNotifier";
 import { metricHistory } from "../metrics/metricHistory";
 import { tripDiagnosticsWatcher } from "./tripDiagnosticsWatcher";
+import { publishWidgetState } from "../widget/widgetPublisher";
 import { FuelIntegrationState, fuelRateLh } from "../fuel/fuelCalculator";
 import { speedCalibrator } from "../analysis/speedCalibrator";
 import { useCareCoordinator } from "../care/careCoordinator";
@@ -144,6 +145,7 @@ async function beginTrip(manual: boolean, set: (partial: Partial<TripRecorderSto
   // The live graphs cover the drive in progress, not the one before it.
   metricHistory.clear();
   tripDiagnosticsWatcher.start(trip.id);
+  publishWidgetState(Date.now(), true).catch(() => undefined);
   movingDurationS = 0;
   idleDurationS = 0;
   maxSpeed = 0;
@@ -335,6 +337,7 @@ async function finalizeTrip(discard: boolean, set: (partial: Partial<TripRecorde
     const vehicleId = activeVehicleId();
     if (vehicleId) await vehicleRepository.addDistance(vehicleId, trip.distanceKm);
     maintenanceNotifier.check().catch(() => undefined);
+    publishWidgetState(Date.now(), true).catch(() => undefined);
 
     const settings = useAppSettings.getState();
     settings.set("lastParkingLatitude", trip.endLatitude);

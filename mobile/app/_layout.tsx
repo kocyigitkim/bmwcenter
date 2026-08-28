@@ -11,6 +11,8 @@ import { useAppSettings } from "@/core/settings/appSettings";
 import { tripRepository } from "@/core/storage/tripRepository";
 import { shouldShowOnboarding } from "@/core/onboarding/onboardingState";
 import { maintenanceNotifier } from "@/core/maintenance/maintenanceNotifier";
+import { publishWidgetState } from "@/core/widget/widgetPublisher";
+import { useWidgetPublisher } from "@/core/widget/useWidgetPublisher";
 import { useAlertEngineRunner } from "@/core/alerts/useAlertEngineRunner";
 import { useTripRecorderRunner } from "@/core/trip/useTripRecorderRunner";
 import { useCareCoordinatorRunner } from "@/core/care/useCareCoordinatorRunner";
@@ -73,6 +75,7 @@ function RootStack() {
   useFuelPriceRunner();
   useAutoConnectRunner();
   useTripNotificationRunner();
+  useWidgetPublisher();
   return (
     <>
       <StatusBar style={scheme === "dark" ? "light" : "dark"} />
@@ -98,6 +101,7 @@ export default function RootLayout() {
       // Intervals are scoped to the active vehicle, so this waits for the garage.
       .then(() => {
         maintenanceNotifier.watchGarage();
+        publishWidgetState(Date.now(), true).catch(() => undefined);
         return maintenanceNotifier.check();
       })
       .catch(() => undefined)
