@@ -26,6 +26,12 @@ import {
   type TripDiagnosticEvent,
 } from "@/core/trip/tripDiagnostics";
 import { TRIP_SENSOR_KEYS, tripSensor } from "@/core/trip/tripSensors";
+import {
+  compareToRoute,
+  findSameRoute,
+  verdictFor,
+  type RouteComparison,
+} from "@/core/trip/routeMatching";
 import type { FreezeFrameValues } from "@/core/obd/freezeFrame";
 import type { Trip } from "@/core/storage/models";
 
@@ -45,6 +51,7 @@ export default function TripDetailScreen() {
     events: TripDiagnosticEvent[];
     protection: ProtectionEntry[];
   }>({ events: [], protection: [] });
+  const [history, setHistory] = useState<Trip[]>([]);
 
   useEffect(() => {
     if (!id) return;
@@ -54,6 +61,8 @@ export default function TripDetailScreen() {
       setRawSamples(rows);
     });
     tripRepository.diagnostics(id).then(setDiagnostics).catch(() => undefined);
+    // Enough history to recognise a commute without loading a whole year.
+    tripRepository.recentTrips(400).then(setHistory).catch(() => undefined);
   }, [id]);
 
   // Guard stored points: a malformed row must never reach the map layer.
@@ -77,6 +86,10 @@ export default function TripDetailScreen() {
   const hasRoute = route.length > 1;
   const hasHarsh = (analysis?.segments ?? []).some((s) => s.cls !== "normal");
   const timeline = buildTimeline(trip.startedAt, diagnostics.events, diagnostics.protection);
+  // Only drives that already happened count as "usual" — a later one cannot be
+  // part of what this trip is being measured against.
+  const earlier = findSameRoute(trip, history.filter((t) => t.startedAt < trip.startedAt));
+  const comparison = compareToRoute(trip, earlier);
   const sensors = summarizeSensors(rawSamples, TRIP_SENSOR_KEYS);
 
   const exportCSV = async () => {
@@ -205,6 +218,12 @@ export default function TripDetailScreen() {
         </Section>
       )}
 
+      {comparison && (
+        <Section title={t("route.title")}>
+          <RouteComparisonRows comparison={comparison} trip={trip} />
+        </Section>
+      )}
+
       {timeline.length > 0 && (
         <Section title={t("trip.diagnostics.title")}>
           {timeline.map((entry, i) => (
@@ -238,6 +257,60 @@ export default function TripDetailScreen() {
         <ActionRow icon="trash-can-outline" tint={colors.semCritical} label={t("common.delete")} onPress={deleteTrip} destructive />
       </View>
     </ScrollView>
+  );
+}
+
+/** How this drive sat against the same route's usual. */
+function RouteComparisonRows({ comparison, trip }: { comparison: RouteComparison; trip: Trip }) {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const settings = useAppSettings();
+
+  const fuelVerdict = verdictFor(comparison.consumptionDelta);
+  const timeVerdict = verdictFor(comparison.durationDelta);
+
+  const tintFor = (verdict: string) =>
+    verdict === "better" ? colors.semNominal : verdict === "worse" ? colors.semAttention : colors.contentSecondary;
+
+  const percent = (delta: number) => `${delta > 0 ? "+" : ""}${Math.round(delta * 100)}%`;
+
+  return (
+    <>
+      <AnalysisRow
+        icon="map-marker-path"
+        tint={brandPrimary}
+        label={t("route.basis")}
+        value={t("route.basisValue", { count: comparison.sampleCount })}
+      />
+      <AnalysisRow
+        icon={fuelVerdict === "better" ? "trending-down" : fuelVerdict === "worse" ? "trending-up" : "trending-neutral"}
+        tint={tintFor(fuelVerdict)}
+        label={t("route.consumption")}
+        value={t(`route.verdict.${fuelVerdict}`, {
+          delta: percent(comparison.consumptionDelta),
+          usual: Formatters.consumption(comparison.usualL100, settings),
+        })}
+      />
+      <AnalysisRow
+        icon="clock-outline"
+        tint={tintFor(timeVerdict)}
+        label={t("route.duration")}
+        value={t(`route.verdict.${timeVerdict}`, {
+          delta: percent(comparison.durationDelta),
+          usual: Formatters.duration(comparison.usualDurationS),
+        })}
+        last={!comparison.isBest}
+      />
+      {comparison.isBest && (
+        <AnalysisRow
+          icon="trophy-outline"
+          tint={colors.semNominal}
+          label={t("route.best")}
+          value={Formatters.consumption(trip.avgL100, settings)}
+          last
+        />
+      )}
+    </>
   );
 }
 

@@ -63,6 +63,7 @@ export default function InsightsScreen() {
 
       <View style={{ paddingHorizontal: DSSpace.screenEdge, gap: DSSpace.cardGap, marginTop: DSSpace.cardGap }}>
         <NavRow icon="heart-pulse" label={t("health.title")} onPress={() => router.push("/health")} />
+        <NavRow icon="chart-timeline-variant" label={t("trends.title")} onPress={() => router.push("/trends")} />
         <NavRow icon="calendar-month" label={t("insights.monthlyReport")} onPress={() => router.push("/monthly-report")} />
         <NavRow icon="wrench" label={t("insights.maintenance")} onPress={() => router.push("/maintenance")} />
         <NavRow icon="alert-circle-outline" label={t("insights.dtc")} onPress={() => router.push("/scan")} />
