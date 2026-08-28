@@ -4,7 +4,6 @@
   "tab.trips": "Trips",
   "tab.insights": "Insights",
   "tab.settings": "Settings",
-
   "unit.kmh": "km/h",
   "unit.mph": "mph",
   "unit.rpm": "rpm",
@@ -22,7 +21,6 @@
   "unit.mpgUS": "mpg (US)",
   "unit.mpgUK": "mpg (UK)",
   "unit.kgh": "kg/h",
-
   "metric.speed": "Speed",
   "metric.rpm": "RPM",
   "metric.coolant": "Coolant",
@@ -55,18 +53,15 @@
   "metric.vanosIntake": "VANOS Intake",
   "metric.vanosExhaust": "VANOS Exhaust",
   "metric.oilPressure": "Oil Pressure",
-
   "scan.action": "Scan Vehicle",
   "scan.dashboardHint": "Check diagnostic codes and emissions readiness",
   "parking.findCar": "Find my car",
   "dashboard.parkingEmpty": "No saved parking location",
-
   "data.noData": "No data",
   "data.notSupported": "Not supported",
   "data.oilExtendedHint": "Requires extended PID support",
   "data.extendedPending": "Extended sensor pending",
   "common.value.unavailable": "--",
-
   "dashboard.gallery": "Add Widget",
   "dashboard.gallery.engine": "Engine",
   "dashboard.gallery.fuel": "Fuel",
@@ -89,7 +84,6 @@
   "dashboard.dailyFuel.noSpend": "No trips today yet",
   "dashboard.emptyTitle": "Dashboard is empty",
   "dashboard.emptyMessage": "Tap Add to choose widgets from the gallery.",
-
   "connection.connect": "Connect",
   "connection.disconnect": "Disconnect",
   "connection.scanning": "Scanning…",
@@ -99,7 +93,6 @@
   "connection.error.bluetooth_off": "Bluetooth appears to be off. Turn it on and try again.",
   "connection.error.bluetooth_permission_denied": "Bluetooth permission was denied. Enable Bluetooth/Location permission for QuickCar in device settings.",
   "connection.error.generic": "Couldn't connect: {{message}}",
-
   "fuel.today": "Today",
   "fuel.week": "This Week",
   "fuel.month": "This Month",
@@ -112,10 +105,15 @@
   "fuel.empty.title": "No refuels logged yet",
   "fuel.priceSource.live": "Live price {{price}}/L · updated {{time}}",
   "fuel.priceSource.manual": "Manual price {{price}}/L",
-
   "trip.distance": "Distance",
   "trip.average": "Average",
-
+  "trip.live.recording": "Recording trip",
+  "trip.live.paused": "Paused",
+  "trip.live.distance": "Distance",
+  "trip.live.fuelUsed": "Fuel",
+  "trip.live.consumption": "Average",
+  "trip.live.cost": "Cost",
+  "trip.live.inProgress": "In progress",
   "settings.title": "Settings",
   "settings.units": "Units",
   "settings.vehicle": "Vehicle",
@@ -130,7 +128,6 @@
   "settings.fuelPrices.updated": "Updated {{time}}",
   "settings.fuelPrices.neverUpdated": "Not fetched yet",
   "settings.fuelPrices.attribution": "Data: OpenVan.camp (CC BY 4.0)",
-
   "common.cancel": "Cancel",
   "common.save": "Save",
   "common.delete": "Delete",
@@ -139,7 +136,6 @@
   "fuel.station": "Station",
   "fuel.odometer": "Odometer (km)",
   "common.note": "Note",
-
   "trips.title": "Trips",
   "trips.empty": "No trips recorded yet",
   "score.acceleration": "Acceleration",
@@ -162,7 +158,6 @@
   "insights.dtc": "Diagnostic codes",
   "insights.batteryHealth": "Battery health",
   "insights.accelTest": "0-100 test",
-
   "scan.title": "Vehicle Scan",
   "scan.startScan": "Start scan",
   "scan.noIssues": "No stored trouble codes",
@@ -170,11 +165,14 @@
   "parking.title": "Parking",
   "parking.save": "Save current location",
   "parking.directions": "Walking directions",
-
   "settings.aboutVehicle": "Vehicle profile",
   "settings.tankCapacity": "Tank capacity (L)",
   "settings.fuelType": "Fuel type",
   "settings.autoConnect": "Auto-connect on launch",
+  "settings.autoReconnect": "Reconnect if the link drops",
+  "settings.rememberedAdapter": "Remembered adapter: {{name}}",
+  "settings.noRememberedAdapter": "No adapter remembered yet",
+  "settings.forgetAdapter": "Forget",
   "settings.useMockAdapter": "Use simulated adapter",
   "settings.autoRecordTrips": "Auto-record trips",
   "settings.unitSystem": "Unit system",
@@ -223,7 +221,6 @@
   "settings.care.low": "Low",
   "settings.care.normalFreq": "Normal",
   "settings.care.high": "High",
-
   "dtc.catalog.title": "Code Library",
   "dtc.catalog.subtitleCount": "{{count}} known codes",
   "dtc.catalog.bmwSection": "BMW-priority codes",
@@ -238,7 +235,6 @@
   "dtc.guidance.other.low": "Low-severity code — usually not urgent, but worth mentioning at your next service.",
   "freezeFrame.title": "Freeze Frame",
   "freezeFrame.empty": "No freeze-frame data captured for this code yet.",
-
   "calibration.title": "Calibration",
   "calibration.fuelFactor": "Fuel calibration factor",
   "calibration.speedFactor": "Speed calibration factor",
@@ -262,19 +258,16 @@
   "capability.freezeFrame": "Freeze frame data",
   "capability.emissionsReadiness": "Emissions readiness",
   "capability.extendedEngineData": "Extended engine data",
-
   "maintenance.oilChange": "Oil change",
   "maintenance.brakeFluid": "Brake fluid",
   "maintenance.airFilter": "Air filter",
   "maintenance.sparkPlugs": "Spark plugs",
   "maintenance.coolant": "Coolant",
-
   "battery.title": "Battery Health",
   "battery.empty": "No cranking records yet",
   "accel.title": "0-100 km/h Test",
   "accel.empty": "No runs recorded yet",
   "accel.start": "Start test",
-
   "alert.coolantHigh.title": "Coolant running hot",
   "alert.coolantHigh.body": "Coolant temperature is above normal.",
   "alert.coolantCritical.title": "Engine overheating",
@@ -293,7 +286,6 @@
   "alert.fuelPriceDown": "decreased",
   "alert.fuelPriceChanged.title": "{{fuelType}} price changed",
   "alert.fuelPriceChanged.body": "Price {{direction}} from {{oldPrice}} to {{newPrice}} per liter.",
-
   "units.metric": "Metric",
   "units.imperial": "Imperial",
   "fuelType.gasoline": "Gasoline",

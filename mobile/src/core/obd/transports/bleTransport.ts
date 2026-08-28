@@ -63,6 +63,8 @@ class CommandQueue {
 }
 
 export class BLEOBDTransport implements OBDTransport {
+  readonly isRealAdapter = true;
+
   private manager = new BleManager();
   private device: Device | undefined;
   private writeChar: Characteristic | undefined;
@@ -106,6 +108,22 @@ export class BLEOBDTransport implements OBDTransport {
       current = await this.manager.state();
     }
     return current === State.PoweredOn;
+  }
+
+  /** Reconnecting to a known adapter does not need a scan — but it does still need the
+   * scan/connect permissions and a powered-on radio, so those are checked here too. */
+  async prepareForDirectConnect(): Promise<boolean> {
+    const granted = await ensureAndroidBlePermissions();
+    if (!granted) {
+      this.setState({ status: "error", message: "bluetooth_permission_denied" });
+      return false;
+    }
+    const poweredOn = await this.waitUntilPoweredOn();
+    if (!poweredOn) {
+      this.setState({ status: "error", message: "bluetooth_off" });
+      return false;
+    }
+    return true;
   }
 
   async scan(onDevice: (device: DiscoveredDevice) => void, timeoutMs = 15000): Promise<void> {

@@ -34,7 +34,25 @@ export default function SettingsScreen() {
 
       <Section title={t("settings.connection")}>
         <SwitchRow label={t("settings.autoConnect")} value={settings.autoConnectOnLaunch} onValueChange={(v) => settings.set("autoConnectOnLaunch", v)} />
+        <SwitchRow label={t("settings.autoReconnect")} value={settings.autoReconnect} onValueChange={(v) => settings.set("autoReconnect", v)} />
         <SwitchRow label={t("settings.useMockAdapter")} value={settings.useMockAdapter} onValueChange={(v) => settings.set("useMockAdapter", v)} />
+        <View style={styles.row}>
+          <Text style={{ color: colors.contentSecondary, flex: 1, fontSize: 12 }}>
+            {settings.lastAdapterId
+              ? t("settings.rememberedAdapter", { name: settings.lastAdapterName ?? settings.lastAdapterId })
+              : t("settings.noRememberedAdapter")}
+          </Text>
+          {settings.lastAdapterId != null && (
+            <Pressable
+              onPress={() => {
+                settings.set("lastAdapterId", null);
+                settings.set("lastAdapterName", null);
+              }}
+            >
+              <Text style={{ color: brandPrimary, fontWeight: "600", fontSize: 12 }}>{t("settings.forgetAdapter")}</Text>
+            </Pressable>
+          )}
+        </View>
       </Section>
 
       <Section title={t("settings.units")}>

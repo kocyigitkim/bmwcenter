@@ -4,7 +4,6 @@
   "tab.trips": "Seferler",
   "tab.insights": "Analiz",
   "tab.settings": "Ayarlar",
-
   "unit.kmh": "km/s",
   "unit.mph": "mph",
   "unit.rpm": "d/d",
@@ -22,7 +21,6 @@
   "unit.mpgUS": "mpg (US)",
   "unit.mpgUK": "mpg (UK)",
   "unit.kgh": "kg/sa",
-
   "metric.speed": "Hız",
   "metric.rpm": "Devir",
   "metric.coolant": "Soğutma Suyu",
@@ -55,18 +53,15 @@
   "metric.vanosIntake": "VANOS Emme",
   "metric.vanosExhaust": "VANOS Egzoz",
   "metric.oilPressure": "Yağ Basıncı",
-
   "scan.action": "Araç Tara",
   "scan.dashboardHint": "Arıza kodlarını ve emisyon hazırlığını kontrol et",
   "parking.findCar": "Arabamı bul",
   "dashboard.parkingEmpty": "Kayıtlı park konumu yok",
-
   "data.noData": "Veri yok",
   "data.notSupported": "Desteklenmiyor",
   "data.oilExtendedHint": "Genişletilmiş PID desteği gerekir",
   "data.extendedPending": "Genişletilmiş sensör bekleniyor",
   "common.value.unavailable": "--",
-
   "dashboard.gallery": "Widget Ekle",
   "dashboard.gallery.engine": "Motor",
   "dashboard.gallery.fuel": "Yakıt",
@@ -89,7 +84,6 @@
   "dashboard.dailyFuel.noSpend": "Bugün henüz sefer yok",
   "dashboard.emptyTitle": "Gösterge paneli boş",
   "dashboard.emptyMessage": "Galeriden widget eklemek için Ekle'ye dokunun.",
-
   "connection.connect": "Bağlan",
   "connection.disconnect": "Bağlantıyı kes",
   "connection.scanning": "Taranıyor…",
@@ -99,7 +93,6 @@
   "connection.error.bluetooth_off": "Bluetooth kapalı görünüyor. Lütfen açıp tekrar deneyin.",
   "connection.error.bluetooth_permission_denied": "Bluetooth izni verilmedi. Cihaz ayarlarından QuickCar için Bluetooth/Konum iznini açın.",
   "connection.error.generic": "Bağlantı kurulamadı: {{message}}",
-
   "fuel.today": "Bugün",
   "fuel.week": "Bu Hafta",
   "fuel.month": "Bu Ay",
@@ -112,10 +105,15 @@
   "fuel.empty.title": "Henüz yakıt alımı kaydı yok",
   "fuel.priceSource.live": "Güncel fiyat {{price}}/L · {{time}} güncellendi",
   "fuel.priceSource.manual": "Manuel fiyat {{price}}/L",
-
   "trip.distance": "Mesafe",
   "trip.average": "Ortalama",
-
+  "trip.live.recording": "Yolculuk kaydediliyor",
+  "trip.live.paused": "Duraklatıldı",
+  "trip.live.distance": "Mesafe",
+  "trip.live.fuelUsed": "Yakıt",
+  "trip.live.consumption": "Ortalama",
+  "trip.live.cost": "Maliyet",
+  "trip.live.inProgress": "Devam ediyor",
   "settings.title": "Ayarlar",
   "settings.units": "Birimler",
   "settings.vehicle": "Araç",
@@ -130,7 +128,6 @@
   "settings.fuelPrices.updated": "{{time}} güncellendi",
   "settings.fuelPrices.neverUpdated": "Henüz alınmadı",
   "settings.fuelPrices.attribution": "Veri: OpenVan.camp (CC BY 4.0)",
-
   "common.cancel": "İptal",
   "common.save": "Kaydet",
   "common.delete": "Sil",
@@ -139,7 +136,6 @@
   "fuel.station": "İstasyon",
   "fuel.odometer": "Kilometre",
   "common.note": "Not",
-
   "trips.title": "Seferler",
   "trips.empty": "Henüz kayıtlı sefer yok",
   "score.acceleration": "İvmelenme",
@@ -162,7 +158,6 @@
   "insights.dtc": "Arıza kodları",
   "insights.batteryHealth": "Akü sağlığı",
   "insights.accelTest": "0-100 testi",
-
   "scan.title": "Araç Taraması",
   "scan.startScan": "Taramayı başlat",
   "scan.noIssues": "Kayıtlı arıza kodu yok",
@@ -170,11 +165,14 @@
   "parking.title": "Park",
   "parking.save": "Mevcut konumu kaydet",
   "parking.directions": "Yürüme yolu tarifi",
-
   "settings.aboutVehicle": "Araç profili",
   "settings.tankCapacity": "Depo kapasitesi (L)",
   "settings.fuelType": "Yakıt türü",
   "settings.autoConnect": "Açılışta otomatik bağlan",
+  "settings.autoReconnect": "Bağlantı koparsa yeniden bağlan",
+  "settings.rememberedAdapter": "Hatırlanan adaptör: {{name}}",
+  "settings.noRememberedAdapter": "Henüz kayıtlı adaptör yok",
+  "settings.forgetAdapter": "Unut",
   "settings.useMockAdapter": "Simüle adaptör kullan",
   "settings.autoRecordTrips": "Seferleri otomatik kaydet",
   "settings.unitSystem": "Birim sistemi",
@@ -223,7 +221,6 @@
   "settings.care.low": "Düşük",
   "settings.care.normalFreq": "Normal",
   "settings.care.high": "Yüksek",
-
   "dtc.catalog.title": "Kod Kütüphanesi",
   "dtc.catalog.subtitleCount": "{{count}} bilinen kod",
   "dtc.catalog.bmwSection": "BMW öncelikli kodlar",
@@ -238,7 +235,6 @@
   "dtc.guidance.other.low": "Düşük önemde bir kod — genelde acil değildir ama bir sonraki serviste belirtmekte fayda var.",
   "freezeFrame.title": "Dondurulmuş Kare",
   "freezeFrame.empty": "Bu kod için henüz kaydedilmiş bir anlık görüntü yok.",
-
   "calibration.title": "Kalibrasyon",
   "calibration.fuelFactor": "Yakıt kalibrasyon katsayısı",
   "calibration.speedFactor": "Hız kalibrasyon katsayısı",
@@ -262,19 +258,16 @@
   "capability.freezeFrame": "Dondurulmuş kare verisi",
   "capability.emissionsReadiness": "Emisyon hazırlığı",
   "capability.extendedEngineData": "Genişletilmiş motor verisi",
-
   "maintenance.oilChange": "Yağ değişimi",
   "maintenance.brakeFluid": "Fren hidroliği",
   "maintenance.airFilter": "Hava filtresi",
   "maintenance.sparkPlugs": "Buji",
   "maintenance.coolant": "Antifriz",
-
   "battery.title": "Akü Sağlığı",
   "battery.empty": "Henüz marş kaydı yok",
   "accel.title": "0-100 km/s Testi",
   "accel.empty": "Henüz test kaydı yok",
   "accel.start": "Testi başlat",
-
   "alert.coolantHigh.title": "Soğutma suyu ısınıyor",
   "alert.coolantHigh.body": "Soğutma suyu sıcaklığı normalin üzerinde.",
   "alert.coolantCritical.title": "Motor aşırı ısınıyor",
@@ -293,7 +286,6 @@
   "alert.fuelPriceDown": "azaldı",
   "alert.fuelPriceChanged.title": "{{fuelType}} fiyatı değişti",
   "alert.fuelPriceChanged.body": "Fiyat litre başına {{oldPrice}} değerinden {{newPrice}} değerine {{direction}}.",
-
   "units.metric": "Metrik",
   "units.imperial": "İngiliz",
   "fuelType.gasoline": "Benzin",

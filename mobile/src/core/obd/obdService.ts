@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useAppSettings } from "../settings/appSettings";
 import { BLEOBDTransport } from "./transports/bleTransport";
 import { MockOBDTransport } from "./transports/mockTransport";
 import type { ConnectionState, DiscoveredDevice, OBDTransport } from "./obdTransport";
@@ -14,11 +15,16 @@ interface OBDServiceState {
   supportedPIDs: Set<number>;
   devices: DiscoveredDevice[];
   isPolling: boolean;
+  /** Set when the user disconnects on purpose, so the reconnect loop stands down until
+   * they ask for a connection again. */
+  autoConnectSuppressed: boolean;
 
   useMockTransport: (useMock: boolean) => void;
   scan: () => Promise<void>;
   stopScan: () => void;
   connect: (deviceId: string) => Promise<void>;
+  /** Connects to the remembered adapter, falling back to a scan. Safe to call repeatedly. */
+  autoConnect: () => Promise<boolean>;
   disconnect: () => Promise<void>;
   start: () => Promise<void>;
   stop: () => void;
@@ -127,6 +133,7 @@ export const useOBDStore = create<OBDServiceState>((set, get) => ({
   supportedPIDs: new Set(),
   devices: [],
   isPolling: false,
+  autoConnectSuppressed: false,
 
   useMockTransport: (useMock: boolean) => {
     get().stop();
@@ -145,9 +152,54 @@ export const useOBDStore = create<OBDServiceState>((set, get) => ({
 
   stopScan: () => get().transport.stopScan(),
 
+  autoConnect: async () => {
+    const settings = useAppSettings.getState();
+    const { transport } = get();
+    if (transport.state.status === "connected") return true;
+    if (transport.state.status === "connecting") return false;
+    // Reaching here means someone actively wants a connection — the reconnect loop
+    // checks `autoConnectSuppressed` before calling, and a UI tap overrides it.
+    set({ autoConnectSuppressed: false });
+
+    const remembered = settings.lastAdapterId;
+    if (remembered) {
+      // Direct connect skips the 15s scan entirely — much faster and far more reliable
+      // than scanning and hoping the adapter advertises in time.
+      const ready = (await transport.prepareForDirectConnect?.()) ?? true;
+      if (!ready) return false;
+      try {
+        await get().connect(remembered);
+        return true;
+      } catch {
+        // Adapter out of range or its MAC rotated — fall through to a scan.
+      }
+    }
+
+    await get().scan();
+    const devices = get().devices;
+    const target = devices.find((d) => d.id === remembered) ?? devices[0];
+    if (!target) return false;
+    try {
+      await get().connect(target.id);
+      return true;
+    } catch {
+      return false;
+    }
+  },
+
   connect: async (deviceId: string) => {
     const { transport } = get();
+    set({ autoConnectSuppressed: false });
     await transport.connect(deviceId);
+    // Remember the adapter only once the link is actually up, so a failed attempt
+    // never overwrites a known-good id — and never remember the simulated adapter.
+    if (transport.isRealAdapter) {
+      const settings = useAppSettings.getState();
+      settings.set("lastAdapterId", deviceId);
+      const name = transport.state.status === "connected" ? transport.state.deviceName ?? null : null;
+      if (name) settings.set("lastAdapterName", name);
+    }
+
     await runInitSequence(transport);
 
     const pages: Array<{ command: string; pid: number; base: number }> = [
@@ -175,6 +227,7 @@ export const useOBDStore = create<OBDServiceState>((set, get) => ({
   },
 
   disconnect: async () => {
+    set({ autoConnectSuppressed: true });
     get().stop();
     await get().transport.disconnect();
   },

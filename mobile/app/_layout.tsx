@@ -10,6 +10,7 @@ import { useAlertEngineRunner } from "@/core/alerts/useAlertEngineRunner";
 import { useTripRecorderRunner } from "@/core/trip/useTripRecorderRunner";
 import { useCareCoordinatorRunner } from "@/core/care/useCareCoordinatorRunner";
 import { useFuelPriceRunner } from "@/core/fuel/useFuelPriceRunner";
+import { useAutoConnectRunner } from "@/core/obd/useAutoConnectRunner";
 import { CareFullScreenAlert } from "@/components/CareFullScreenAlert";
 import { TripSummaryCardModal } from "@/components/TripSummaryCardModal";
 
@@ -19,6 +20,7 @@ function RootStack() {
   useTripRecorderRunner();
   useCareCoordinatorRunner();
   useFuelPriceRunner();
+  useAutoConnectRunner();
   return (
     <>
       <StatusBar style={scheme === "dark" ? "light" : "dark"} />

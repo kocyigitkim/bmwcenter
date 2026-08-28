@@ -27,6 +27,8 @@ export interface AppSettingsState {
   useMockAdapter: boolean;
   autoConnectOnLaunch: boolean;
   lastAdapterId: string | null;
+  lastAdapterName: string | null;
+  autoReconnect: boolean;
   vehicleName: string;
   fuelType: FuelType;
   tankCapacityL: number;
@@ -73,7 +75,6 @@ export interface AppSettingsState {
   careAdaptiveIntervals: boolean;
   careShowSeverityFactor: boolean;
 
-  dashboardLayoutJSON: string | null;
 
   set: <K extends keyof AppSettingsState>(key: K, value: AppSettingsState[K]) => void;
 }
@@ -92,6 +93,8 @@ const defaults = {
   useMockAdapter: true,
   autoConnectOnLaunch: true,
   lastAdapterId: null as string | null,
+  lastAdapterName: null as string | null,
+  autoReconnect: true,
   vehicleName: "",
   fuelType: "gasoline" as FuelType,
   tankCapacityL: 60,
@@ -138,7 +141,6 @@ const defaults = {
   careAdaptiveIntervals: true,
   careShowSeverityFactor: true,
 
-  dashboardLayoutJSON: null as string | null,
 };
 
 function load<K extends keyof typeof defaults>(key: K): (typeof defaults)[K] {

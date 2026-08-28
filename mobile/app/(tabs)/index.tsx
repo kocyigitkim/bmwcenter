@@ -12,6 +12,7 @@ import { packedRows, hideWidget, ALL_PRESETS, type DashboardWidgetItem } from "@
 import { DashboardWidgetView } from "@/components/DashboardWidgetView";
 import { DashboardWidgetGallery } from "@/components/DashboardWidgetGallery";
 import { AlertChipRow } from "@/components/AlertChipRow";
+import { ActiveTripStrip } from "@/components/ActiveTripStrip";
 
 export default function DashboardScreen() {
   const { t } = useTranslation();
@@ -21,29 +22,15 @@ export default function DashboardScreen() {
   const setLayout = useDashboardLayout((s) => s.setLayout);
   const applyPreset = useDashboardLayout((s) => s.applyPreset);
   const connection = useOBDStore((s) => s.connection);
-  const useMockAdapter = useAppSettings((s) => s.useMockAdapter);
-  const useMockTransport = useOBDStore((s) => s.useMockTransport);
-  const autoConnectOnLaunch = useAppSettings((s) => s.autoConnectOnLaunch);
-  const scan = useOBDStore((s) => s.scan);
   const devices = useOBDStore((s) => s.devices);
   const connect = useOBDStore((s) => s.connect);
   const disconnect = useOBDStore((s) => s.disconnect);
+  const autoConnect = useOBDStore((s) => s.autoConnect);
   const [isEditing, setIsEditing] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
 
-  useEffect(() => {
-    useMockTransport(useMockAdapter);
-  }, [useMockAdapter, useMockTransport]);
-
-  useEffect(() => {
-    if (!autoConnectOnLaunch) return;
-    if (connection.status !== "idle") return;
-    scan().then(() => {
-      const first = useOBDStore.getState().devices[0];
-      if (first) connect(first.id);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoConnectOnLaunch]);
+  // Transport selection and auto-connect/reconnect are driven by useAutoConnectRunner
+  // in the root layout.
 
   const rows = packedRows(layout);
   const connected = connection.status === "connected";
@@ -56,7 +43,11 @@ export default function DashboardScreen() {
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.contentPrimary }]}>{t("tab.dashboard")}</Text>
         <View style={{ flexDirection: "row", alignItems: "center", gap: DSSpace.s2 }}>
-          <ConnectionPill connected={connected} scanning={connection.status === "scanning"} onPress={() => (connected ? disconnect() : scan())} />
+          <ConnectionPill
+            connected={connected}
+            scanning={connection.status === "scanning" || connection.status === "connecting"}
+            onPress={() => (connected ? disconnect() : autoConnect())}
+          />
           <Pressable onPress={() => setIsEditing((v) => !v)} hitSlop={8}>
             <Text style={{ color: brandPrimary, fontWeight: "600" }}>
               {isEditing ? t("dashboard.doneEditing") : t("dashboard.editLayout")}
@@ -80,6 +71,8 @@ export default function DashboardScreen() {
       </ScrollView>
 
       <AlertChipRow />
+
+      <ActiveTripStrip />
 
       {connection.status === "error" && (
         <View style={[styles.deviceList, { backgroundColor: colors.surface1 }]}>

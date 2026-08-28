@@ -69,6 +69,7 @@ let disconnectedSince: number | undefined;
 let manualOverrideUntil: number | undefined;
 let lastSampleAt: number | undefined;
 let lastFlushAt = Date.now();
+let lastProgressPersistAt = 0;
 let movingDurationS = 0;
 let idleDurationS = 0;
 let maxSpeed = 0;
@@ -133,6 +134,7 @@ async function beginTrip(manual: boolean, set: (partial: Partial<TripRecorderSto
   routePoints = [];
   lastRoutePointAt = 0;
   lastSampleAt = undefined;
+  lastProgressPersistAt = now;
   speedAboveThresholdSince = undefined;
   speedBelowSince = undefined;
   pausedSince = undefined;
@@ -204,6 +206,35 @@ function sample(snapshot: VehicleSnapshot, now: number, set: (partial: Partial<T
     flushSamples();
     lastFlushAt = now;
   }
+  // The Trip row is inserted with zeroed aggregates and only filled in at finalize, so
+  // without this an in-progress trip reads as all-zero everywhere it is loaded from the
+  // database — and a kill mid-trip would persist those zeros permanently.
+  if (now - lastProgressPersistAt >= PROGRESS_PERSIST_MS) {
+    lastProgressPersistAt = now;
+    persistProgress(now).catch(() => undefined);
+  }
+}
+
+const PROGRESS_PERSIST_MS = 30_000;
+
+/** Writes the running aggregates onto the open Trip row. `endedAt` stays null so the
+ * trip still reads as in-progress. */
+async function persistProgress(now: number) {
+  const trip = currentTrip;
+  if (!trip) return;
+  const duration = (now - trip.startedAt) / 1000;
+  trip.distanceKm = integration.distanceKm;
+  trip.durationS = duration;
+  trip.movingDurationS = movingDurationS;
+  trip.idleDurationS = idleDurationS;
+  trip.fuelUsedL = integration.fuelUsedL;
+  trip.idleFuelL = integration.idleFuelL;
+  trip.avgSpeedKmh = duration > 0 ? integration.distanceKm / (duration / 3600) : 0;
+  trip.maxSpeedKmh = maxSpeed;
+  trip.maxRpm = maxRpm;
+  trip.avgL100 = integration.avgL100 ?? 0;
+  trip.startFuelPct = startFuelPct ?? null;
+  await tripRepository.update(trip);
 }
 
 async function flushSamples() {

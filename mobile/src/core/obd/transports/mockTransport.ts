@@ -25,6 +25,8 @@ const PAGE2_PIDS = [0x42, 0x46, 0x49, 0x5c, 0x5e]; // voltage, ambient, pedal, o
  * every dashboard/fuel/trip screen can be exercised end-to-end without hardware.
  */
 export class MockOBDTransport implements OBDTransport {
+  readonly isRealAdapter = false;
+
   private _state: ConnectionState = { status: "idle" };
   private stateListeners = new Set<(s: ConnectionState) => void>();
   private lineListeners = new Set<(l: string) => void>();
