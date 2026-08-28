@@ -7,6 +7,7 @@ import { useAppSettings } from "../settings/appSettings";
 import { activeVehicleId } from "../vehicle/useGarage";
 import { vehicleRepository } from "../vehicle/vehicleRepository";
 import { maintenanceNotifier } from "../maintenance/maintenanceNotifier";
+import { metricHistory } from "../metrics/metricHistory";
 import { FuelIntegrationState, fuelRateLh } from "../fuel/fuelCalculator";
 import { speedCalibrator } from "../analysis/speedCalibrator";
 import { useCareCoordinator } from "../care/careCoordinator";
@@ -129,6 +130,8 @@ async function beginTrip(manual: boolean, set: (partial: Partial<TripRecorderSto
   currentTrip = trip;
   integration = new FuelIntegrationState();
   memorySamples = [];
+  // The live graphs cover the drive in progress, not the one before it.
+  metricHistory.clear();
   movingDurationS = 0;
   idleDurationS = 0;
   maxSpeed = 0;

@@ -15,6 +15,7 @@ import {
   type FreezeFrameValues,
 } from "./freezeFrame";
 import { emptySnapshot, type VehicleSnapshot } from "./vehicleSnapshot";
+import { metricHistory } from "../metrics/metricHistory";
 
 interface OBDServiceState {
   transport: OBDTransport;
@@ -254,7 +255,10 @@ export const useOBDStore = create<OBDServiceState>((set, get) => ({
       if (transport.state.status === "connected") {
         const patch = await pollOnce(transport, supportedPIDs, first);
         first = false;
-        set((s) => ({ snapshot: { ...s.snapshot, ...patch, timestamp: Date.now() } }));
+        const now = Date.now();
+        // Only what this poll actually read feeds the history a gauge opens into.
+        metricHistory.record(patch, now);
+        set((s) => ({ snapshot: { ...s.snapshot, ...patch, timestamp: now } }));
       }
       pollHandle = setTimeout(loop, FAST_INTERVAL_MS);
     };

@@ -466,5 +466,16 @@
   "maintenance.notification.title": "Bakım zamanı",
   "maintenance.notification.due": "{{title}} bakımı geldi.",
   "maintenance.notification.overdue": "{{title}} bakımı gecikti.",
-  "maintenance.notification.multiple": "{{title}} ve {{count}} işlem daha bekliyor."
+  "maintenance.notification.multiple": "{{title}} ve {{count}} işlem daha bekliyor.",
+  "unit.gramsPerSecond": "g/s",
+  "unit.degree": "°",
+  "metricGraph.window": "Bu sürüşün son {{count}} dakikası",
+  "metricGraph.waiting": "İlk veriler bekleniyor…",
+  "metricGraph.notConnected": "Bu veriyi kaydetmek için adaptöre bağlanın",
+  "metricGraph.notGraphable": "Bu kart birden fazla veriden hesaplanıyor, bu yüzden grafiği çizilecek tek bir geçmiş yok.",
+  "metricGraph.unknown": "Ölçüm",
+  "metricGraph.min": "En düşük",
+  "metricGraph.avg": "Ortalama",
+  "metricGraph.max": "En yüksek",
+  "metricGraph.footnote": "Geçmiş yalnızca devam eden sürüşü kapsar ve bellekte tutulur — her seferde sıfırdan başlar. Değer okumak için grafiğin üzerinde parmağınızı kaydırın."
 }

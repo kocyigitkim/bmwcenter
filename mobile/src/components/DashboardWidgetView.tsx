@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, type StyleProp, type ViewStyle } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -23,6 +23,7 @@ import {
 import type { DashboardWidgetItem } from "@/core/dashboard/dashboardLayout";
 import * as DM from "@/core/dashboard/dashMetrics";
 import * as FC from "@/core/fuel/fuelCalculator";
+import { isGraphable } from "@/core/metrics/widgetMetric";
 
 export type Placement = "gridCell" | "heroFull" | "heroDual";
 
@@ -74,7 +75,7 @@ export function DashboardWidgetView({ item, placement, isEditing = false }: Prop
   if (usesGauge) {
     const spec = gaugeSpec(item.id, snapshot, settings, connected, caption);
     return (
-      <View style={styles.gaugeWrap}>
+      <GraphableWrap kind={item.id} isEditing={isEditing} style={styles.gaugeWrap}>
         <GaugeRing
           value={spec.value}
           range={spec.range}
@@ -85,13 +86,60 @@ export function DashboardWidgetView({ item, placement, isEditing = false }: Prop
           precision={spec.precision}
           unavailableReason={t(spec.emptyReasonKey)}
         />
-      </View>
+      </GraphableWrap>
     );
   }
 
   const spec = tileSpec(item.id, snapshot, settings, connected, caption, icon, t);
-  return <MetricTile {...spec} emptyReason={spec.emptyReason ? t(spec.emptyReason) : undefined} />;
+  return (
+    <GraphableWrap kind={item.id} isEditing={isEditing} style={{ flex: 1 }}>
+      <MetricTile {...spec} emptyReason={spec.emptyReason ? t(spec.emptyReason) : undefined} />
+    </GraphableWrap>
+  );
 }
+
+/**
+ * Opens a widget backed by a single PID into its live graph.
+ *
+ * Widgets that are computed from several readings are not in the history, so
+ * they stay inert rather than opening an empty chart. The corner mark is what
+ * tells the two apart — without it, tapping is a feature nobody finds.
+ */
+function GraphableWrap({
+  kind,
+  isEditing,
+  style,
+  children,
+}: {
+  kind: DashboardWidgetKind;
+  isEditing: boolean;
+  style: StyleProp<ViewStyle>;
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const { colors } = useTheme();
+  const graphable = isGraphable(kind);
+
+  return (
+    <Pressable
+      style={style}
+      disabled={isEditing || !graphable}
+      onPress={() => router.push(`/metric/${kind}`)}
+    >
+      {children}
+      {graphable && !isEditing && (
+        <MaterialCommunityIcons
+          name="chart-line-variant"
+          size={13}
+          color={colors.contentTertiary}
+          style={graphMarkStyle}
+        />
+      )}
+    </Pressable>
+  );
+}
+
+const graphMarkStyle = { position: "absolute" as const, top: 6, right: 6, opacity: 0.5 };
 
 function ActionCard({
   icon,

@@ -466,5 +466,16 @@
   "maintenance.notification.title": "Maintenance due",
   "maintenance.notification.due": "{{title}} is due now.",
   "maintenance.notification.overdue": "{{title}} is overdue.",
-  "maintenance.notification.multiple": "{{title}} and {{count}} more item(s) need attention."
+  "maintenance.notification.multiple": "{{title}} and {{count}} more item(s) need attention.",
+  "unit.gramsPerSecond": "g/s",
+  "unit.degree": "°",
+  "metricGraph.window": "Last {{count}} min of this drive",
+  "metricGraph.waiting": "Waiting for the first readings…",
+  "metricGraph.notConnected": "Connect to the adapter to record this metric",
+  "metricGraph.notGraphable": "This card is calculated from several readings, so there is no single history to graph.",
+  "metricGraph.unknown": "Metric",
+  "metricGraph.min": "Min",
+  "metricGraph.avg": "Average",
+  "metricGraph.max": "Max",
+  "metricGraph.footnote": "History covers the drive in progress and is kept in memory only — it starts fresh with each trip. Drag across the graph to read a value."
 }
