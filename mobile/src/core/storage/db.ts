@@ -2,7 +2,9 @@ import * as SQLite from "expo-sqlite";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import * as schema from "./schema";
 
-const sqlite = SQLite.openDatabaseSync("quickcar.db");
+/** Exported for backup and restore, which work table by table rather than
+ * through the typed schema so a table added later is never left out. */
+export const sqlite = SQLite.openDatabaseSync("quickcar.db");
 
 export const db = drizzle(sqlite, { schema });
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, StyleSheet, TextInput, Switch, Pressable, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TextInput, Switch, Pressable, ActivityIndicator, Alert } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
@@ -21,6 +21,8 @@ import { useRemoteFuelPrices } from "@/core/fuel/remoteFuelPriceStore";
 import { fetchAndApplyFuelPrices } from "@/core/fuel/fuelPriceService";
 import { Formatters } from "@/design/formatters";
 import { tripNotification } from "@/core/notifications/tripNotification";
+import { applyBackup, exportBackup, pickBackup, type RestoreOutcome } from "@/core/backup/backupService";
+import { describeBackup } from "@/core/backup/backupFormat";
 
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
@@ -238,6 +240,10 @@ export default function SettingsScreen() {
         <SwitchRow label={t("settings.care.showSeverityFactor")} value={settings.careShowSeverityFactor} onValueChange={(v) => settings.set("careShowSeverityFactor", v)} />
       </Section>
 
+      <Section title={t("backup.section")}>
+        <BackupRows />
+      </Section>
+
       <Section title="">
         <Pressable
           onPress={async () => {
@@ -258,6 +264,107 @@ export default function SettingsScreen() {
         </Pressable>
       </Section>
     </ScrollView>
+  );
+}
+
+/**
+ * Backup and restore.
+ *
+ * Restoring is destructive in a way exporting is not, so it always states what
+ * the file holds and asks how to apply it before touching anything.
+ */
+function BackupRows() {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const [busy, setBusy] = useState<"export" | "restore" | undefined>();
+
+  const runExport = async () => {
+    if (busy) return;
+    setBusy("export");
+    try {
+      const uri = await exportBackup();
+      if (!uri) Alert.alert(t("backup.failedTitle"), t("backup.exportFailedBody"));
+    } finally {
+      setBusy(undefined);
+    }
+  };
+
+  const runRestore = async () => {
+    if (busy) return;
+    setBusy("restore");
+    try {
+      const picked = await pickBackup();
+      if (!picked.ok) {
+        if (picked.problem !== "cancelled") {
+          Alert.alert(t("backup.failedTitle"), t(`backup.problem.${picked.problem}`));
+        }
+        return;
+      }
+
+      const summary = describeBackup(picked.payload)
+        .slice(0, 4)
+        .map((entry) => t("backup.rowCount", { table: t(`backup.table.${entry.table}`, { defaultValue: entry.table }), count: entry.rows }))
+        .join("\n");
+      const taken = picked.payload.createdAt
+        ? new Date(picked.payload.createdAt).toLocaleString()
+        : t("backup.unknownDate");
+
+      Alert.alert(
+        t("backup.restoreTitle"),
+        t("backup.restoreBody", { date: taken, summary }),
+        [
+          { text: t("common.cancel"), style: "cancel" },
+          { text: t("backup.merge"), onPress: () => finish(applyBackup(picked.payload, "merge")) },
+          {
+            text: t("backup.replace"),
+            style: "destructive",
+            onPress: () =>
+              Alert.alert(t("backup.replaceConfirmTitle"), t("backup.replaceConfirmBody"), [
+                { text: t("common.cancel"), style: "cancel" },
+                {
+                  text: t("backup.replace"),
+                  style: "destructive",
+                  onPress: () => finish(applyBackup(picked.payload, "replace")),
+                },
+              ]),
+          },
+        ]
+      );
+    } finally {
+      setBusy(undefined);
+    }
+  };
+
+  const finish = (outcome: RestoreOutcome) => {
+    if (!outcome.ok) {
+      Alert.alert(t("backup.failedTitle"), t("backup.problem.failed"));
+      return;
+    }
+    Alert.alert(
+      t("backup.restoredTitle"),
+      t("backup.restoredBody", { inserted: outcome.inserted ?? 0, skipped: outcome.skipped ?? 0 })
+    );
+  };
+
+  return (
+    <>
+      <Pressable onPress={runExport} disabled={busy != null} style={styles.navRow}>
+        <MaterialCommunityIcons name="content-save-outline" size={20} color={brandPrimary} />
+        <View style={{ flex: 1, marginLeft: DSSpace.s3 }}>
+          <Text style={{ color: colors.contentPrimary }}>{t("backup.export")}</Text>
+          <Text style={{ color: colors.contentTertiary, fontSize: 11 }}>{t("backup.exportHint")}</Text>
+        </View>
+        {busy === "export" && <ActivityIndicator size="small" />}
+      </Pressable>
+      <Pressable onPress={runRestore} disabled={busy != null} style={styles.navRow}>
+        <MaterialCommunityIcons name="backup-restore" size={20} color={brandPrimary} />
+        <View style={{ flex: 1, marginLeft: DSSpace.s3 }}>
+          <Text style={{ color: colors.contentPrimary }}>{t("backup.restore")}</Text>
+          <Text style={{ color: colors.contentTertiary, fontSize: 11 }}>{t("backup.restoreHint")}</Text>
+        </View>
+        {busy === "restore" && <ActivityIndicator size="small" />}
+      </Pressable>
+    </>
   );
 }
 

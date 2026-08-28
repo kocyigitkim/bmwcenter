@@ -80,9 +80,15 @@ export interface AppSettingsState {
   careAirflowWatch: boolean;
   careAdaptiveIntervals: boolean;
   careShowSeverityFactor: boolean;
+  /** When first-run setup finished. Null while it has never been completed. */
+  onboardingCompletedAt: number | null;
+  /** Which step the wizard was left on, so it resumes rather than restarts. */
+  onboardingStep: number;
 
 
   set: <K extends keyof AppSettingsState>(key: K, value: AppSettingsState[K]) => void;
+  /** Re-reads every setting from storage, for after a backup restore. */
+  reload: () => void;
 }
 
 const defaults = {
@@ -152,6 +158,8 @@ const defaults = {
   careAirflowWatch: true,
   careAdaptiveIntervals: true,
   careShowSeverityFactor: true,
+  onboardingCompletedAt: null as number | null,
+  onboardingStep: 0,
 
 };
 
@@ -175,6 +183,15 @@ export const useAppSettings = create<AppSettingsState>((set) => {
     set: (key, value) => {
       storage.set(`settings.${String(key)}`, JSON.stringify(value));
       set({ [key]: value } as Partial<AppSettingsState>);
+    },
+    /** Re-reads every setting from storage. Needed after a restore, which
+     * writes the keys underneath the store. */
+    reload: () => {
+      set(
+        Object.fromEntries(
+          (Object.keys(defaults) as Array<keyof typeof defaults>).map((k) => [k, load(k)])
+        ) as Partial<AppSettingsState>
+      );
     },
   };
 });
