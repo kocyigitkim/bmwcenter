@@ -290,5 +290,13 @@
   "units.imperial": "Imperial",
   "fuelType.gasoline": "Gasoline",
   "fuelType.diesel": "Diesel",
-  "fuelType.lpg": "LPG"
+  "fuelType.lpg": "LPG",
+  "settings.vehicle.model": "Make and model",
+  "settings.vehicle.pickMake": "Choose a make",
+  "settings.vehicle.searchMake": "Search makes",
+  "settings.vehicle.makeOnly": "Make only",
+  "settings.vehicle.makeOnlyHint": "My model isn't listed — use brand-level figures",
+  "settings.vehicle.thermostat": "Thermostat {{value}}°C",
+  "settings.vehicle.confidence": "Confidence {{value}}",
+  "settings.vehicle.thermalSummary": "Thermostat {{thermostat}}°C · normal ceiling {{normal}}°C · warn {{warn}}°C"
 }

@@ -290,5 +290,13 @@
   "units.imperial": "İngiliz",
   "fuelType.gasoline": "Benzin",
   "fuelType.diesel": "Dizel",
-  "fuelType.lpg": "LPG"
+  "fuelType.lpg": "LPG",
+  "settings.vehicle.model": "Marka ve model",
+  "settings.vehicle.pickMake": "Marka seçin",
+  "settings.vehicle.searchMake": "Marka ara",
+  "settings.vehicle.makeOnly": "Sadece marka",
+  "settings.vehicle.makeOnlyHint": "Modelim listede yok — markaya göre değerleri kullan",
+  "settings.vehicle.thermostat": "Termostat {{value}}°C",
+  "settings.vehicle.confidence": "Güven {{value}}",
+  "settings.vehicle.thermalSummary": "Termostat {{thermostat}}°C · normal üst sınır {{normal}}°C · uyarı {{warn}}°C"
 }

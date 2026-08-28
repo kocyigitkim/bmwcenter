@@ -1,3 +1,5 @@
+import { archetypeProfile, type VehicleDiagnosticProfile } from "../vehicle/vehicleProfile";
+
 export type CueSeverity = "celebration" | "coach" | "protective" | "critical";
 
 const SEVERITY_RANK: Record<CueSeverity, number> = {
@@ -28,6 +30,9 @@ export interface CareChannelPlan {
 
 export interface CareContext {
   now: number;
+  /** Per-vehicle thermal/electrical constants. Watchdogs must judge against this
+   * rather than one hardcoded threshold for every car. */
+  vehicle: VehicleDiagnosticProfile;
   ambientC?: number;
   oilTempC?: number;
   oilIsEstimated: boolean;
@@ -44,6 +49,7 @@ export interface CareContext {
 export function emptyCareContext(now = Date.now()): CareContext {
   return {
     now,
+    vehicle: archetypeProfile("gasolineNA", "gasoline"),
     oilIsEstimated: true,
     engineReady: false,
     isColdPhase: true,

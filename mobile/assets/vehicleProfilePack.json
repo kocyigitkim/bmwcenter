@@ -1,0 +1,2079 @@
+{
+  "schemaVersion": 3,
+  "packVersion": "2026.08.2",
+  "models": [
+    {
+      "id": "universal.obd2",
+      "make": "Universal",
+      "model": "Any car",
+      "matchModel": [
+        "any car",
+        "unknown vehicle"
+      ],
+      "matchEngine": [
+        "obd2"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C",
+      "engineLabel": "Standard OBD-II",
+      "tankL": 50,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "universal.gasolineNA",
+      "make": "Universal",
+      "model": "Gasoline",
+      "matchModel": [
+        "gasoline"
+      ],
+      "matchEngine": [
+        "na"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C",
+      "engineLabel": "Naturally aspirated",
+      "tankL": 50,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "universal.gasolineTurboDI",
+      "make": "Universal",
+      "model": "Gasoline",
+      "matchModel": [
+        "gasoline"
+      ],
+      "matchEngine": [
+        "turbo"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "Turbo",
+      "tankL": 50,
+      "displacementL": 1.3,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "universal.dieselDPF",
+      "make": "Universal",
+      "model": "Diesel",
+      "matchModel": [
+        "diesel"
+      ],
+      "matchEngine": [
+        "dpf"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "Turbo diesel (DPF)",
+      "tankL": 55,
+      "displacementL": 1.6,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "universal.hybridFHEV",
+      "make": "Universal",
+      "model": "Hybrid",
+      "matchModel": [
+        "hybrid"
+      ],
+      "matchEngine": [
+        "hybrid"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "C",
+      "engineLabel": "Full hybrid",
+      "tankL": 43,
+      "displacementL": 1.8,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "universal.ev",
+      "make": "Universal",
+      "model": "Electric",
+      "matchModel": [
+        "ev",
+        "electric"
+      ],
+      "matchEngine": [
+        "ev"
+      ],
+      "archetype": "ev",
+      "tstat": 0,
+      "mapControlled": false,
+      "capBar": 1.2,
+      "batteryChem": "lithium",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "Battery electric",
+      "tankL": 0,
+      "displacementL": 0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "flags": [
+        "noICE"
+      ]
+    },
+    {
+      "id": "renault.clio6.tce115",
+      "make": "Renault",
+      "model": "Clio",
+      "matchModel": [
+        "clio"
+      ],
+      "matchEngine": [
+        "tce115",
+        "h5ht"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TCe 115",
+      "yearFrom": 2019,
+      "yearTo": 2026,
+      "tankL": 42,
+      "displacementL": 1.3,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "renault.clio5.tce90",
+      "make": "Renault",
+      "model": "Clio",
+      "matchModel": [
+        "clio"
+      ],
+      "matchEngine": [
+        "tce90",
+        "tce100"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TCe 90",
+      "yearFrom": 2012,
+      "yearTo": 2019,
+      "tankL": 45,
+      "displacementL": 0.9,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "renault.megane.tce140",
+      "make": "Renault",
+      "model": "Megane",
+      "matchModel": [
+        "megane"
+      ],
+      "matchEngine": [
+        "tce140"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TCe 140",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.3,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "renault.megane.dci",
+      "make": "Renault",
+      "model": "Megane",
+      "matchModel": [
+        "megane"
+      ],
+      "matchEngine": [
+        "bluedci",
+        "dci"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "Blue dCi",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.5,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "renault.duster.mhev",
+      "make": "Renault",
+      "model": "Duster",
+      "matchModel": [
+        "duster"
+      ],
+      "matchEngine": [
+        "mhev"
+      ],
+      "archetype": "mildHybrid48V",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "Mild hybrid",
+      "yearFrom": 2022,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.2,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "dacia.sandero.tce",
+      "make": "Dacia",
+      "model": "Sandero",
+      "matchModel": [
+        "sandero"
+      ],
+      "matchEngine": [
+        "tce",
+        "ecog"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TCe",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "fiat.egea.fire95",
+      "make": "Fiat",
+      "model": "Egea",
+      "matchModel": [
+        "egea",
+        "tipo"
+      ],
+      "matchEngine": [
+        "fire95",
+        "fire"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 88,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "Fire 95",
+      "yearFrom": 2015,
+      "yearTo": 2026,
+      "tankL": 45,
+      "displacementL": 1.4,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "fiat.egea.multijet120",
+      "make": "Fiat",
+      "model": "Egea",
+      "matchModel": [
+        "egea",
+        "tipo"
+      ],
+      "matchEngine": [
+        "multijet",
+        "1.6mjt"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "Multijet 120",
+      "yearFrom": 2015,
+      "yearTo": 2026,
+      "tankL": 45,
+      "displacementL": 1.6,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "fiat.egea.t4hybrid",
+      "make": "Fiat",
+      "model": "Egea",
+      "matchModel": [
+        "egea",
+        "tipo"
+      ],
+      "matchEngine": [
+        "t4",
+        "hybrid"
+      ],
+      "archetype": "mildHybrid48V",
+      "tstat": 90,
+      "mapControlled": true,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "T4 Hybrid",
+      "yearFrom": 2020,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "toyota.corolla.2zrfxe",
+      "make": "Toyota",
+      "model": "Corolla",
+      "matchModel": [
+        "corolla"
+      ],
+      "matchEngine": [
+        "2zr-fxe",
+        "hybrid"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A",
+      "engineLabel": "2ZR-FXE hybrid",
+      "yearFrom": 2019,
+      "yearTo": 2026,
+      "tankL": 43,
+      "displacementL": 1.8,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "toyota.corolla.m15a",
+      "make": "Toyota",
+      "model": "Corolla",
+      "matchModel": [
+        "corolla"
+      ],
+      "matchEngine": [
+        "m15a-fks",
+        "1.5"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "efb",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "M15A-FKS 1.5",
+      "yearFrom": 2019,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "toyota.chr.hybrid",
+      "make": "Toyota",
+      "model": "C-HR",
+      "matchModel": [
+        "c-hr",
+        "chr"
+      ],
+      "matchEngine": [
+        "hybrid"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A",
+      "engineLabel": "Hybrid",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "tankL": 43,
+      "displacementL": 1.8,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "toyota.yariscross.hybrid",
+      "make": "Toyota",
+      "model": "Yaris Cross",
+      "matchModel": [
+        "yaris cross",
+        "yariscross"
+      ],
+      "matchEngine": [
+        "hybrid"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A",
+      "engineLabel": "Hybrid",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 36,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "vw.taigo.tsi",
+      "make": "Volkswagen",
+      "model": "Taigo",
+      "matchModel": [
+        "taigo"
+      ],
+      "matchEngine": [
+        "1.0tsi",
+        "ea211"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.0 TSI",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 40,
+      "displacementL": 1.0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "vw.polo.tsi",
+      "make": "Volkswagen",
+      "model": "Polo",
+      "matchModel": [
+        "polo"
+      ],
+      "matchEngine": [
+        "1.0tsi"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.0 TSI",
+      "yearFrom": 2017,
+      "yearTo": 2026,
+      "tankL": 40,
+      "displacementL": 1.0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "vw.golf8.etsi",
+      "make": "Volkswagen",
+      "model": "Golf",
+      "matchModel": [
+        "golf"
+      ],
+      "matchEngine": [
+        "etsi",
+        "1.5"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.5 eTSI",
+      "yearFrom": 2020,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "vw.passat.tsi2.0",
+      "make": "Volkswagen",
+      "model": "Passat",
+      "matchModel": [
+        "passat",
+        "tiguan"
+      ],
+      "matchEngine": [
+        "2.0tsi",
+        "ea888"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "2.0 TSI",
+      "yearFrom": 2015,
+      "yearTo": 2026,
+      "tankL": 66,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "skoda.octavia.tsi",
+      "make": "Skoda",
+      "model": "Octavia",
+      "matchModel": [
+        "octavia"
+      ],
+      "matchEngine": [
+        "1.5tsi"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.5 TSI",
+      "yearFrom": 2020,
+      "yearTo": 2026,
+      "tankL": 45,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "audi.a3.tdi",
+      "make": "Audi",
+      "model": "A3",
+      "matchModel": [
+        "a3"
+      ],
+      "matchEngine": [
+        "tdi",
+        "ea288"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 87,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TDI",
+      "yearFrom": 2013,
+      "yearTo": 2026,
+      "tankL": 50,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "bmw.f30.n13",
+      "make": "BMW",
+      "model": "3 Series F30",
+      "matchModel": [
+        "f30",
+        "316i",
+        "3 series"
+      ],
+      "matchEngine": [
+        "n13"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 97,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "A",
+      "engineLabel": "N13 1.6 turbo",
+      "tankL": 60,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "bmwF30N13",
+      "yearFrom": 2012,
+      "yearTo": 2015
+    },
+    {
+      "id": "bmw.fseries",
+      "make": "BMW",
+      "model": "F-series",
+      "matchModel": [
+        "f-series",
+        "fseries",
+        "f20",
+        "f21",
+        "f22",
+        "f31",
+        "f32",
+        "f10",
+        "f11"
+      ],
+      "matchEngine": [
+        "n20",
+        "n55",
+        "b48",
+        "b58",
+        "n47",
+        "b47"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "A",
+      "engineLabel": "F-series (Mode 22)",
+      "tankL": 60,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "bmwFSeries",
+      "yearFrom": 2011,
+      "yearTo": 2019
+    },
+    {
+      "id": "bmw.320i.b48",
+      "make": "BMW",
+      "model": "320i",
+      "matchModel": [
+        "320i",
+        "3 series"
+      ],
+      "matchEngine": [
+        "b48"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 105,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "A",
+      "engineLabel": "B48 2.0 turbo",
+      "yearFrom": 2015,
+      "yearTo": 2024,
+      "tankL": 60,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "bmwFSeries"
+    },
+    {
+      "id": "bmw.520d.b47",
+      "make": "BMW",
+      "model": "520d",
+      "matchModel": [
+        "520d",
+        "5 series"
+      ],
+      "matchEngine": [
+        "b47"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "A",
+      "engineLabel": "B47 2.0 diesel",
+      "yearFrom": 2017,
+      "yearTo": 2024,
+      "tankL": 66,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "bmwFSeries"
+    },
+    {
+      "id": "mercedes.c200.m254",
+      "make": "Mercedes-Benz",
+      "model": "C200",
+      "matchModel": [
+        "c200",
+        "c-class"
+      ],
+      "matchEngine": [
+        "m254",
+        "mhev"
+      ],
+      "archetype": "mildHybrid48V",
+      "tstat": 90,
+      "mapControlled": true,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "M254 mild hybrid",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 66,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "mercedes.a180d.om654q",
+      "make": "Mercedes-Benz",
+      "model": "A180d",
+      "matchModel": [
+        "a180d",
+        "a-class"
+      ],
+      "matchEngine": [
+        "om654q"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 87,
+      "mapControlled": true,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "OM654q diesel",
+      "yearFrom": 2018,
+      "yearTo": 2026,
+      "tankL": 43,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "hyundai.i20.mpi",
+      "make": "Hyundai",
+      "model": "i20",
+      "matchModel": [
+        "i20"
+      ],
+      "matchEngine": [
+        "1.4mpi"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "1.4 MPI",
+      "yearFrom": 2014,
+      "yearTo": 2026,
+      "tankL": 40,
+      "displacementL": 1.4,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "hyundai.tucson.hev",
+      "make": "Hyundai",
+      "model": "Tucson",
+      "matchModel": [
+        "tucson"
+      ],
+      "matchEngine": [
+        "1.6tgdi",
+        "hev"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 85,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "1.6 T-GDI hybrid",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 52,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "kia.sportage.tgdi",
+      "make": "Kia",
+      "model": "Sportage",
+      "matchModel": [
+        "sportage"
+      ],
+      "matchEngine": [
+        "1.6tgdi"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 85,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.6 T-GDI",
+      "yearFrom": 2022,
+      "yearTo": 2026,
+      "tankL": 54,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "peugeot.3008.puretech",
+      "make": "Peugeot",
+      "model": "3008",
+      "matchModel": [
+        "3008"
+      ],
+      "matchEngine": [
+        "puretech",
+        "eb2"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "flags": [
+        "wetTimingBelt",
+        "oilConsumptionRisk"
+      ],
+      "engineLabel": "PureTech",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "tankL": 53,
+      "displacementL": 1.2,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "opel.corsa.puretech",
+      "make": "Opel",
+      "model": "Corsa",
+      "matchModel": [
+        "corsa"
+      ],
+      "matchEngine": [
+        "puretech",
+        "1.2"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "flags": [
+        "wetTimingBelt",
+        "oilConsumptionRisk"
+      ],
+      "engineLabel": "1.2 PureTech",
+      "yearFrom": 2019,
+      "yearTo": 2026,
+      "tankL": 44,
+      "displacementL": 1.2,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "ford.focus.ecoboost",
+      "make": "Ford",
+      "model": "Focus",
+      "matchModel": [
+        "focus"
+      ],
+      "matchEngine": [
+        "ecoboost",
+        "1.5"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 88,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "flags": [
+        "smartAlternator"
+      ],
+      "engineLabel": "1.5 EcoBoost",
+      "yearFrom": 2018,
+      "yearTo": 2026,
+      "tankL": 52,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "togg.t10x",
+      "make": "Togg",
+      "model": "T10X",
+      "matchModel": [
+        "t10x"
+      ],
+      "matchEngine": [],
+      "archetype": "ev",
+      "tstat": 0,
+      "mapControlled": false,
+      "capBar": 1.2,
+      "batteryChem": "lithium",
+      "smartAlternator": false,
+      "confidence": "B",
+      "flags": [
+        "noICE"
+      ],
+      "engineLabel": "Electric",
+      "yearFrom": 2023,
+      "yearTo": 2026,
+      "tankL": 0,
+      "displacementL": 0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "honda.civic.vtec",
+      "make": "Honda",
+      "model": "Civic",
+      "matchModel": [
+        "civic"
+      ],
+      "matchEngine": [
+        "vtec turbo"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 78,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "VTEC turbo",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "tankL": 47,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "honda.civic.ehev",
+      "make": "Honda",
+      "model": "Civic",
+      "matchModel": [
+        "civic"
+      ],
+      "matchEngine": [
+        "e:hev",
+        "ehev"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 78,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "e:HEV",
+      "yearFrom": 2022,
+      "yearTo": 2026,
+      "tankL": 40,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "nissan.qashqai.digt",
+      "make": "Nissan",
+      "model": "Qashqai",
+      "matchModel": [
+        "qashqai"
+      ],
+      "matchEngine": [
+        "1.3digt",
+        "h5ht"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.3 DIG-T",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 55,
+      "displacementL": 1.3,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "suzuki.vitara.boosterjet",
+      "make": "Suzuki",
+      "model": "Vitara",
+      "matchModel": [
+        "vitara"
+      ],
+      "matchEngine": [
+        "boosterjet"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "Boosterjet",
+      "yearFrom": 2015,
+      "yearTo": 2026,
+      "tankL": 47,
+      "displacementL": 1.4,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "ford.ecoblue",
+      "make": "Ford",
+      "model": "Ranger/Transit",
+      "matchModel": [
+        "ranger",
+        "transit"
+      ],
+      "matchEngine": [
+        "ecoblue",
+        "2.0"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 88,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "2.0 EcoBlue",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "tankL": 80,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "volvo.xc40.b4mhev",
+      "make": "Volvo",
+      "model": "XC40",
+      "matchModel": [
+        "xc40"
+      ],
+      "matchEngine": [
+        "b4",
+        "mhev"
+      ],
+      "archetype": "mildHybrid48V",
+      "tstat": 90,
+      "mapControlled": true,
+      "capBar": 1.5,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "B4 mild hybrid",
+      "yearFrom": 2018,
+      "yearTo": 2026,
+      "tankL": 54,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "seat.leon.tsi",
+      "make": "Seat",
+      "model": "Leon/Cupra",
+      "matchModel": [
+        "leon",
+        "cupra"
+      ],
+      "matchEngine": [
+        "1.5tsi"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.5 TSI",
+      "yearFrom": 2020,
+      "yearTo": 2026,
+      "tankL": 45,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "chery.tiggo8pro",
+      "make": "Chery",
+      "model": "Tiggo 8 Pro",
+      "matchModel": [
+        "tiggo 8",
+        "tiggo8"
+      ],
+      "matchEngine": [
+        "1.6tgdi"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 88,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "1.6 TGDI",
+      "yearFrom": 2021,
+      "yearTo": 2026,
+      "tankL": 51,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "mg.zs.vti",
+      "make": "MG",
+      "model": "ZS",
+      "matchModel": [
+        "zs"
+      ],
+      "matchEngine": [
+        "1.5vti"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 88,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "1.5 VTi",
+      "yearFrom": 2018,
+      "yearTo": 2026,
+      "tankL": 45,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal"
+    },
+    {
+      "id": "mitsubishi.l200.did",
+      "make": "Mitsubishi",
+      "model": "L200",
+      "matchModel": [
+        "l200"
+      ],
+      "matchEngine": [
+        "2.4did"
+      ],
+      "archetype": "dieselHeavy",
+      "tstat": 80,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "2.4 DI-D",
+      "yearFrom": 2015,
+      "yearTo": 2026,
+      "tankL": 75,
+      "displacementL": 2.4,
+      "fuel": "diesel",
+      "pidPack": "universal"
+    },
+    {
+      "id": "toyota.rav4.hybrid",
+      "make": "Toyota",
+      "model": "RAV4",
+      "matchModel": [
+        "rav4"
+      ],
+      "matchEngine": [
+        "hybrid"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A",
+      "engineLabel": "Hybrid",
+      "tankL": 55,
+      "displacementL": 2.5,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2019,
+      "yearTo": 2026
+    },
+    {
+      "id": "vw.golf.tdi",
+      "make": "Volkswagen",
+      "model": "Golf",
+      "matchModel": [
+        "golf"
+      ],
+      "matchEngine": [
+        "tdi",
+        "ea288"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 87,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TDI",
+      "tankL": 50,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "universal",
+      "yearFrom": 2013,
+      "yearTo": 2026
+    },
+    {
+      "id": "honda.accord.na",
+      "make": "Honda",
+      "model": "Accord",
+      "matchModel": [
+        "accord"
+      ],
+      "matchEngine": [
+        "2.0",
+        "k20"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 78,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "2.0 NA",
+      "tankL": 56,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2013,
+      "yearTo": 2022
+    },
+    {
+      "id": "ford.fiesta.ecoboost",
+      "make": "Ford",
+      "model": "Fiesta",
+      "matchModel": [
+        "fiesta"
+      ],
+      "matchEngine": [
+        "ecoboost",
+        "1.0"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 88,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "1.0 EcoBoost",
+      "tankL": 42,
+      "displacementL": 1.0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2013,
+      "yearTo": 2023
+    },
+    {
+      "id": "hyundai.i30.mpi",
+      "make": "Hyundai",
+      "model": "i30",
+      "matchModel": [
+        "i30"
+      ],
+      "matchEngine": [
+        "1.6mpi",
+        "mpi"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "1.6 MPI",
+      "tankL": 50,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2012,
+      "yearTo": 2026
+    },
+    {
+      "id": "chevrolet.cruze.na",
+      "make": "Chevrolet",
+      "model": "Cruze",
+      "matchModel": [
+        "cruze"
+      ],
+      "matchEngine": [
+        "1.4",
+        "1.6"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C",
+      "engineLabel": "1.6 NA",
+      "tankL": 52,
+      "displacementL": 1.6,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2011,
+      "yearTo": 2019
+    },
+    {
+      "id": "mazda.cx5.skyactiv",
+      "make": "Mazda",
+      "model": "CX-5",
+      "matchModel": [
+        "cx-5",
+        "cx5"
+      ],
+      "matchEngine": [
+        "skyactiv"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "Skyactiv-G",
+      "tankL": 56,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2017,
+      "yearTo": 2026
+    },
+    {
+      "id": "tesla.model3",
+      "make": "Tesla",
+      "model": "Model 3",
+      "matchModel": [
+        "model 3",
+        "model3"
+      ],
+      "matchEngine": [
+        "ev"
+      ],
+      "archetype": "ev",
+      "tstat": 0,
+      "mapControlled": false,
+      "capBar": 1.2,
+      "batteryChem": "lithium",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "Electric",
+      "tankL": 0,
+      "displacementL": 0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2017,
+      "yearTo": 2026,
+      "flags": [
+        "noICE"
+      ]
+    },
+    {
+      "id": "mini.cooper.b48",
+      "make": "Mini",
+      "model": "Cooper",
+      "matchModel": [
+        "cooper",
+        "f56"
+      ],
+      "matchEngine": [
+        "b48",
+        "b38"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "B38/B48 turbo",
+      "tankL": 44,
+      "displacementL": 1.5,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2014,
+      "yearTo": 2024
+    },
+    {
+      "id": "citroen.c3.puretech",
+      "make": "Citroën",
+      "model": "C3",
+      "matchModel": [
+        "c3"
+      ],
+      "matchEngine": [
+        "puretech"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "PureTech",
+      "tankL": 45,
+      "displacementL": 1.2,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2016,
+      "yearTo": 2026,
+      "flags": [
+        "wetTimingBelt"
+      ]
+    },
+    {
+      "id": "lexus.nx.hybrid",
+      "make": "Lexus",
+      "model": "NX",
+      "matchModel": [
+        "nx"
+      ],
+      "matchEngine": [
+        "hybrid"
+      ],
+      "archetype": "hybridFHEV",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A",
+      "engineLabel": "Hybrid",
+      "tankL": 56,
+      "displacementL": 2.5,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2014,
+      "yearTo": 2026
+    },
+    {
+      "id": "jeep.compass.na",
+      "make": "Jeep",
+      "model": "Compass",
+      "matchModel": [
+        "compass"
+      ],
+      "matchEngine": [
+        "2.4",
+        "tigershark"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C",
+      "engineLabel": "2.4 NA",
+      "tankL": 60,
+      "displacementL": 2.4,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2017,
+      "yearTo": 2026
+    },
+    {
+      "id": "subaru.forester.na",
+      "make": "Subaru",
+      "model": "Forester",
+      "matchModel": [
+        "forester"
+      ],
+      "matchEngine": [
+        "fb25",
+        "2.5"
+      ],
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B",
+      "engineLabel": "2.5 NA",
+      "tankL": 63,
+      "displacementL": 2.5,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2013,
+      "yearTo": 2026
+    },
+    {
+      "id": "alfa.giulia.2.0",
+      "make": "Alfa Romeo",
+      "model": "Giulia",
+      "matchModel": [
+        "giulia"
+      ],
+      "matchEngine": [
+        "2.0",
+        "gme"
+      ],
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "2.0 turbo",
+      "tankL": 58,
+      "displacementL": 2.0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2016,
+      "yearTo": 2026
+    },
+    {
+      "id": "porsche.macan.turbo",
+      "make": "Porsche",
+      "model": "Macan",
+      "matchModel": [
+        "macan"
+      ],
+      "matchEngine": [
+        "3.0",
+        "turbo"
+      ],
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "C",
+      "engineLabel": "Turbo",
+      "tankL": 65,
+      "displacementL": 3.0,
+      "fuel": "gasoline",
+      "pidPack": "universal",
+      "yearFrom": 2014,
+      "yearTo": 2026
+    },
+    {
+      "id": "landrover.discovery.diesel",
+      "make": "Land Rover",
+      "model": "Discovery Sport",
+      "matchModel": [
+        "discovery"
+      ],
+      "matchEngine": [
+        "ingenuim",
+        "td4"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "TD4 diesel",
+      "tankL": 65,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "universal",
+      "yearFrom": 2015,
+      "yearTo": 2026
+    },
+    {
+      "id": "jaguar.xe.diesel",
+      "make": "Jaguar",
+      "model": "XE",
+      "matchModel": [
+        "xe"
+      ],
+      "matchEngine": [
+        "ingenuim",
+        "20d"
+      ],
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B",
+      "engineLabel": "2.0 diesel",
+      "tankL": 56,
+      "displacementL": 2.0,
+      "fuel": "diesel",
+      "pidPack": "universal",
+      "yearFrom": 2015,
+      "yearTo": 2024
+    }
+  ],
+  "brands": [
+    {
+      "make": "Toyota",
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A"
+    },
+    {
+      "make": "Lexus",
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "agm",
+      "smartAlternator": false,
+      "confidence": "A"
+    },
+    {
+      "make": "Honda",
+      "archetype": "gasolineNA",
+      "tstat": 78,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "A"
+    },
+    {
+      "make": "Renault",
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Dacia",
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Fiat",
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Peugeot",
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Citroën",
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Opel",
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Volkswagen",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 1.8,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Audi",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 1.8,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Skoda",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 1.8,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Seat",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 1.8,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "BMW",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "A"
+    },
+    {
+      "make": "Mini",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 100,
+      "mapControlled": true,
+      "capBar": 2.0,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "A"
+    },
+    {
+      "make": "Mercedes-Benz",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 91,
+      "mapControlled": false,
+      "capBar": 1.7,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Hyundai",
+      "archetype": "gasolineTurboDI",
+      "tstat": 85,
+      "mapControlled": false,
+      "capBar": 1.25,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Kia",
+      "archetype": "gasolineTurboDI",
+      "tstat": 85,
+      "mapControlled": false,
+      "capBar": 1.25,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Ford",
+      "archetype": "gasolineTurboDI",
+      "tstat": 89,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Nissan",
+      "archetype": "gasolineTurboDI",
+      "tstat": 85,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Suzuki",
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C"
+    },
+    {
+      "make": "Volvo",
+      "archetype": "mildHybrid48V",
+      "tstat": 90,
+      "mapControlled": true,
+      "capBar": 1.5,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Chery",
+      "archetype": "gasolineTurboDI",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C"
+    },
+    {
+      "make": "MG",
+      "archetype": "gasolineTurboDI",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C"
+    },
+    {
+      "make": "BYD",
+      "archetype": "gasolineTurboDI",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "efb",
+      "smartAlternator": true,
+      "confidence": "C"
+    },
+    {
+      "make": "Togg",
+      "archetype": "ev",
+      "tstat": 0,
+      "mapControlled": false,
+      "capBar": 1.2,
+      "batteryChem": "lithium",
+      "smartAlternator": false,
+      "confidence": "B"
+    },
+    {
+      "make": "Chevrolet",
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C"
+    },
+    {
+      "make": "Mazda",
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B"
+    },
+    {
+      "make": "Subaru",
+      "archetype": "gasolineNA",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B"
+    },
+    {
+      "make": "Jeep",
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C"
+    },
+    {
+      "make": "Tesla",
+      "archetype": "ev",
+      "tstat": 0,
+      "mapControlled": false,
+      "capBar": 1.2,
+      "batteryChem": "lithium",
+      "smartAlternator": false,
+      "confidence": "B"
+    },
+    {
+      "make": "Porsche",
+      "archetype": "gasolineTurboEuro",
+      "tstat": 95,
+      "mapControlled": true,
+      "capBar": 1.6,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "C"
+    },
+    {
+      "make": "Land Rover",
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Jaguar",
+      "archetype": "dieselDPF",
+      "tstat": 82,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Alfa Romeo",
+      "archetype": "gasolineTurboDI",
+      "tstat": 90,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "agm",
+      "smartAlternator": true,
+      "confidence": "B"
+    },
+    {
+      "make": "Mitsubishi",
+      "archetype": "dieselHeavy",
+      "tstat": 80,
+      "mapControlled": false,
+      "capBar": 1.4,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "B"
+    },
+    {
+      "make": "Universal",
+      "archetype": "gasolineNA",
+      "tstat": 87,
+      "mapControlled": false,
+      "capBar": 1.1,
+      "batteryChem": "flooded",
+      "smartAlternator": false,
+      "confidence": "C"
+    }
+  ]
+}

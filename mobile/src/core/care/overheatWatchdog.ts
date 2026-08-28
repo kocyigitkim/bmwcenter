@@ -2,19 +2,22 @@ import { isEngineRunning } from "../obd/vehicleSnapshot";
 import { db } from "../storage/db";
 import { protectionEvents } from "../storage/schema";
 import type { VehicleSnapshot } from "../obd/vehicleSnapshot";
+import {
+  coolantAlarmC,
+  coolantCriticalC,
+  coolantWatchC,
+  effectiveFanOnC,
+  warmupTargetC,
+} from "../vehicle/vehicleProfile";
 import type { CareCue, CareContext } from "./careTypes";
 import type { CareFeature } from "./careFeature";
 
-/** Simplified port of OverheatWatchdog.swift — uses fixed thresholds instead of the
- * per-vehicle-archetype `VehicleDiagnosticProfile` system (not ported; see plan notes). */
+/** Port of OverheatWatchdog.swift. Thresholds come from the resolved
+ * `VehicleDiagnosticProfile`, so an 82 °C-thermostat diesel alarms far earlier than a
+ * 95 °C map-controlled turbo instead of every car sharing one fixed number. */
 const HOT_RESTART_SOAK_MS = 20 * 60 * 1000;
 const CONFIRM_MS = 3000;
 const MAX_PLAUSIBLE_DELTA_C_PER_S = 3;
-
-const WATCH_C = 106;
-const ALARM_C = 112;
-const CRITICAL_C = 118;
-const THERMOSTAT_OPEN_C = 88;
 
 class OverheatWatchdog implements CareFeature {
   id = "overheat";
@@ -59,10 +62,21 @@ class OverheatWatchdog implements CareFeature {
     const coolant = rawCoolant;
     this.lastAccepted = { t: now, c: coolant };
 
+    // "Operating temperature +5%" in the user's terms: the alarm sits a fixed margin over
+    // this engine's normal ceiling, which itself is derived from its thermostat rating.
+    // `sensitivityOffsetC` lets the Care sensitivity setting shift all of them together.
+    const offset = context.sensitivityOffsetC;
+    const profile = context.vehicle;
+    const thermostatOpenC = warmupTargetC(profile) + 3;
+    const watchC = coolantWatchC(profile) + offset;
+    const alarmC = coolantAlarmC(profile) + offset;
+    const criticalC = coolantCriticalC(profile) + offset;
+    const fanTemp = effectiveFanOnC(profile);
+
     const sinceStart = this.engineStartedAt != null ? now - this.engineStartedAt : Infinity;
     const wasHotRestart = this.engineStoppedAt != null && now - this.engineStoppedAt < HOT_RESTART_SOAK_MS;
     const startupGraceMs = wasHotRestart ? 90_000 : 45_000;
-    const inStartupGrace = sinceStart < startupGraceMs || coolant < THERMOSTAT_OPEN_C;
+    const inStartupGrace = sinceStart < startupGraceMs || coolant < thermostatOpenC;
 
     const speed = snapshot.speedKmh ?? 0;
 
@@ -70,18 +84,17 @@ class OverheatWatchdog implements CareFeature {
     this.coolantHistory = this.coolantHistory.filter((s) => now - s.t <= 600_000);
 
     const cues: CareCue[] = [];
-    const isWarmedUp = coolant >= THERMOSTAT_OPEN_C;
+    const isWarmedUp = coolant >= thermostatOpenC;
 
     const last30 = this.coolantHistory.filter((s) => now - s.t <= 30_000);
-    if (!inStartupGrace && coolant >= THERMOSTAT_OPEN_C + 5 && last30[0] && coolant - last30[0].c >= 8) {
+    if (!inStartupGrace && coolant >= thermostatOpenC + 5 && last30[0] && coolant - last30[0].c >= 8) {
       cues.push(this.alarmCue());
-      this.log("alarm", coolant, ALARM_C);
+      this.log("alarm", coolant, alarmC);
       this.lastLevel = "alarm";
       return cues;
     }
 
     const fanDelayMs = 90_000;
-    const fanTemp = 98;
     const lastFan = this.coolantHistory.filter((s) => now - s.t <= fanDelayMs);
     if (speed < 5 && isWarmedUp && coolant >= fanTemp && lastFan[0] && coolant - lastFan[0].c >= 5 && !this.fanAnnounced) {
       this.fanAnnounced = true;
@@ -99,27 +112,27 @@ class OverheatWatchdog implements CareFeature {
     if (inStartupGrace) {
       this.criticalStreakStart = undefined;
       this.alarmStreakStart = undefined;
-    } else if (coolant >= CRITICAL_C) {
+    } else if (coolant >= criticalC) {
       this.alarmStreakStart = undefined;
       if (this.criticalStreakStart == null) this.criticalStreakStart = now;
       if (now - this.criticalStreakStart >= CONFIRM_MS) {
         if (this.lastLevel !== "critical") {
           cues.push({ id: "overheat.critical", text: "Engine overheating — pull over and let it cool.", severity: "critical" });
-          this.log("critical", coolant, CRITICAL_C);
+          this.log("critical", coolant, criticalC);
         }
         this.lastLevel = "critical";
       }
-    } else if (coolant >= ALARM_C) {
+    } else if (coolant >= alarmC) {
       this.criticalStreakStart = undefined;
       if (this.alarmStreakStart == null) this.alarmStreakStart = now;
       if (now - this.alarmStreakStart >= CONFIRM_MS) {
         if (this.lastLevel !== "alarm" && this.lastLevel !== "critical") {
           cues.push(this.alarmCue());
-          this.log("alarm", coolant, ALARM_C);
+          this.log("alarm", coolant, alarmC);
         }
         this.lastLevel = "alarm";
       }
-    } else if (coolant >= WATCH_C) {
+    } else if (coolant >= watchC) {
       this.criticalStreakStart = undefined;
       this.alarmStreakStart = undefined;
       this.lastLevel = "watch";
@@ -154,21 +167,39 @@ class OverheatWatchdog implements CareFeature {
   }
 }
 
+/** Counts genuine direction reversals of at least `amplitude`. A monotonic climb is not
+ * oscillation however far it travels — deriving a count from the sample range alone made
+ * every ordinary cold-start warmup report a bouncing thermostat. */
 function oscillationCount(samples: Array<{ t: number; c: number }>, amplitude: number): number {
   if (samples.length < 4) return 0;
-  let peaks = 0;
-  let lastDir = 0;
-  for (let i = 1; i < samples.length; i++) {
-    const d = samples[i]!.c - samples[i - 1]!.c;
-    const dir = d > 0.5 ? 1 : d < -0.5 ? -1 : 0;
-    if (dir !== 0 && lastDir !== 0 && dir !== lastDir && Math.abs(d) >= amplitude / 4) peaks++;
-    if (dir !== 0) lastDir = dir;
-  }
   const vals = samples.map((s) => s.c);
-  const mn = Math.min(...vals);
-  const mx = Math.max(...vals);
-  if (mx - mn < amplitude) return 0;
-  return Math.max(Math.floor(peaks / 2), mx - mn >= amplitude * 2 ? 3 : 1);
+  if (Math.max(...vals) - Math.min(...vals) < amplitude) return 0;
+
+  // Zigzag: follow the current leg's extreme and count a turn only once the temperature
+  // has retraced from it by the full amplitude. The first leg establishes direction and
+  // is not itself a reversal.
+  let reversals = 0;
+  let dir: -1 | 0 | 1 = 0;
+  let high = vals[0]!;
+  let low = vals[0]!;
+
+  for (const value of vals) {
+    if (value > high) high = value;
+    if (value < low) low = value;
+
+    if (dir >= 0 && high - value >= amplitude) {
+      if (dir > 0) reversals++;
+      dir = -1;
+      low = value;
+      high = value;
+    } else if (dir <= 0 && value - low >= amplitude) {
+      if (dir < 0) reversals++;
+      dir = 1;
+      high = value;
+      low = value;
+    }
+  }
+  return reversals;
 }
 
 export const overheatWatchdog = new OverheatWatchdog();

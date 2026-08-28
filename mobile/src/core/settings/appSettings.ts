@@ -37,6 +37,9 @@ export interface AppSettingsState {
   isTurbo: boolean;
   vehiclePlatform: VehiclePlatform;
   vehicleProfileId: string;
+  vehicleMake: string;
+  vehicleModel: string;
+  vehicleEngineCode: string;
   lastVIN: string;
   vehicleYear: number;
   fuelCalibrationFactor: number;
@@ -102,7 +105,10 @@ const defaults = {
   volumetricEfficiency: 0.85,
   isTurbo: true,
   vehiclePlatform: "universal" as VehiclePlatform,
-  vehicleProfileId: "universal.obd2",
+  vehicleProfileId: "",
+  vehicleMake: "",
+  vehicleModel: "",
+  vehicleEngineCode: "",
   lastVIN: "",
   vehicleYear: 0,
   fuelCalibrationFactor: 1.0,

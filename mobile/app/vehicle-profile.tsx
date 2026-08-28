@@ -8,6 +8,9 @@ import { useTheme } from "@/design/theme";
 import { DSSpace, DSRadius, brandPrimary } from "@/design/tokens";
 import { useAppSettings, type FuelType } from "@/core/settings/appSettings";
 import { useOBDStore } from "@/core/obd/obdService";
+import { useVehicleProfile } from "@/core/vehicle/useVehicleProfile";
+import { coolantNormalTopC, coolantWatchC } from "@/core/vehicle/vehicleProfile";
+import { VehiclePickerSheet } from "@/components/VehiclePickerSheet";
 
 const FUEL_TYPES: FuelType[] = ["gasoline", "diesel", "lpg"];
 
@@ -20,6 +23,8 @@ export default function VehicleProfileScreen() {
   const readVIN = useOBDStore((s) => s.readVIN);
   const connection = useOBDStore((s) => s.connection);
   const [reading, setReading] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const profile = useVehicleProfile();
 
   const onReadVIN = async () => {
     setReading(true);
@@ -51,6 +56,44 @@ export default function VehicleProfileScreen() {
           />
         </View>
       </Section>
+
+      <Section title={t("settings.vehicle.model")}>
+        <Pressable onPress={() => setPickerOpen(true)} style={styles.row}>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: colors.contentPrimary }}>
+              {settings.vehicleMake
+                ? `${settings.vehicleMake}${settings.vehicleModel ? ` ${settings.vehicleModel}` : ""}`
+                : t("settings.vehicle.pickMake")}
+            </Text>
+            <Text style={{ color: colors.contentTertiary, fontSize: 11 }}>
+              {profile.engineLabel} · {t("settings.vehicle.confidence", { value: profile.overallConfidence.toUpperCase() })}
+            </Text>
+          </View>
+          <MaterialCommunityIcons name="chevron-right" size={18} color={colors.contentTertiary} />
+        </Pressable>
+        <View style={styles.row}>
+          <Text style={{ color: colors.contentSecondary, flex: 1, fontSize: 12 }}>
+            {t("settings.vehicle.thermalSummary", {
+              thermostat: Math.round(profile.thermostatOpenC.value),
+              normal: Math.round(coolantNormalTopC(profile)),
+              warn: Math.round(coolantWatchC(profile)),
+            })}
+          </Text>
+        </View>
+      </Section>
+
+      <VehiclePickerSheet
+        visible={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        onSelect={(make, entry) => {
+          settings.set("vehicleMake", make);
+          settings.set("vehicleModel", entry?.model ?? "");
+          settings.set("vehicleProfileId", entry?.id ?? "");
+          if (entry?.fuel) settings.set("fuelType", entry.fuel);
+          if (entry?.displacementL != null) settings.set("displacementL", entry.displacementL);
+          if (entry?.tankL != null) settings.set("tankCapacityL", entry.tankL);
+        }}
+      />
 
       <Section title={t("settings.vehicle.vin")}>
         <View style={styles.row}>

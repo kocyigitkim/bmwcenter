@@ -14,6 +14,7 @@ import { streakService } from "./streakService";
 import { badgeService } from "./badgeService";
 import { cueScheduler } from "./cueScheduler";
 import { emptyCareContext } from "./careTypes";
+import { currentVehicleProfile } from "../vehicle/useVehicleProfile";
 import { alertSeverityFrom } from "./severityRouter";
 import { buildTripSummaryCard, shouldRenderTripCard, type TripSummaryCardModel } from "./tripSummaryCard";
 import { useAppSettings } from "../settings/appSettings";
@@ -123,6 +124,7 @@ export const useCareCoordinator = create<CareCoordinatorState>((set, get) => ({
     context = {
       ...context,
       now,
+      vehicle: currentVehicleProfile(),
       ambientC: snapshot.ambientC ?? context.ambientC,
       oilTempC: snapshot.oilTempC,
       oilIsEstimated: snapshot.oilTempC == null,
