@@ -1,6 +1,7 @@
 import { sqliteTable, text, integer, real, blob } from "drizzle-orm/sqlite-core";
 
 export const trips = sqliteTable("trips", {
+  vehicleId: text("vehicle_id"),
   id: text("id").primaryKey(),
   startedAt: integer("started_at").notNull(),
   endedAt: integer("ended_at"),
@@ -56,6 +57,7 @@ export const drivingEvents = sqliteTable("driving_events", {
 });
 
 export const refuelEntries = sqliteTable("refuel_entries", {
+  vehicleId: text("vehicle_id"),
   id: text("id").primaryKey(),
   date: integer("date").notNull(),
   liters: real("liters").notNull(),
@@ -101,6 +103,7 @@ export const vehicleProfiles = sqliteTable("vehicle_profiles", {
 });
 
 export const maintenanceItems = sqliteTable("maintenance_items", {
+  vehicleId: text("vehicle_id"),
   id: text("id").primaryKey(),
   titleKey: text("title_key").notNull(),
   customTitle: text("custom_title"),
@@ -114,6 +117,7 @@ export const maintenanceItems = sqliteTable("maintenance_items", {
 });
 
 export const dtcRecords = sqliteTable("dtc_records", {
+  vehicleId: text("vehicle_id"),
   id: integer("id").primaryKey({ autoIncrement: true }),
   code: text("code").notNull(),
   seenAt: integer("seen_at").notNull(),

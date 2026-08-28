@@ -123,6 +123,11 @@ export default function SettingsScreen() {
           <Text style={{ color: colors.contentPrimary, marginLeft: DSSpace.s3, flex: 1 }}>{t("settings.calibration")}</Text>
           <MaterialCommunityIcons name="chevron-right" size={18} color={colors.contentTertiary} />
         </Pressable>
+        <Pressable onPress={() => router.push("/garage")} style={styles.navRow}>
+          <MaterialCommunityIcons name="garage" size={20} color={brandPrimary} />
+          <Text style={{ color: colors.contentPrimary, marginLeft: DSSpace.s3, flex: 1 }}>{t("garage.title")}</Text>
+          <MaterialCommunityIcons name="chevron-right" size={18} color={colors.contentTertiary} />
+        </Pressable>
         <Pressable onPress={() => router.push("/vehicle-profile")} style={styles.navRow}>
           <MaterialCommunityIcons name="car-cog" size={20} color={brandPrimary} />
           <Text style={{ color: colors.contentPrimary, marginLeft: DSSpace.s3, flex: 1 }}>{t("settings.vehicleProfile")}</Text>

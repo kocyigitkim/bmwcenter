@@ -4,6 +4,8 @@ import { tripSamples } from "../storage/schema";
 import { tripRepository } from "../storage/tripRepository";
 import { locationProvider } from "./locationProvider";
 import { useAppSettings } from "../settings/appSettings";
+import { activeVehicleId } from "../vehicle/useGarage";
+import { vehicleRepository } from "../vehicle/vehicleRepository";
 import { FuelIntegrationState, fuelRateLh } from "../fuel/fuelCalculator";
 import { speedCalibrator } from "../analysis/speedCalibrator";
 import { useCareCoordinator } from "../care/careCoordinator";
@@ -307,6 +309,11 @@ async function finalizeTrip(discard: boolean, set: (partial: Partial<TripRecorde
     trip.scoreBreakdownJSON = JSON.stringify(breakdown);
 
     await tripRepository.update(trip);
+
+    // The odometer is what maintenance intervals are measured against, so it
+    // advances with every trip we actually recorded.
+    const vehicleId = activeVehicleId();
+    if (vehicleId) await vehicleRepository.addDistance(vehicleId, trip.distanceKm);
 
     const settings = useAppSettings.getState();
     settings.set("lastParkingLatitude", trip.endLatitude);

@@ -1,4 +1,5 @@
-import { and, desc, eq, gte, lt } from "drizzle-orm";
+import { and, desc, eq, gte, lt, type SQL } from "drizzle-orm";
+import { activeVehicleId } from "../vehicle/useGarage";
 import { db } from "./db";
 import { fuelPricePoints, refuelEntries } from "./schema";
 import type { DateInterval } from "./tripRepository";
@@ -18,18 +19,30 @@ function rowToRefuel(row: typeof refuelEntries.$inferSelect): RefuelEntry {
   };
 }
 
+/** Restricts a query to the active vehicle; unscoped until the garage loads. */
+function ownedByActiveVehicle(extra?: SQL): SQL | undefined {
+  const id = activeVehicleId();
+  if (!id) return extra;
+  const owned = eq(refuelEntries.vehicleId, id);
+  return extra ? and(extra, owned) : owned;
+}
+
 export class FuelRepository {
   async refuels(range: DateInterval): Promise<RefuelEntry[]> {
     const rows = await db
       .select()
       .from(refuelEntries)
-      .where(and(gte(refuelEntries.date, range.start), lt(refuelEntries.date, range.end)))
+      .where(ownedByActiveVehicle(and(gte(refuelEntries.date, range.start), lt(refuelEntries.date, range.end))))
       .orderBy(desc(refuelEntries.date));
     return rows.map(rowToRefuel);
   }
 
   async allRefuels(): Promise<RefuelEntry[]> {
-    const rows = await db.select().from(refuelEntries).orderBy(desc(refuelEntries.date));
+    const rows = await db
+      .select()
+      .from(refuelEntries)
+      .where(ownedByActiveVehicle())
+      .orderBy(desc(refuelEntries.date));
     return rows.map(rowToRefuel);
   }
 
@@ -37,7 +50,7 @@ export class FuelRepository {
     const rows = await db
       .select()
       .from(refuelEntries)
-      .where(eq(refuelEntries.isFullTank, true))
+      .where(ownedByActiveVehicle(eq(refuelEntries.isFullTank, true)))
       .orderBy(desc(refuelEntries.date))
       .limit(2);
     if (rows.length < 2) return undefined;
@@ -57,6 +70,7 @@ export class FuelRepository {
 
   async addRefuel(entry: RefuelEntry, currencyCode = "TRY"): Promise<void> {
     await db.insert(refuelEntries).values({
+      vehicleId: activeVehicleId(),
       id: entry.id,
       date: entry.date,
       liters: entry.liters,

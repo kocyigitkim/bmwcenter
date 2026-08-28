@@ -1,4 +1,4 @@
-import type { DTC } from "./vehicleSnapshot";
+import type { DTC, DTCStatus } from "./vehicleSnapshot";
 
 export type OBDFrameParseResult =
   | { kind: "value"; bytes: number[] }
@@ -212,7 +212,8 @@ export function bmwOilPressureBar(bytes: number[], ambientBaroKpa?: number): num
   return gaugeBar > -0.5 && gaugeBar < 10 ? gaugeBar : undefined;
 }
 
-export function parseDTCResponse(response: string): DTC[] {
+/** @param status which service the reply came from — 03 stored, 07 pending, 0A permanent. */
+export function parseDTCResponse(response: string, status: DTCStatus = "stored"): DTC[] {
   const upper = response.toUpperCase();
   if (upper.includes("NO DATA")) return [];
   const hex = filterHex(upper);
@@ -252,7 +253,7 @@ export function parseDTCResponse(response: string): DTC[] {
     const d3 = (b & 0xf0) >> 4;
     const d4 = b & 0x0f;
     const code = `${letters[type]}${d1.toString(16)}${d2.toString(16)}${d3.toString(16)}${d4.toString(16)}`.toUpperCase();
-    codes.push({ code, status: "stored", firstSeen: now });
+    codes.push({ code, status, firstSeen: now });
   }
   return codes;
 }

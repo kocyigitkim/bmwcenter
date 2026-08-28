@@ -5,7 +5,8 @@ import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider, useTheme } from "@/design/theme";
-import { bootstrapDatabase } from "@/core/storage/db";
+import { bootstrapDatabase, migrateDatabase } from "@/core/storage/db";
+import { useGarage } from "@/core/vehicle/useGarage";
 import { useAlertEngineRunner } from "@/core/alerts/useAlertEngineRunner";
 import { useTripRecorderRunner } from "@/core/trip/useTripRecorderRunner";
 import { useCareCoordinatorRunner } from "@/core/care/useCareCoordinatorRunner";
@@ -45,7 +46,14 @@ export default function RootLayout() {
 
   useEffect(() => {
     bootstrapDatabase();
-    setReady(true);
+    migrateDatabase();
+    // The garage decides which vehicle every query is scoped to, so nothing may
+    // render until it has loaded.
+    useGarage
+      .getState()
+      .load()
+      .catch(() => undefined)
+      .finally(() => setReady(true));
   }, []);
 
   if (!ready) return null;

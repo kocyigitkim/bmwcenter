@@ -6,6 +6,14 @@ import type { ConnectionState, DiscoveredDevice, OBDTransport } from "./obdTrans
 import * as OBDFrameParser from "./obdFrameParser";
 import { allPIDs, applyPidValue, parseSupportedBitmask } from "./obdPid";
 import { ELM327Commands, initSequence } from "./elm327Commands";
+import { parseReadiness, type ReadinessStatus } from "./readiness";
+import {
+  extractFreezeFrameBytes,
+  freezeFrameCommand,
+  hasAnyValue,
+  FREEZE_FRAME_PIDS,
+  type FreezeFrameValues,
+} from "./freezeFrame";
 import { emptySnapshot, type VehicleSnapshot } from "./vehicleSnapshot";
 
 interface OBDServiceState {
@@ -29,6 +37,10 @@ interface OBDServiceState {
   start: () => Promise<void>;
   stop: () => void;
   readVIN: () => Promise<string | undefined>;
+  /** Mode 01 PID 01 — emissions monitor readiness. */
+  readReadiness: () => Promise<ReadinessStatus | undefined>;
+  /** Mode 02 — the ECU's snapshot from when the fault set, not live values. */
+  readFreezeFrame: () => Promise<FreezeFrameValues | undefined>;
 }
 
 let pollHandle: ReturnType<typeof setTimeout> | undefined;
@@ -263,5 +275,32 @@ export const useOBDStore = create<OBDServiceState>((set, get) => ({
     } catch {
       return undefined;
     }
+  },
+
+  readReadiness: async () => {
+    const { transport } = get();
+    try {
+      const command = ELM327Commands.mode01(0x01);
+      const raw = await transport.writeAndRead(command, 3000);
+      const result = OBDFrameParser.parse(raw, 0x01, 4, command);
+      return result.kind === "value" ? parseReadiness(result.bytes) : undefined;
+    } catch {
+      return undefined;
+    }
+  },
+
+  readFreezeFrame: async () => {
+    const { transport } = get();
+    const values: FreezeFrameValues = {};
+    for (const entry of FREEZE_FRAME_PIDS) {
+      try {
+        const raw = await transport.writeAndRead(freezeFrameCommand(entry.pid), 2500);
+        const bytes = extractFreezeFrameBytes(raw, entry.pid, entry.byteCount);
+        if (bytes) entry.apply(bytes, values);
+      } catch {
+        // One unsupported PID must not abandon the rest of the frame.
+      }
+    }
+    return hasAnyValue(values) ? values : undefined;
   },
 }));

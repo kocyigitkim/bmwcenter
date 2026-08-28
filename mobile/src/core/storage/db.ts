@@ -234,3 +234,25 @@ export function bootstrapDatabase(): void {
     );
   `);
 }
+
+/**
+ * Adds a column to an existing table when it isn't there yet.
+ *
+ * `CREATE TABLE IF NOT EXISTS` above never alters a table that already exists,
+ * so an app upgraded from an older install keeps the old shape. SQLite has no
+ * `ADD COLUMN IF NOT EXISTS`, hence the PRAGMA check.
+ */
+function addColumnIfMissing(table: string, column: string, definition: string): void {
+  const columns = sqlite.getAllSync<{ name: string }>(`PRAGMA table_info(${table});`);
+  if (columns.some((c) => c.name === column)) return;
+  sqlite.execSync(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition};`);
+}
+
+/** Schema changes that must also reach databases created by earlier versions. */
+export function migrateDatabase(): void {
+  // Garage: rows recorded before multi-vehicle support have no owner. They are
+  // backfilled to the default vehicle by vehicleRepository.ensureDefault().
+  for (const table of ["trips", "refuel_entries", "dtc_records", "maintenance_items"]) {
+    addColumnIfMissing(table, "vehicle_id", "TEXT");
+  }
+}

@@ -1,4 +1,5 @@
-import { and, asc, desc, eq, gte, lt } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lt, type SQL } from "drizzle-orm";
+import { activeVehicleId } from "../vehicle/useGarage";
 import { db } from "./db";
 import { drivingEvents, trips, tripSamples } from "./schema";
 import {
@@ -58,12 +59,21 @@ function rowToTrip(row: typeof trips.$inferSelect, events: (typeof drivingEvents
   };
 }
 
+/** Restricts a query to the active vehicle. Returns the caller's condition
+ * unchanged before the garage has loaded, so early reads still work. */
+function ownedByActiveVehicle(extra?: SQL): SQL | undefined {
+  const id = activeVehicleId();
+  if (!id) return extra;
+  const owned = eq(trips.vehicleId, id);
+  return extra ? and(extra, owned) : owned;
+}
+
 export class TripRepository {
   async trips(range: DateInterval): Promise<Trip[]> {
     const rows = await db
       .select()
       .from(trips)
-      .where(and(gte(trips.startedAt, range.start), lt(trips.startedAt, range.end)))
+      .where(ownedByActiveVehicle(and(gte(trips.startedAt, range.start), lt(trips.startedAt, range.end))))
       .orderBy(desc(trips.startedAt));
     if (!rows.length) return [];
     const ids = rows.map((r) => r.id);
@@ -96,7 +106,12 @@ export class TripRepository {
   }
 
   async recentTrips(limit: number): Promise<Trip[]> {
-    const rows = await db.select().from(trips).orderBy(desc(trips.startedAt)).limit(limit);
+    const rows = await db
+      .select()
+      .from(trips)
+      .where(ownedByActiveVehicle())
+      .orderBy(desc(trips.startedAt))
+      .limit(limit);
     if (!rows.length) return [];
     const events = await db.select().from(drivingEvents);
     return rows.map((r) => rowToTrip(r, events));
@@ -145,6 +160,7 @@ export class TripRepository {
 
   async insert(trip: Trip): Promise<void> {
     await db.insert(trips).values({
+      vehicleId: activeVehicleId(),
       id: trip.id,
       startedAt: trip.startedAt,
       endedAt: trip.endedAt,
