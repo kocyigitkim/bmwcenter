@@ -1,6 +1,6 @@
-import { and, desc, eq, gte, lt } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lt } from "drizzle-orm";
 import { db } from "./db";
-import { drivingEvents, trips } from "./schema";
+import { drivingEvents, trips, tripSamples } from "./schema";
 import {
   emptyDrivingSummary,
   summarize,
@@ -128,8 +128,14 @@ export class TripRepository {
     return rowToTrip(row, events);
   }
 
+  /** Recorded telemetry for one trip, oldest first — the input to tripAnalysis. */
+  async samples(tripId: string) {
+    return db.select().from(tripSamples).where(eq(tripSamples.tripId, tripId)).orderBy(asc(tripSamples.t));
+  }
+
   async deleteTrip(id: string): Promise<void> {
     await db.delete(drivingEvents).where(eq(drivingEvents.tripId, id));
+    await db.delete(tripSamples).where(eq(tripSamples.tripId, id));
     await db.delete(trips).where(eq(trips.id, id));
   }
 

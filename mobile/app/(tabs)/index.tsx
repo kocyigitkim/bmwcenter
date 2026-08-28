@@ -13,6 +13,7 @@ import { DashboardWidgetView } from "@/components/DashboardWidgetView";
 import { DashboardWidgetGallery } from "@/components/DashboardWidgetGallery";
 import { AlertChipRow } from "@/components/AlertChipRow";
 import { ActiveTripStrip } from "@/components/ActiveTripStrip";
+import { CalibrationPromptCard } from "@/components/CalibrationPromptCard";
 
 export default function DashboardScreen() {
   const { t } = useTranslation();
@@ -73,6 +74,8 @@ export default function DashboardScreen() {
       <AlertChipRow />
 
       <ActiveTripStrip />
+
+      <CalibrationPromptCard />
 
       {connection.status === "error" && (
         <View style={[styles.deviceList, { backgroundColor: colors.surface1 }]}>

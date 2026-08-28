@@ -9,6 +9,7 @@ function createMMKV() {
     getBoolean: (key) => (store.has(key) ? Boolean(store.get(key)) : undefined),
     contains: (key) => store.has(key),
     delete: (key) => store.delete(key),
+    remove: (key) => store.delete(key),
     getAllKeys: () => [...store.keys()],
     clearAll: () => store.clear(),
     addOnValueChangedListener: () => ({ remove: () => {} }),

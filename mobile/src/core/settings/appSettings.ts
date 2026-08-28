@@ -57,6 +57,7 @@ export interface AppSettingsState {
   lastParkingLongitude: number | null;
   lastParkingPlaceName: string | null;
   cloudSync: boolean;
+  calibrationPromptDismissed: boolean;
 
   careOverheatWatchdog: boolean;
   careColdShield: boolean;
@@ -126,6 +127,7 @@ const defaults = {
   lastParkingLongitude: null as number | null,
   lastParkingPlaceName: null as string | null,
   cloudSync: false,
+  calibrationPromptDismissed: false,
 
   careOverheatWatchdog: true,
   careColdShield: true,

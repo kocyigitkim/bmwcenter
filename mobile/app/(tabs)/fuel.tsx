@@ -11,6 +11,7 @@ import { useAppSettings } from "@/core/settings/appSettings";
 import { useOBDStore } from "@/core/obd/obdService";
 import { tripRepository, type DateInterval } from "@/core/storage/tripRepository";
 import { fuelRepository } from "@/core/storage/fuelRepository";
+import { fuelCalibrator } from "@/core/fuel/fuelCalibrator";
 import { fuelStatistics } from "@/core/fuel/fuelStatistics";
 import { estimatedRangeKm } from "@/core/fuel/fuelCalculator";
 import { useEffectivePricePerLiter } from "@/core/fuel/effectivePrice";
@@ -198,6 +199,11 @@ export default function FuelScreen() {
         onClose={() => setShowAdd(false)}
         onSubmit={async (entry) => {
           await fuelRepository.addRefuel(entry, settings.currencyCode);
+          // A full-tank refuel may complete a calibration pair — evaluate it at
+          // the moment it happens, not only if the user opens the calibration screen.
+          if (entry.isFullTank) {
+            fuelCalibrator.evaluateLatestFullTankPair().catch(() => undefined);
+          }
           setShowAdd(false);
           reload();
         }}
