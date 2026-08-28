@@ -20,6 +20,7 @@ import { exportTripsCSV } from "@/core/export/csvExporter";
 import { useRemoteFuelPrices } from "@/core/fuel/remoteFuelPriceStore";
 import { fetchAndApplyFuelPrices } from "@/core/fuel/fuelPriceService";
 import { Formatters } from "@/design/formatters";
+import { tripNotification } from "@/core/notifications/tripNotification";
 
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
@@ -35,6 +36,14 @@ export default function SettingsScreen() {
       <Section title={t("settings.connection")}>
         <SwitchRow label={t("settings.autoConnect")} value={settings.autoConnectOnLaunch} onValueChange={(v) => settings.set("autoConnectOnLaunch", v)} />
         <SwitchRow label={t("settings.autoReconnect")} value={settings.autoReconnect} onValueChange={(v) => settings.set("autoReconnect", v)} />
+        <SwitchRow
+          label={t("settings.liveTripNotification")}
+          value={settings.liveTripNotification}
+          onValueChange={(v) => {
+            settings.set("liveTripNotification", v);
+            if (v) tripNotification.requestPermissions().catch(() => undefined);
+          }}
+        />
         <SwitchRow label={t("settings.useMockAdapter")} value={settings.useMockAdapter} onValueChange={(v) => settings.set("useMockAdapter", v)} />
         <View style={styles.row}>
           <Text style={{ color: colors.contentSecondary, flex: 1, fontSize: 12 }}>

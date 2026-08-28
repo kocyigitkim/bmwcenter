@@ -58,6 +58,8 @@ export interface AppSettingsState {
   lastParkingPlaceName: string | null;
   cloudSync: boolean;
   calibrationPromptDismissed: boolean;
+  liveTripNotification: boolean;
+  backgroundPromptDone: boolean;
 
   careOverheatWatchdog: boolean;
   careColdShield: boolean;
@@ -128,6 +130,8 @@ const defaults = {
   lastParkingPlaceName: null as string | null,
   cloudSync: false,
   calibrationPromptDismissed: false,
+  liveTripNotification: true,
+  backgroundPromptDone: false,
 
   careOverheatWatchdog: true,
   careColdShield: true,

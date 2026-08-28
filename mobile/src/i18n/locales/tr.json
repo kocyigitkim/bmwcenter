@@ -341,5 +341,14 @@
   "calibration.card.both": "Yakıt ve hız kalibrasyonu henüz yapılmadı. Değerler bu yüzden yaklaşık gösteriliyor.",
   "calibration.card.fuelOnly": "Yakıt kalibrasyonu eksik — tüketim ve maliyet değerleri yaklaşık.",
   "calibration.card.speedOnly": "Hız kalibrasyonu eksik — mesafe ve hız değerleri yaklaşık.",
-  "calibration.card.action": "Kalibre Et"
+  "calibration.card.action": "Kalibre Et",
+  "notification.trip.channel": "Aktif sefer",
+  "notification.trip.title": "Sefer kaydediliyor",
+  "notification.trip.paused": "Sefer duraklatıldı",
+  "notification.trip.open": "Uygulamayı Aç",
+  "settings.liveTripNotification": "Sefer sırasında bildirim göster",
+  "background.prompt.title": "Arka planda takip",
+  "background.prompt.body": "Ekran kapalıyken de sefer verilerinin kaydedilmesi ve canlı sefer bildirimi için bildirim izni gerekiyor. Ardından pil optimizasyonu muafiyeti sorulabilir — bu, Android'in sürüş sırasında kaydı durdurmasını engeller.",
+  "background.prompt.allow": "İzin Ver",
+  "background.prompt.later": "Şimdi Değil"
 }

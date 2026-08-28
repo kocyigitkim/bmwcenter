@@ -60,7 +60,13 @@
       "expo-localization",
       "expo-sqlite",
       "expo-location",
-      "expo-notifications",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/android-icon-monochrome.png",
+          "color": "#1C6FE0"
+        }
+      ],
       "expo-task-manager",
       "expo-background-task",
       [
@@ -74,7 +80,8 @@
           "bluetoothAlwaysPermission": "QuickCar connects to your OBD-II Bluetooth adapter to read live vehicle data."
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      "./plugins/withTripForegroundService.js"
     ]
   }
 }

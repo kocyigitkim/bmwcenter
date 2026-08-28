@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
+    "@notifee/react-native": "^9.1.8",
     "@shopify/react-native-skia": "2.6.2",
     "buffer": "^6.0.3",
     "drizzle-orm": "^0.45.2",

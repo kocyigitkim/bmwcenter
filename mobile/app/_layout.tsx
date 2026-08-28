@@ -11,8 +11,15 @@ import { useTripRecorderRunner } from "@/core/trip/useTripRecorderRunner";
 import { useCareCoordinatorRunner } from "@/core/care/useCareCoordinatorRunner";
 import { useFuelPriceRunner } from "@/core/fuel/useFuelPriceRunner";
 import { useAutoConnectRunner } from "@/core/obd/useAutoConnectRunner";
+import { useTripNotificationRunner } from "@/core/notifications/useTripNotificationRunner";
+import { BackgroundPermissionSheet } from "@/components/BackgroundPermissionSheet";
+import { tripNotification } from "@/core/notifications/tripNotification";
 import { CareFullScreenAlert } from "@/components/CareFullScreenAlert";
 import { TripSummaryCardModal } from "@/components/TripSummaryCardModal";
+
+// Must be registered before any trip starts its foreground-service notification.
+// Module scope of the root layout runs once, ahead of all screens.
+tripNotification.registerForegroundService();
 
 function RootStack() {
   const { scheme } = useTheme();
@@ -21,10 +28,12 @@ function RootStack() {
   useCareCoordinatorRunner();
   useFuelPriceRunner();
   useAutoConnectRunner();
+  useTripNotificationRunner();
   return (
     <>
       <StatusBar style={scheme === "dark" ? "light" : "dark"} />
       <Stack screenOptions={{ headerShown: false }} />
+      <BackgroundPermissionSheet />
       <CareFullScreenAlert />
       <TripSummaryCardModal />
     </>

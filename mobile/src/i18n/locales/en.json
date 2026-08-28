@@ -341,5 +341,14 @@
   "calibration.card.both": "Fuel and speed calibration aren't done yet, so figures are approximate.",
   "calibration.card.fuelOnly": "Fuel calibration is incomplete — consumption and cost figures are approximate.",
   "calibration.card.speedOnly": "Speed calibration is incomplete — distance and speed figures are approximate.",
-  "calibration.card.action": "Calibrate"
+  "calibration.card.action": "Calibrate",
+  "notification.trip.channel": "Active trip",
+  "notification.trip.title": "Recording trip",
+  "notification.trip.paused": "Trip paused",
+  "notification.trip.open": "Open App",
+  "settings.liveTripNotification": "Show notification during trips",
+  "background.prompt.title": "Background tracking",
+  "background.prompt.body": "Notification permission is needed to keep recording trip data with the screen off and show the live trip notification. You may then be asked to exempt QuickCar from battery optimization — this stops Android from killing the recording mid-drive.",
+  "background.prompt.allow": "Allow",
+  "background.prompt.later": "Not Now"
 }
