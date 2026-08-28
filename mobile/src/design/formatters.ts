@@ -30,6 +30,14 @@ export const Formatters = {
     return `${this.number(km * 0.621371, 1)} mi`;
   },
 
+  /** Odometer and service intervals are whole numbers — a tenth of a kilometre
+   * is noise next to a six-figure reading. */
+  odometer(km: number | undefined, settings: Settings): string {
+    if (km == null) return unavailable();
+    if (settings.unitSystem === "metric") return `${this.number(km, 0)} km`;
+    return `${this.number(km * 0.621371, 0)} mi`;
+  },
+
   temperature(celsius: number | undefined, settings: Settings): string {
     if (celsius == null) return unavailable();
     if (settings.temperatureUnit === "celsius") return `${this.number(celsius, 0)} ${t("unit.celsius")}`;

@@ -6,6 +6,7 @@ import { locationProvider } from "./locationProvider";
 import { useAppSettings } from "../settings/appSettings";
 import { activeVehicleId } from "../vehicle/useGarage";
 import { vehicleRepository } from "../vehicle/vehicleRepository";
+import { maintenanceNotifier } from "../maintenance/maintenanceNotifier";
 import { FuelIntegrationState, fuelRateLh } from "../fuel/fuelCalculator";
 import { speedCalibrator } from "../analysis/speedCalibrator";
 import { useCareCoordinator } from "../care/careCoordinator";
@@ -314,6 +315,7 @@ async function finalizeTrip(discard: boolean, set: (partial: Partial<TripRecorde
     // advances with every trip we actually recorded.
     const vehicleId = activeVehicleId();
     if (vehicleId) await vehicleRepository.addDistance(vehicleId, trip.distanceKm);
+    maintenanceNotifier.check().catch(() => undefined);
 
     const settings = useAppSettings.getState();
     settings.set("lastParkingLatitude", trip.endLatitude);

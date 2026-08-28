@@ -7,6 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import { ThemeProvider, useTheme } from "@/design/theme";
 import { bootstrapDatabase, migrateDatabase } from "@/core/storage/db";
 import { useGarage } from "@/core/vehicle/useGarage";
+import { maintenanceNotifier } from "@/core/maintenance/maintenanceNotifier";
 import { useAlertEngineRunner } from "@/core/alerts/useAlertEngineRunner";
 import { useTripRecorderRunner } from "@/core/trip/useTripRecorderRunner";
 import { useCareCoordinatorRunner } from "@/core/care/useCareCoordinatorRunner";
@@ -52,6 +53,11 @@ export default function RootLayout() {
     useGarage
       .getState()
       .load()
+      // Intervals are scoped to the active vehicle, so this waits for the garage.
+      .then(() => {
+        maintenanceNotifier.watchGarage();
+        return maintenanceNotifier.check();
+      })
       .catch(() => undefined)
       .finally(() => setReady(true));
   }, []);

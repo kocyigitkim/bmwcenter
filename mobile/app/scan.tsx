@@ -11,6 +11,7 @@ import { ELM327Commands } from "@/core/obd/elm327Commands";
 import { parseDTCResponse } from "@/core/obd/obdFrameParser";
 import { readinessVerdict, type ReadinessStatus } from "@/core/obd/readiness";
 import { activeVehicleId } from "@/core/vehicle/useGarage";
+import { rememberReadiness } from "@/core/health/healthRepository";
 import { db } from "@/core/storage/db";
 import { dtcRecords } from "@/core/storage/schema";
 import { useAlertEngine } from "@/core/alerts/alertEngine";
@@ -55,7 +56,9 @@ export default function ScanScreen() {
       const found = [...dedup.values()];
       setDtcs(found);
 
-      setReadiness(await readReadiness());
+      const r = await readReadiness();
+      setReadiness(r);
+      if (r) rememberReadiness(r);
       const frame = found.length > 0 ? await readFreezeFrame() : undefined;
 
       const existing = await db.select().from(dtcRecords);
