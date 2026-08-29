@@ -15,6 +15,7 @@ import { exportTripGPX } from "@/core/export/gpxExporter";
 import { analyzeTrip, type TripAnalysis, type TripSample } from "@/core/trip/tripAnalysis";
 import { TripMap } from "@/components/TripMap";
 import { MetricChart } from "@/components/MetricChart";
+import { ScreenErrorBoundary } from "@/components/ScreenErrorBoundary";
 import {
   buildTimeline,
   sensorSeries,
@@ -37,7 +38,20 @@ import type { Trip } from "@/core/storage/models";
 
 type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
 
-export default function TripDetailScreen() {
+/**
+ * Its own boundary as well as the root one, so recovering from a crash here
+ * returns to a working trip screen instead of resetting the whole navigator.
+ */
+export default function TripDetailRoute() {
+  const [attempt, setAttempt] = useState(0);
+  return (
+    <ScreenErrorBoundary screen="trip/[id]" onReset={() => setAttempt((n) => n + 1)}>
+      <TripDetailScreen key={attempt} />
+    </ScreenErrorBoundary>
+  );
+}
+
+function TripDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t } = useTranslation();
   const { colors } = useTheme();

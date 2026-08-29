@@ -52,6 +52,11 @@ export interface AppSettingsState {
   scoreSensitivity: "early" | "normal" | "calm";
   pressureUnit: PressureUnit;
   defaultTripCategory: TripCategory;
+  /** Reimbursement rate per km for the mileage report. Zero means the user has
+   * not set one, and no allowance figure is claimed. */
+  mileageRatePerKm: number;
+  /** The automatic business-hours rule, serialised. Empty until configured. */
+  mileageAutoRuleJSON: string;
   saveRoute: boolean;
   lastParkingLatitude: number | null;
   lastParkingLongitude: number | null;
@@ -130,6 +135,8 @@ const defaults = {
   scoreSensitivity: "normal" as const,
   pressureUnit: "kpa" as PressureUnit,
   defaultTripCategory: "personal" as TripCategory,
+  mileageRatePerKm: 0,
+  mileageAutoRuleJSON: "",
   saveRoute: true,
   lastParkingLatitude: null as number | null,
   lastParkingLongitude: null as number | null,

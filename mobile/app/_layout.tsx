@@ -20,6 +20,7 @@ import { useFuelPriceRunner } from "@/core/fuel/useFuelPriceRunner";
 import { useAutoConnectRunner } from "@/core/obd/useAutoConnectRunner";
 import { useTripNotificationRunner } from "@/core/notifications/useTripNotificationRunner";
 import { BackgroundPermissionSheet } from "@/components/BackgroundPermissionSheet";
+import { ScreenErrorBoundary } from "@/components/ScreenErrorBoundary";
 import { tripNotification } from "@/core/notifications/tripNotification";
 import { CareFullScreenAlert } from "@/components/CareFullScreenAlert";
 import { TripSummaryCardModal } from "@/components/TripSummaryCardModal";
@@ -79,7 +80,11 @@ function RootStack() {
   return (
     <>
       <StatusBar style={scheme === "dark" ? "light" : "dark"} />
-      <Stack screenOptions={{ headerShown: false }} />
+      {/* Wraps the whole navigator: a screen that throws while rendering would
+          otherwise unmount the tree and leave a white screen with no way back. */}
+      <ScreenErrorBoundary>
+        <Stack screenOptions={{ headerShown: false }} />
+      </ScreenErrorBoundary>
       <BackgroundPermissionSheet />
       <CareFullScreenAlert />
       <TripSummaryCardModal />

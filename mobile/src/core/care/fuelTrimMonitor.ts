@@ -55,11 +55,16 @@ class FuelTrimMonitor implements CareFeature {
   }
 
   onTripEnded(trip: Trip, context: CareContext): CareCue[] {
+    // Taken before the reset, not read through `this` afterwards: the closure
+    // used to resolve `this.bandAccum` at call time, by which point it had
+    // already been emptied two lines above, so every average came back
+    // undefined and no drift pattern could ever match.
+    const accum = this.bandAccum;
+    this.bandAccum = {};
     const avg = (band: string) => {
-      const acc = this.bandAccum[band];
+      const acc = accum[band];
       return acc && acc.n > 0 ? acc.sum / acc.n : undefined;
     };
-    this.bandAccum = {};
     if (trip.durationS < 60) return [];
 
     const idleAvg = avg("idle");
@@ -90,6 +95,11 @@ class FuelTrimMonitor implements CareFeature {
         thresholdUsed: 20,
       })
       .catch(() => undefined);
+
+    // Cleared once announced, so the pattern has to establish itself again
+    // before it speaks. Without this the counters stay over the threshold and
+    // every later trip with the same drift repeats the same cue forever.
+    delete this.sessionHits[pattern];
 
     return [{ id: "trim.drift", text: "Fuel trim has been drifting outside normal range across recent trips.", severity: "coach" }];
   }
