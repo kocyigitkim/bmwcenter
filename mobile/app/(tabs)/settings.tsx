@@ -240,6 +240,17 @@ export default function SettingsScreen() {
         <SwitchRow label={t("settings.care.showSeverityFactor")} value={settings.careShowSeverityFactor} onValueChange={(v) => settings.set("careShowSeverityFactor", v)} />
       </Section>
 
+      <Section title={t("widget.title")}>
+        <Pressable onPress={() => router.push("/widgets")} style={styles.navRow}>
+          <MaterialCommunityIcons name="widgets-outline" size={20} color={brandPrimary} />
+          <View style={{ flex: 1, marginLeft: DSSpace.s3 }}>
+            <Text style={{ color: colors.contentPrimary }}>{t("widget.title")}</Text>
+            <Text style={{ color: colors.contentTertiary, fontSize: 11 }}>{t("widget.settingsHint")}</Text>
+          </View>
+          <MaterialCommunityIcons name="chevron-right" size={18} color={colors.contentTertiary} />
+        </Pressable>
+      </Section>
+
       <Section title={t("backup.section")}>
         <BackupRows />
       </Section>
