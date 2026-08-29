@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fill missing `tr` fields in QuickCar/Resources/DTCCatalog.json.
+"""Fill missing `tr` fields in mobile/src/data/DTCCatalog.json.
 
 DTC descriptions follow the SAE J2012 generic-code vocabulary very closely
 (component name + fault type + position, e.g. "Circuit High", "Bank 1
@@ -21,7 +21,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG_PATH = ROOT / "QuickCar/Resources/DTCCatalog.json"
+CATALOG_PATH = ROOT / "mobile/src/data/DTCCatalog.json"
 
 # Longest / most specific phrases first — matched and substituted in this
 # order, so e.g. "Circuit Range/Performance" is consumed before the bare

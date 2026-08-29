@@ -57,7 +57,7 @@ async function runInitSequence(transport: OBDTransport) {
 // Real ELM327/BLE round-trips are far too slow (often 100-300ms each) to query every
 // supported PID sequentially and still keep speed/RPM fresh enough for trip-distance
 // integration (FuelIntegrationState drops any gap >= 10s). So — matching the tiered
-// scheduler in the Swift original (OBDService.pollOnce) — only a small, capped set of
+// scheduler carried over from the original iOS app — only a small, capped set of
 // PIDs is queried per cycle: the fast tier (speed/RPM/fuel-rate) every cycle, others on
 // slower cadences, with overflow deferred to the next cycle rather than ever skipped.
 const FAST_PIDS = [0x0c, 0x0d, 0x5e, 0x10, 0x0b, 0x0f]; // rpm, speed, fuelRate, maf, map, intakeAir

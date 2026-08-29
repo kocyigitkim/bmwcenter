@@ -1,46 +1,81 @@
 # QuickCar
 
-iOS 17+ vehicle companion app with CarPlay Driving Task support.
+Android vehicle companion app. Reads the car's own data over a Bluetooth
+OBD-II adapter: live sensors, fuel use, trip recording, trouble codes, and
+maintenance tracking.
+
+Built with React Native (Expo SDK 57). The app lives entirely in `mobile/`.
 
 ## Features
 
-- Live OBD-II metrics (BLE ELM327 + mock adapter for Simulator)
-- Auto trip recording with SwiftData
-- Fuel tracking and refuel log
-- CarPlay tabs: Live / Trip / Fuel / History
-- Phone tabs: Dashboard / Trips / Fuel / Settings
+- Live OBD-II metrics over a BLE ELM327 adapter, with a mock adapter for
+  development
+- Automatic trip recording with route, per-second sensor history, and driving
+  analysis (harsh events, traffic waits, fuel hotspots)
+- Fuel tracking, refuel log, and live fuel prices
+- Diagnostics: stored / pending / permanent trouble codes, real freeze frames,
+  emissions monitor readiness, and a per-trip diagnostic timeline
+- Vehicle health score, maintenance reminders driven by odometer and date, and
+  a one-page mechanic report as PDF
+- Multi-vehicle garage, route comparison and weekly trends
+- Home-screen widget and a quick settings tile
+- Full backup and restore to a single file
+- Turkish and English
 
-## Setup
-
-```bash
-brew install xcodegen
-cd /Users/muhammetkocyigit/Desktop/bmwcenter
-xcodegen generate
-open QuickCar.xcodeproj
-```
-
-Set your Development Team in Xcode if needed for device builds. Simulator runs without a team.
-
-## Run on Simulator
+## Develop
 
 ```bash
-xcrun simctl boot "iPhone 17 Pro" || true
-open -a Simulator
-xcodebuild -project QuickCar.xcodeproj -scheme QuickCar \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
-  -configuration Debug build
+cd mobile
+npm install --legacy-peer-deps
+npx expo start
 ```
 
-Then install/launch, or Run from Xcode (`⌘R`).
+`--legacy-peer-deps` is needed because react-dom's peer requirement conflicts
+with the pinned React version.
 
-### Open CarPlay
+Checks before pushing:
 
-Simulator menu: **I/O → External Displays → CarPlay**.
+```bash
+cd mobile
+npx tsc --noEmit
+npx jest
+```
 
-Mock adapter is enabled by default on Simulator (`Settings → Use mock adapter`).
+## Build an APK
 
-## Requirements
+Pushing to a branch runs `.github/workflows/mobile-android-build.yml`, which
+prebuilds the native project, builds a signed release APK and publishes it as a
+GitHub Release asset.
 
-- Xcode 15+
-- iOS 17.0+
-- Entitlement: `com.apple.developer.carplay-driving-task` (local debug / Simulator)
+Signing comes from repository secrets — `ANDROID_KEYSTORE_BASE64`,
+`ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`. They
+are never committed.
+
+To build locally you need the Android SDK:
+
+```bash
+cd mobile
+npx expo prebuild --platform android
+cd android && ./gradlew assembleRelease
+```
+
+`mobile/android/` is generated and gitignored, so anything native is injected at
+prebuild time by the config plugins in `mobile/plugins/`.
+
+## Repository layout
+
+| Path | What it is |
+| --- | --- |
+| `mobile/` | The app |
+| `mobile/src/core/` | Logic, organised by domain — OBD, trip, fuel, care, health, storage |
+| `mobile/plugins/` | Expo config plugins for the native pieces (foreground service, widget) |
+| `docs/` | PRD and reference notes |
+| `scripts/` | One-off Python tools that regenerate the bundled DTC catalog and vehicle profile pack |
+| `design/` | Branding assets |
+
+## History
+
+This started as a Swift/SwiftUI iOS app with CarPlay support. It was rewritten
+in React Native and the Swift sources were removed once the port was complete;
+`docs/ios-native-surfaces.md` records the parts that were never ported (CarPlay,
+Apple Watch, iOS widgets) and how to recover them from git history.

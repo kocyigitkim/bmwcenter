@@ -1,72 +1,23 @@
-# Xcode
-.DS_Store
-build/
-DerivedData/
-*.moved-aside
-*.xcuserstate
-*.xcscmblueprint
-xcuserdata/
-*.xccheckout
-
-# Swift Package Manager
-.swiftpm/
-.build/
-
-# CocoaPods / Carthage (not used, kept as guard)
-Pods/
-Carthage/Build/
-
-# Obj-C/Swift specific
-*.hmap
-
-# Simulator / test artifacts
-*.xcresult
-
-# XcodeGen generated project (regenerated from project.yml)
-# Keep QuickCar.xcodeproj tracked since no CI regenerates it yet.
-
 # Claude Code local session state
 .claude/
 
-# ── Otomatik eklendi: derleme çıktısı ve bağımlılıklar ──
+# Dependencies and build output
 node_modules/
 dist/
 out/
-release/
 build/
 Build/
-.next/
-.nuxt/
 .cache/
-DerivedData/
-.derivedData/
+
+# Python (scripts/)
 __pycache__/
 *.pyc
 venv/
 .venv/
 
-# Xcode / CocoaPods
-Pods/
-*.xcuserdatad/
-xcuserdata/
-*.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
-
-# Android / Gradle
-.gradle/
-local.properties
-
-# Unity
-Library/
-Temp/
-Obj/
-Logs/
-UserSettings/
-MemoryCaptures/
-Recordings/
-
-# Araç çıktıları
+# Tool output
 graphify-out/
 
-# Sistem
+# System
 .DS_Store
 *.log

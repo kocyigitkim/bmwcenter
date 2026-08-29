@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PACK = ROOT / "QuickCar" / "Resources" / "VehicleProfilePack.json"
+PACK = ROOT / "mobile" / "assets" / "vehicleProfilePack.json"
 
 ARCH_DEFAULTS = {
     "gasolineNA": {"tankL": 50, "displacementL": 1.6, "fuel": "gasoline"},

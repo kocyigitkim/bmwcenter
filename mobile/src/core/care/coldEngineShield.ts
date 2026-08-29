@@ -17,7 +17,7 @@ function caps(oilTempC: number): { rpm?: number; load?: number } {
   return { rpm: REDLINE_RPM * pct[0], load: pct[1] };
 }
 
-/** Simplified port of ColdEngineShield.swift — fixed redline/oil-warmup assumptions
+/** Warns about revving a cold engine — fixed redline/oil-warmup assumptions
  * instead of the unported per-vehicle-archetype profile system. */
 class ColdEngineShield implements CareFeature {
   id = "coldShield";

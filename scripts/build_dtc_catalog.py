@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build QuickCar/Resources/DTCCatalog.json from open OBD-II datasets.
+"""Build mobile/src/data/DTCCatalog.json from open OBD-II datasets.
 
 Sources (clone once):
   git clone --depth 1 https://github.com/foerbsnavi/obdex.git /tmp/obdex
@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from translate_dtc_catalog_tr import fill_missing_tr  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
-EXISTING_PATH = ROOT / "QuickCar/Resources/DTCCatalog.json"
+EXISTING_PATH = ROOT / "mobile/src/data/DTCCatalog.json"
 OUT = EXISTING_PATH
 OBDEX = Path("/tmp/obdex/data/generic")
 WAL_DB = Path("/tmp/dtc-database/data/dtc_codes.db")

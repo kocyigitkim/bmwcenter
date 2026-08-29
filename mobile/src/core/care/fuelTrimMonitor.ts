@@ -13,7 +13,7 @@ interface BandHit {
 
 const THERMOSTAT_OPEN_C = 88;
 
-/** Simplified port of FuelTrimMonitor.swift — watches long-term fuel trim for a
+/** Watches long-term fuel trim for a
  * lean/rich drift pattern across trips (skipping the unported ethanol/altitude
  * bucket adjustments from the vehicle-profile system). */
 class FuelTrimMonitor implements CareFeature {

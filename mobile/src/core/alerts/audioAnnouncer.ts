@@ -3,7 +3,7 @@ import { useAppSettings } from "../settings/appSettings";
 import type { AlertSeverity, CueSeverity } from "./alertTypes";
 
 function playTones(count: number) {
-  // expo doesn't expose the iOS system-sound API used by the Swift version;
+  // expo doesn't expose a system-sound API;
   // the spoken utterance itself is the primary cue on this platform.
   void count;
 }

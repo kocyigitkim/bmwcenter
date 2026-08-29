@@ -5,7 +5,7 @@ jest.mock("react-native-ble-plx", () => ({
 
 import { duePIDs, resetPollScheduler } from "../obdService";
 
-describe("OBD poll scheduler (tiered, matches the Swift original's cadence)", () => {
+describe("OBD poll scheduler (tiered: fast metrics every cycle, slow ones rarely)", () => {
   beforeEach(() => resetPollScheduler());
 
   test("first cycle (forceAll) requests every tier at once", () => {

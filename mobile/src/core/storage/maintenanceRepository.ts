@@ -37,7 +37,7 @@ function rowToItem(row: typeof maintenanceItems.$inferSelect): MaintenanceItem {
   };
 }
 
-/** BMW/general maintenance defaults (mirrors MaintenanceTemplates.swift's factory set). */
+/** BMW/general maintenance defaults, seeded on first run. */
 const DEFAULT_TEMPLATES: Array<Pick<MaintenanceItem, "titleKey" | "intervalKm" | "intervalMonths">> = [
   { titleKey: "maintenance.oilChange", intervalKm: 10000, intervalMonths: 12 },
   { titleKey: "maintenance.brakeFluid", intervalKm: 30000, intervalMonths: 24 },

@@ -28,7 +28,7 @@ function recommendedIdleS(tli: number): number {
   return 120;
 }
 
-/** Simplified port of ThermalShockGuard.swift — detects turbo/engine "hot shutdown"
+/** Detects turbo/engine "hot shutdown"
  * risk and recommends an idle-before-shutoff cooldown window. */
 class ThermalShockGuard implements CareFeature {
   id = "thermalShock";

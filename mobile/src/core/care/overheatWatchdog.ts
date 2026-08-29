@@ -12,7 +12,7 @@ import {
 import type { CareCue, CareContext } from "./careTypes";
 import type { CareFeature } from "./careFeature";
 
-/** Port of OverheatWatchdog.swift. Thresholds come from the resolved
+/** Coolant overheat watchdog. Thresholds come from the resolved
  * `VehicleDiagnosticProfile`, so an 82 °C-thermostat diesel alarms far earlier than a
  * 95 °C map-controlled turbo instead of every car sharing one fixed number. */
 const HOT_RESTART_SOAK_MS = 20 * 60 * 1000;

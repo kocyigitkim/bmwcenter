@@ -12,7 +12,7 @@ import type { CareFeature } from "./careFeature";
 const SLOW_WARMUP_MIN_DISTANCE_KM = 5;
 const SLOW_WARMUP_MIN_MOVING_MS = 8 * 60 * 1000;
 
-/** Port of ThermostatWatch.swift — detects slow warmup (stuck-open thermostat), highway
+/** Detects slow warmup (stuck-open thermostat), highway
  * over-cooling, and post-warmup spikes (stuck-closed). Targets come from the resolved
  * vehicle profile, so a 95 °C map-controlled engine is not judged against an 82 °C
  * diesel's warmup curve. */
